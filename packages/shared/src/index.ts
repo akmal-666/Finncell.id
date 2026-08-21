@@ -5,3 +5,4 @@ export * from './types/promo';
 export * from './types/tradein';
 export * from './types/blog';
 export * from './types/user';
+export * from './types/seo';

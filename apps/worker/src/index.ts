@@ -7,6 +7,7 @@ import { settingsRoutes } from './routes/settings.js';
 import { tradeInRoutes } from './routes/tradein.js';
 import { mediaRoutes } from './routes/media.js';
 import { blogRoutes } from './routes/blog.js';
+import { seoRoutes } from './routes/seo.js';
 
 type Bindings = {
   DB: D1Database;
@@ -41,6 +42,7 @@ app.route('/api/settings', settingsRoutes);
 app.route('/api/trade-in', tradeInRoutes);
 app.route('/api/media', mediaRoutes);
 app.route('/api/blog', blogRoutes);
+app.route('/api/seo', seoRoutes);
 
 // 404 Handler
 app.notFound((c) => {
