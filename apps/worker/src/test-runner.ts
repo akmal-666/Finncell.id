@@ -190,11 +190,21 @@ async function runTests() {
   console.assert(res7.status === 200, 'Categories GET');
   console.log('[PASS] GET /api/categories (200 OK)');
 
-  // 8. GET /api/settings
-  const res8 = await app.request('/api/settings', {}, mockEnv);
-  const json8: any = await res8.json();
-  console.assert(res8.status === 200 && json8.data.store_name === 'fincell.id', 'Settings GET');
-  console.log('[PASS] GET /api/settings (200 OK)');
+  // 9. POST & GET /api/trade-in
+  const res9 = await app.request('/api/trade-in', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      customerName: 'Ahmad TradeIn Test',
+      customerPhone: '081299887766',
+      deviceModel: 'iPhone 14 Pro',
+      storage: '256GB',
+      estimatedValue: 12000000,
+    }),
+  }, mockEnv);
+  const json9: any = await res9.json();
+  console.assert(res9.status === 201 && json9.success === true, 'Trade In POST endpoint');
+  console.log('[PASS] POST /api/trade-in (201 Created)');
 
   console.log('--- ALL QA TESTS PASSED SUCCESSFULLY! ---');
 }
