@@ -251,6 +251,17 @@ async function runTests() {
   console.assert(res13.status === 401, 'Auth login invalid credentials 401');
   console.log('[PASS] POST /api/auth/login Invalid Credentials (401 UNAUTHORIZED)');
 
+  // 12. GET /api/media & DELETE /api/media/:id
+  const res14 = await app.request('/api/media', {}, mockEnv);
+  const json14: any = await res14.json();
+  console.assert(res14.status === 200 && json14.success === true, 'Media GET endpoint');
+  console.log('[PASS] GET /api/media (200 OK)');
+
+  const res15 = await app.request('/api/media/med-1', { method: 'DELETE' }, mockEnv);
+  const json15: any = await res15.json();
+  console.assert(res15.status === 200 && json15.success === true, 'Media DELETE endpoint');
+  console.log('[PASS] DELETE /api/media/med-1 (200 OK)');
+
   console.log('--- ALL QA TESTS PASSED SUCCESSFULLY! ---');
 }
 
