@@ -28,14 +28,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Build shared package
+        run: pnpm --filter @fincell/shared build
+
       - name: Typecheck TypeScript
-        run: pnpm run typecheck
+        run: pnpm --filter worker typecheck
 
       - name: Run unit & QA tests
-        run: pnpm run test
+        run: pnpm --filter worker test
 
-      - name: Build applications (Web & Worker)
-        run: pnpm run build
+      - name: Build Web application
+        run: pnpm --filter web build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://api.fincell.id/api' }}
+          VITE_STORE_NAME: ${{ vars.VITE_STORE_NAME || 'fincell.id' }}
 
       # ── D1 DATABASE MIGRATIONS ──
       - name: Apply Cloudflare D1 Database Migrations
