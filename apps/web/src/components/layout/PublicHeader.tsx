@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, ShoppingBag, Heart, User, Menu, X } from 'lucide-react';
-import { Button } from '../ui/Button';
 
 export const PublicHeader: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,11 +23,12 @@ export const PublicHeader: React.FC = () => {
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tighter shrink-0">
-            <span className="text-[#E7B65A]">fincell</span>.id
+          <Link to="/" className="flex items-center gap-1.5 text-xl sm:text-2xl font-black tracking-tighter shrink-0 group">
+            <span className="text-white group-hover:text-gray-200 transition-colors">fincell</span>
+            <span className="text-[#E7B65A] font-extrabold">.id</span>
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
@@ -48,8 +48,8 @@ export const PublicHeader: React.FC = () => {
             })}
           </nav>
 
-          {/* Actions & Search */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Search Bar Desktop */}
             <div className="hidden md:flex items-center relative">
               <input
@@ -57,17 +57,18 @@ export const PublicHeader: React.FC = () => {
                 placeholder="Cari iPhone, aksesoris..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 xl:w-64 pl-9 pr-4 py-1.5 text-xs bg-[#111111] text-white border border-white/15 rounded-full placeholder-gray-500 focus:outline-none focus:border-[#E7B65A] focus:w-72 transition-all duration-300"
+                className="w-44 xl:w-56 pl-9 pr-4 py-1.5 text-xs bg-[#111111] text-white border border-white/15 rounded-full placeholder-gray-500 focus:outline-none focus:border-[#E7B65A] focus:w-64 transition-all duration-300"
               />
               <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
 
-            {/* Quick Action Buttons */}
-            <div className="flex items-center space-x-1 sm:space-x-2">
+            {/* Action Buttons: Account, Wishlist, Cart */}
+            <div className="flex items-center space-x-1">
               <Link
                 to="/admin/login"
                 className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Account / Admin"
+                title="Account / Login"
+                aria-label="Account"
               >
                 <User className="w-4 h-4" />
               </Link>
@@ -75,25 +76,31 @@ export const PublicHeader: React.FC = () => {
                 to="/wishlist"
                 className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
                 title="Wishlist"
+                aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" />
+                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-rose-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+                  0
+                </span>
               </Link>
               <Link
                 to="/keranjang"
                 className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
                 title="Cart"
+                aria-label="Cart"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-extrabold rounded-full flex items-center justify-center">
                   2
                 </span>
               </Link>
             </div>
 
-            {/* Mobile menu trigger */}
+            {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+              aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -101,7 +108,7 @@ export const PublicHeader: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Menu Drawer */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-white/10 bg-[#050505] px-4 pt-3 pb-6 space-y-3">
           <div className="relative mb-3">
