@@ -1,0 +1,47 @@
+name: fincell.id CI — Quality Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'feature/*'
+
+jobs:
+  quality_gate:
+    name: Lint, Typecheck, Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint code
+        run: pnpm run lint
+
+      - name: Typecheck TypeScript
+        run: pnpm run typecheck
+
+      - name: Run unit & QA tests
+        run: pnpm run test
+
+      - name: Build applications (Web & Worker)
+        run: pnpm run build
+
+      - name: CI Quality Gate Status
+        if: success()
+        run: echo "✅ All checks passed! PR is safe to merge."

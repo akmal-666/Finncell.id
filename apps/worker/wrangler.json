@@ -6,9 +6,57 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "fincell-db",
+      "database_name": "fincell-db-dev",
       "database_id": "fincell-d1-local",
       "migrations_dir": "migrations"
     }
-  ]
+  ],
+  "vars": {
+    "ENVIRONMENT": "development",
+    "PUBLIC_BASE_URL": "http://localhost:8787"
+  },
+  "env": {
+    "staging": {
+      "name": "fincell-worker-staging",
+      "routes": [
+        {
+          "pattern": "staging-api.fincell.id/*",
+          "custom_domain": true
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "fincell-db-staging",
+          "database_id": "fincell-d1-staging-id",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": {
+        "ENVIRONMENT": "staging",
+        "PUBLIC_BASE_URL": "https://staging-api.fincell.id"
+      }
+    },
+    "production": {
+      "name": "fincell-worker-prod",
+      "routes": [
+        {
+          "pattern": "api.fincell.id/*",
+          "custom_domain": true
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "fincell-db-prod",
+          "database_id": "fincell-d1-prod-id",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "vars": {
+        "ENVIRONMENT": "production",
+        "PUBLIC_BASE_URL": "https://api.fincell.id"
+      }
+    }
+  }
 }
