@@ -9,7 +9,7 @@
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "node --import tsx src/test-runner.ts"
+    "test": "vitest run tests/api.test.ts"
   },
   "dependencies": {
     "@fincell/shared": "workspace:*",
