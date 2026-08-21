@@ -206,6 +206,27 @@ async function runTests() {
   console.assert(res9.status === 201 && json9.success === true, 'Trade In POST endpoint');
   console.log('[PASS] POST /api/trade-in (201 Created)');
 
+  // 10. GET & POST /api/blog
+  const res10 = await app.request('/api/blog', {}, mockEnv);
+  const json10: any = await res10.json();
+  console.assert(res10.status === 200 && json10.success === true, 'Blog GET endpoint');
+  console.log('[PASS] GET /api/blog (200 OK)');
+
+  const res11 = await app.request('/api/blog', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      title: 'Artikel QA Test Worker',
+      slug: 'artikel-qa-test-worker',
+      excerpt: 'Ringkasan test QA',
+      content: 'Isi konten QA',
+      status: 'published',
+    }),
+  }, mockEnv);
+  const json11: any = await res11.json();
+  console.assert(res11.status === 201 && json11.success === true, 'Blog POST endpoint');
+  console.log('[PASS] POST /api/blog (201 Created)');
+
   console.log('--- ALL QA TESTS PASSED SUCCESSFULLY! ---');
 }
 
