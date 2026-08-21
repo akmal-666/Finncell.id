@@ -105,10 +105,10 @@ Panduan ini dibuat khusus agar Anda dapat melakukan penyebaran (deployment) plat
 4. **Konfigurasi Build (Build Settings)**:
    - **Project name**: Isi `fincell-web`
    - **Production branch**: Pilih `main`
-   - **Framework preset**: Pilih **Vite**
-   - **Build command**: Isi `npm run build`
-   - **Build output directory**: Isi `apps/web/dist`
-   - **Root directory**: Biarkan kosong `/`
+   - **Framework preset**: Pilih
+   - **Build command**: Isi `pnpm run build` (atau `npm run build`)
+   - **Deploy command**: Isi `npx wrangler deploy`
+   - **Root directory** (di bagian *Advanced settings*): Isi `apps/worker`
 5. **Environment Variables**:
    - Tambahkan variabel:
      - Name: `VITE_API_BASE_URL` | Value: `https://api.fincell.id/api`
