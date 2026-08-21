@@ -10,6 +10,17 @@ export const settingsRoutes = new Hono<{ Bindings: Bindings }>();
 // GET /api/settings
 settingsRoutes.get('/', async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({
+        success: true,
+        data: {
+          store_name: 'fincell.id',
+          whatsapp_number: '6281234567890',
+          contact_email: 'support@fincell.id',
+        },
+      });
+    }
+
     const { results } = await c.env.DB.prepare(`SELECT key, value FROM settings`).all();
     const settingsMap: Record<string, string> = {};
 

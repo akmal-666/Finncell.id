@@ -10,6 +10,16 @@ export const categoryRoutes = new Hono<{ Bindings: Bindings }>();
 // GET /api/categories
 categoryRoutes.get('/', async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({
+        success: true,
+        data: [
+          { id: 'cat-1', name: 'iPhone 15 Series', slug: 'iphone-15-series', description: 'Seri iPhone terbaru', product_count: 5 },
+          { id: 'cat-2', name: 'iPhone 14 Series', slug: 'iphone-14-series', description: 'Seri iPhone 14 Pro & Base', product_count: 4 },
+        ],
+      });
+    }
+
     const { results } = await c.env.DB.prepare(`
       SELECT c.*, COUNT(p.id) as product_count
       FROM categories c

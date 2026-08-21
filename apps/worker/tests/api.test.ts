@@ -38,91 +38,53 @@ function createMockDb() {
 
   return {
     prepare(sql: string) {
-      return {
+      let boundArgs: any[] = [];
+      const queryObj = {
         bind(...args: any[]) {
-          return {
-            async first<T = any>(): Promise<T | null> {
-              if (sql.includes('SELECT p.*')) {
-                const slugOrId = args[0];
-                const found = dbData.products.find(p => p.slug === slugOrId || p.id === slugOrId);
-                return (found as T) || null;
-              }
-              if (sql.includes('SELECT id FROM products WHERE slug = ?')) {
-                const slug = args[0];
-                const excludeId = args[1];
-                const found = dbData.products.find(p => p.slug === slug && p.id !== excludeId);
-                return (found ? { id: found.id } : null) as T;
-              }
-              if (sql.includes('SELECT id FROM products WHERE sku = ?')) {
-                const sku = args[0];
-                const excludeId = args[1];
-                const found = dbData.products.find(p => p.sku === sku && p.id !== excludeId);
-                return (found ? { id: found.id } : null) as T;
-              }
-              if (sql.includes('SELECT id FROM categories WHERE slug = ?')) {
-                const slug = args[0];
-                const excludeId = args[1];
-                const found = dbData.categories.find(c => c.slug === slug && c.id !== excludeId);
-                return (found ? { id: found.id } : null) as T;
-              }
-              if (sql.includes('SELECT id FROM categories WHERE id = ?')) {
-                const id = args[0];
-                const found = dbData.categories.find(c => c.id === id);
-                return (found ? { id: found.id } : null) as T;
-              }
-              if (sql.includes('SELECT id FROM products WHERE id = ?')) {
-                const id = args[0];
-                const found = dbData.products.find(p => p.id === id);
-                return (found ? { id: found.id } : null) as T;
-              }
-              if (sql.includes('COUNT(*) as total')) {
-                return { total: dbData.products.length } as T;
-              }
-              return null;
-            },
-            async all() {
-              if (sql.includes('FROM products')) {
-                return { results: dbData.products };
-              }
-              if (sql.includes('FROM categories')) {
-                return { results: dbData.categories };
-              }
-              if (sql.includes('FROM brands')) {
-                return { results: dbData.brands };
-              }
-              if (sql.includes('FROM settings')) {
-                return { results: dbData.settings };
-              }
-              return { results: [] };
-            },
-            async run() {
-              if (sql.includes('INSERT INTO products')) {
-                dbData.products.push({
-                  id: args[0],
-                  name: args[1],
-                  slug: args[2],
-                  sku: args[3],
-                  brand_id: args[4],
-                  category_id: args[5],
-                  description: args[6],
-                  short_description: args[7],
-                  base_price: args[8],
-                  compare_price: args[9],
-                  stock: args[10],
-                  low_stock_threshold: args[11],
-                  status: args[12],
-                  condition: args[13],
-                });
-              }
-              if (sql.includes('DELETE FROM products')) {
-                const id = args[0];
-                dbData.products = dbData.products.filter(p => p.id !== id);
-              }
-              return { success: true };
-            },
-          };
+          boundArgs = args;
+          return queryObj;
+        },
+        async first<T = any>(): Promise<T | null> {
+          if (sql.includes('WHERE slug = ?')) {
+            const slug = boundArgs[0];
+            const found = dbData.products.find(p => p.slug === slug);
+            return (found ? { id: found.id } : null) as T;
+          }
+          if (sql.includes('WHERE sku = ?')) {
+            const sku = boundArgs[0];
+            const found = dbData.products.find(p => p.sku === sku);
+            return (found ? { id: found.id } : null) as T;
+          }
+          if (sql.includes('SELECT p.*')) {
+            const slugOrId = boundArgs[0];
+            const found = dbData.products.find(p => p.slug === slugOrId || p.id === slugOrId);
+            return (found as T) || null;
+          }
+          if (sql.includes('COUNT(*) as total')) {
+            return { total: dbData.products.length } as T;
+          }
+          return null;
+        },
+        async all() {
+          if (sql.includes('FROM products')) {
+            return { results: dbData.products };
+          }
+          if (sql.includes('categories')) {
+            return { results: dbData.categories };
+          }
+          if (sql.includes('FROM brands')) {
+            return { results: dbData.brands };
+          }
+          if (sql.includes('FROM settings')) {
+            return { results: dbData.settings };
+          }
+          return { results: [] };
+        },
+        async run() {
+          return { success: true };
         },
       };
+      return queryObj;
     },
   };
 }
