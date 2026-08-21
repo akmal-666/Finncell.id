@@ -20,7 +20,7 @@
       "name": "fincell-worker-staging",
       "routes": [
         {
-          "pattern": "staging-api.fincell.id/*",
+          "pattern": "staging-api.fincell.id",
           "custom_domain": true
         }
       ],
@@ -41,7 +41,7 @@
       "name": "fincell-worker-prod",
       "routes": [
         {
-          "pattern": "api.fincell.id/*",
+          "pattern": "api.fincell.id",
           "custom_domain": true
         }
       ],
