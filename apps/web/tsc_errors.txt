@@ -1,0 +1,36 @@
+﻿src/pages/admin/AdminBlog.tsx(39,26): error TS2322: Type '"secondary" | "success"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+  Type '"secondary"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+src/pages/admin/AdminBlog.tsx(44,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminBlog.tsx(45,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminBrands.tsx(37,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminBrands.tsx(38,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminCategories.tsx(37,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminCategories.tsx(38,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminMedia.tsx(29,53): error TS2322: Type '{ variant: "outline"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminOrders.tsx(47,55): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminProducts.tsx(75,26): error TS2322: Type '"secondary" | "accent"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+  Type '"secondary"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+src/pages/admin/AdminProducts.tsx(82,55): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminProducts.tsx(84,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminPromos.tsx(42,26): error TS2322: Type '"secondary" | "success"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+  Type '"secondary"' is not assignable to type '"outline" | "danger" | "dark" | "default" | "accent" | "success" | "warning" | undefined'.
+src/pages/admin/AdminPromos.tsx(47,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminPromos.tsx(48,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminTradeIn.tsx(46,55): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminTradeIn.tsx(48,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+src/pages/admin/AdminTradeIn.tsx(49,53): error TS2322: Type '{ variant: "ghost"; size: "sm"; iconOnly: Element; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.
+  Property 'iconOnly' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'.

@@ -1,0 +1,16 @@
+{
+  "name": "fincell-id-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev:worker": "pnpm --filter worker dev",
+    "build": "pnpm --filter \"*\" build",
+    "lint": "pnpm --filter \"*\" lint",
+    "typecheck": "pnpm --filter \"*\" typecheck",
+    "test": "pnpm --filter \"*\" test"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,58 @@
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { productRoutes } from './routes/products.js';
+import { categoryRoutes } from './routes/categories.js';
+import { brandRoutes } from './routes/brands.js';
+import { settingsRoutes } from './routes/settings.js';
+
+type Bindings = {
+  DB: D1Database;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
+
+// Enable CORS
+app.use('*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Health check
+app.get('/api/health', (c) => {
+  return c.json({
+    success: true,
+    data: {
+      status: 'ok',
+      service: 'fincell-worker-api',
+      timestamp: new Date().toISOString(),
+    },
+  });
+});
+
+// Mount Routes
+app.route('/api/products', productRoutes);
+app.route('/api/categories', categoryRoutes);
+app.route('/api/brands', brandRoutes);
+app.route('/api/settings', settingsRoutes);
+
+// 404 Handler
+app.notFound((c) => {
+  return c.json({
+    success: false,
+    message: 'Endpoint API tidak ditemukan',
+    code: 'NOT_FOUND',
+  }, 404);
+});
+
+// 500 Global Error Handler
+app.onError((err, c) => {
+  console.error('[Hono Error]', err);
+  return c.json({
+    success: false,
+    message: err.message || 'Terjadi kesalahan pada server worker',
+    code: 'INTERNAL_SERVER_ERROR',
+  }, 500);
+});
+
+export default app;

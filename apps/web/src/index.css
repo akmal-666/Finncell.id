@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-dark: #050505;
+    --card-dark: #111111;
+    --surface-dark: #1A1A1A;
+    --bg-light: #FFFFFF;
+    --bg-alt-light: #F7F7F7;
+    --text-primary: #111111;
+    --text-secondary: #6B7280;
+    --accent: #E7B65A;
+    --accent-dark: #B88632;
+    --whatsapp: #25D366;
+  }
+
+  body {
+    @apply bg-[#F7F7F7] text-[#111111] antialiased selection:bg-[#E7B65A]/20 selection:text-[#111111];
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E7B65A;
+}
