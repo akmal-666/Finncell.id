@@ -1,19 +1,19 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fincell-worker",
+  "name": "fincell-worker-prod",
   "main": "src/index.ts",
   "compatibility_date": "2024-03-01",
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "fincell-db-dev",
-      "database_id": "fincell-d1-local",
+      "database_name": "fincell-db-prod",
+      "database_id": "3f9359a7-f83d-4343-ab61-1964f2992fca",
       "migrations_dir": "migrations"
     }
   ],
   "vars": {
-    "ENVIRONMENT": "development",
-    "PUBLIC_BASE_URL": "http://localhost:8787"
+    "ENVIRONMENT": "production",
+    "PUBLIC_BASE_URL": "https://api.fincell.id"
   },
   "env": {
     "staging": {
@@ -28,7 +28,7 @@
         {
           "binding": "DB",
           "database_name": "fincell-db-staging",
-          "database_id": "fincell-d1-staging-id",
+          "database_id": "3f9359a7-f83d-4343-ab61-1964f2992fca",
           "migrations_dir": "migrations"
         }
       ],
@@ -49,7 +49,7 @@
         {
           "binding": "DB",
           "database_name": "fincell-db-prod",
-          "database_id": "fincell-d1-prod-id",
+          "database_id": "3f9359a7-f83d-4343-ab61-1964f2992fca",
           "migrations_dir": "migrations"
         }
       ],
