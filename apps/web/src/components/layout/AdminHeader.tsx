@@ -1,12 +1,33 @@
 import React from 'react';
-import { Bell, Search, ExternalLink, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Bell, Search, ExternalLink, LogOut, User, ShieldCheck } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import { Badge } from '../ui/Badge';
 
 export interface AdminHeaderProps {
   title?: string;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ title = 'Dashboard' }) => {
+  const { session, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/admin/login');
+  };
+
+  const getRoleBadgeVariant = (role?: string) => {
+    switch (role) {
+      case 'super_admin': return 'dark';
+      case 'admin': return 'secondary';
+      case 'content_manager': return 'outline';
+      case 'order_manager': return 'success';
+      case 'seo_manager': return 'warning';
+      default: return 'secondary';
+    }
+  };
+
   return (
     <header className="h-16 bg-white dark:bg-[#111111] border-b border-gray-200 dark:border-gray-800 px-6 flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center gap-4">
@@ -40,11 +61,30 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title = 'Dashboard' })
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full" />
         </button>
 
-        {/* Avatar */}
-        <div className="flex items-center gap-2 pl-2 border-l border-gray-200 dark:border-gray-800">
-          <div className="w-8 h-8 rounded-full bg-[#111111] dark:bg-[#E7B65A] text-white dark:text-[#111111] text-xs font-bold flex items-center justify-center">
+        {/* User Info & Logout */}
+        <div className="flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-gray-800">
+          <div className="w-8 h-8 rounded-full bg-[#111111] dark:bg-[#E7B65A] text-white dark:text-[#111111] text-xs font-bold flex items-center justify-center shrink-0">
             <User className="w-4 h-4" />
           </div>
+
+          <div className="hidden sm:flex flex-col text-left">
+            <span className="text-xs font-bold text-[#111111] dark:text-white truncate max-w-[120px]">
+              {session?.name || 'Administrator'}
+            </span>
+            <div className="flex items-center gap-1">
+              <Badge variant={getRoleBadgeVariant(session?.role)} size="sm">
+                {session?.role || 'admin'}
+              </Badge>
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            title="Keluar dari Admin Portal"
+            className="p-1.5 text-gray-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>

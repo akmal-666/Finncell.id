@@ -1,5 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 // Layouts
 import { PublicLayout } from './layouts/PublicLayout';
@@ -64,31 +66,39 @@ export const router = createBrowserRouter([
     path: '/admin/login',
     element: <AdminLoginPage />,
   },
-  // Admin Routes
+  // Admin Routes (Protected)
   {
     path: '/admin',
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <AdminDashboardPage /> },
-      { path: 'products', element: <AdminProductsPage /> },
-      { path: 'products/new', element: <AdminProductFormPage /> },
-      { path: 'products/:id/edit', element: <AdminProductFormPage /> },
-      { path: 'categories', element: <AdminCategoriesPage /> },
-      { path: 'brands', element: <AdminBrandsPage /> },
-      { path: 'orders', element: <AdminOrdersPage /> },
-      { path: 'promos', element: <AdminPromosPage /> },
-      { path: 'trade-in', element: <AdminTradeInPage /> },
-      { path: 'content', element: <AdminContentPage /> },
-      { path: 'blog', element: <AdminBlogPage /> },
-      { path: 'seo', element: <AdminSeoPage /> },
-      { path: 'media', element: <AdminMediaPage /> },
-      { path: 'users', element: <AdminUsersPage /> },
-      { path: 'settings', element: <AdminSettingsPage /> },
-      { path: 'activity-log', element: <AdminActivityLogPage /> },
+      { path: 'products', element: <ProtectedRoute requiredPermission="product.read"><AdminProductsPage /></ProtectedRoute> },
+      { path: 'products/new', element: <ProtectedRoute requiredPermission="product.create"><AdminProductFormPage /></ProtectedRoute> },
+      { path: 'products/:id/edit', element: <ProtectedRoute requiredPermission="product.update"><AdminProductFormPage /></ProtectedRoute> },
+      { path: 'categories', element: <ProtectedRoute requiredPermission="product.read"><AdminCategoriesPage /></ProtectedRoute> },
+      { path: 'brands', element: <ProtectedRoute requiredPermission="product.read"><AdminBrandsPage /></ProtectedRoute> },
+      { path: 'orders', element: <ProtectedRoute requiredPermission="order.read"><AdminOrdersPage /></ProtectedRoute> },
+      { path: 'promos', element: <ProtectedRoute requiredPermission="product.read"><AdminPromosPage /></ProtectedRoute> },
+      { path: 'trade-in', element: <ProtectedRoute requiredPermission="order.read"><AdminTradeInPage /></ProtectedRoute> },
+      { path: 'content', element: <ProtectedRoute requiredPermission="content.read"><AdminContentPage /></ProtectedRoute> },
+      { path: 'blog', element: <ProtectedRoute requiredPermission="content.read"><AdminBlogPage /></ProtectedRoute> },
+      { path: 'seo', element: <ProtectedRoute requiredPermission="seo.read"><AdminSeoPage /></ProtectedRoute> },
+      { path: 'media', element: <ProtectedRoute requiredPermission="content.read"><AdminMediaPage /></ProtectedRoute> },
+      { path: 'users', element: <ProtectedRoute requiredPermission="user.manage"><AdminUsersPage /></ProtectedRoute> },
+      { path: 'settings', element: <ProtectedRoute requiredPermission="settings.manage"><AdminSettingsPage /></ProtectedRoute> },
+      { path: 'activity-log', element: <ProtectedRoute requiredPermission="user.manage"><AdminActivityLogPage /></ProtectedRoute> },
     ],
   },
 ]);
 
 export const AppRouter: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };

@@ -284,6 +284,7 @@ export const MOCK_USERS: User[] = [
     name: 'Super Admin fincell',
     email: 'admin@fincell.id',
     role: 'super_admin',
+    isActive: true,
     createdAt: '2024-01-01T00:00:00Z',
     lastLoginAt: '2024-03-02T14:00:00Z'
   }

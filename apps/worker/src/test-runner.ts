@@ -227,7 +227,31 @@ async function runTests() {
   console.assert(res11.status === 201 && json11.success === true, 'Blog POST endpoint');
   console.log('[PASS] POST /api/blog (201 Created)');
 
+  // 11. POST /api/auth/login & GET /api/auth/me
+  const res12 = await app.request('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: 'admin@fincell.id',
+      password: 'admin123',
+    }),
+  }, mockEnv);
+  const json12: any = await res12.json();
+  console.assert(res12.status === 200 && json12.success === true && json12.data.role === 'super_admin', 'Auth login endpoint');
+  console.log('[PASS] POST /api/auth/login (200 OK with Super Admin Session)');
+
+  const res13 = await app.request('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: 'admin@fincell.id',
+      password: 'wrongpassword',
+    }),
+  }, mockEnv);
+  console.assert(res13.status === 401, 'Auth login invalid credentials 401');
+  console.log('[PASS] POST /api/auth/login Invalid Credentials (401 UNAUTHORIZED)');
+
   console.log('--- ALL QA TESTS PASSED SUCCESSFULLY! ---');
 }
 
-runTests().catch(console.error);
+runTests().catch(err => console.error('TEST RUNNER FAILED WITH ERROR:', err));

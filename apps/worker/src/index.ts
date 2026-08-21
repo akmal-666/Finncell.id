@@ -8,6 +8,7 @@ import { tradeInRoutes } from './routes/tradein.js';
 import { mediaRoutes } from './routes/media.js';
 import { blogRoutes } from './routes/blog.js';
 import { seoRoutes } from './routes/seo.js';
+import { authRoutes } from './routes/auth.js';
 
 type Bindings = {
   DB: D1Database;
@@ -17,9 +18,10 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // Enable CORS
 app.use('*', cors({
-  origin: '*',
+  origin: (origin) => origin || '*',
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 // Health check
@@ -43,6 +45,7 @@ app.route('/api/trade-in', tradeInRoutes);
 app.route('/api/media', mediaRoutes);
 app.route('/api/blog', blogRoutes);
 app.route('/api/seo', seoRoutes);
+app.route('/api/auth', authRoutes);
 
 // 404 Handler
 app.notFound((c) => {
