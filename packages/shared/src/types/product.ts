@@ -1,4 +1,4 @@
-export type ProductCondition = 'brand_new' | 'like_new' | 'refurbished';
+export type ProductCondition = 'brand_new' | 'second_mulus' | 'like_new' | 'refurbished';
 
 export interface ProductVariant {
   id: string;
@@ -18,13 +18,18 @@ export interface Product {
   id: string;
   name: string;
   slug: string;
+  sku?: string;
   brand: string;
+  brandId?: string;
   category: string;
   categoryId: string;
   summary: string;
   description: string;
   basePrice: number;
   originalPrice?: number;
+  stock?: number;
+  lowStockThreshold?: number;
+  status?: 'active' | 'draft' | 'archived';
   condition: ProductCondition;
   isFeatured: boolean;
   isBestSeller: boolean;
