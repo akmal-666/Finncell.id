@@ -18,14 +18,21 @@ export const PublicHeader: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#050505]/95 backdrop-blur-md text-white border-b border-white/10">
+    <header className="sticky top-0 z-50 w-full bg-[#050505] text-white border-b border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-1.5 text-xl sm:text-2xl font-black tracking-tighter shrink-0 group">
-            <span className="text-white group-hover:text-gray-200 transition-colors">fincell</span>
-            <span className="text-[#E7B65A] font-extrabold">.id</span>
+          {/* Logo with tagline */}
+          <Link to="/" className="flex items-center gap-2 shrink-0 group">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-0.5 text-xl sm:text-2xl font-extrabold tracking-tight">
+                <span className="text-white group-hover:text-gray-200 transition-colors">fincell</span>
+                <span className="text-[#E7B65A]">.id</span>
+              </div>
+              <span className="text-[9px] text-gray-400 font-medium tracking-wide -mt-1 hidden sm:block">
+                Your iPhone Destination
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -36,13 +43,16 @@ export const PublicHeader: React.FC = () => {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                  className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all relative ${
                     isActive
-                      ? 'text-[#E7B65A] bg-white/5 font-semibold'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
+                      ? 'text-white'
+                      : 'text-gray-300 hover:text-white'
                   }`}
                 >
                   {link.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#E7B65A] rounded-full" />
+                  )}
                 </Link>
               );
             })}
@@ -54,10 +64,10 @@ export const PublicHeader: React.FC = () => {
             <div className="hidden md:flex items-center relative">
               <input
                 type="text"
-                placeholder="Cari iPhone, aksesoris..."
+                placeholder="Cari iPhone..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-44 xl:w-56 pl-9 pr-4 py-1.5 text-xs bg-[#111111] text-white border border-white/15 rounded-full placeholder-gray-500 focus:outline-none focus:border-[#E7B65A] focus:w-64 transition-all duration-300"
+                className="w-40 xl:w-48 pl-9 pr-4 py-1.5 text-xs bg-[#16181d] text-white border border-white/10 rounded-full placeholder-gray-400 focus:outline-none focus:border-[#E7B65A] focus:w-56 transition-all duration-300"
               />
               <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
@@ -79,9 +89,6 @@ export const PublicHeader: React.FC = () => {
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-rose-500 text-white text-[8px] font-bold rounded-full flex items-center justify-center">
-                  0
-                </span>
               </Link>
               <Link
                 to="/keranjang"
@@ -90,7 +97,7 @@ export const PublicHeader: React.FC = () => {
                 aria-label="Cart"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-extrabold rounded-full flex items-center justify-center">
+                <span className="absolute top-0 right-0 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#050505]">
                   2
                 </span>
               </Link>
