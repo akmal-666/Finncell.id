@@ -107,64 +107,65 @@ export const HomePage: React.FC = () => {
       {/* ─────────────────────────────────────────────────────────────
           1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
-      <section 
-        className="relative overflow-hidden bg-[#050505] min-h-[520px] sm:min-h-[580px] lg:h-[640px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
-        style={{ 
-          backgroundImage: `url(${bgIphone17Pm})`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'right center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
+      <section className="relative overflow-hidden bg-[#050505] min-h-[580px] sm:min-h-[640px] lg:h-[680px] flex items-center border-b border-white/10 select-none">
         
         {/* Top-Left Subtle Curved Golden Arc */}
         <svg 
-          className="absolute top-0 left-0 w-[550px] h-[300px] pointer-events-none z-0 opacity-25" 
-          viewBox="0 0 550 300" 
+          className="absolute top-0 left-0 w-[600px] h-[350px] pointer-events-none z-0 opacity-30" 
+          viewBox="0 0 600 350" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
           <path 
-            d="M -50 0 C 150 60 350 140 550 -20" 
+            d="M -50 0 C 180 70 400 160 600 -20" 
             stroke="url(#goldArcTopLeft)" 
             strokeWidth="1.5" 
             strokeLinecap="round" 
           />
           <defs>
             <linearGradient id="goldArcTopLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.85" />
               <stop offset="70%" stopColor="#F2B84B" stopOpacity="0.3" />
               <stop offset="100%" stopColor="#E7B65A" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Bottom-Right Subtle Curved Golden Arc */}
+        {/* Dynamic Curved Golden Arc Behind iPhone */}
         <svg 
-          className="absolute bottom-0 right-0 w-[650px] h-[300px] pointer-events-none z-0 opacity-25" 
-          viewBox="0 0 650 300" 
+          className="absolute top-0 right-0 w-[800px] h-[680px] pointer-events-none z-0 opacity-40" 
+          viewBox="0 0 800 680" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
           <path 
-            d="M 700 300 C 450 220 200 180 -50 300" 
-            stroke="url(#goldArcBottomRight)" 
-            strokeWidth="1.5" 
+            d="M 100 0 C 400 150 750 350 850 680" 
+            stroke="url(#goldArcRight)" 
+            strokeWidth="1.8" 
+          />
+          <path 
+            d="M 850 680 C 600 500 350 450 -50 680" 
+            stroke="url(#goldArcRightBottom)" 
+            strokeWidth="1.2" 
           />
           <defs>
-            <linearGradient id="goldArcBottomRight" x1="100%" y1="100%" x2="0%" y2="0%">
+            <linearGradient id="goldArcRight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.9" />
+              <stop offset="60%" stopColor="#F2B84B" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#E7B65A" stopOpacity="0.1" />
+            </linearGradient>
+            <linearGradient id="goldArcRightBottom" x1="100%" y1="100%" x2="0%" y2="0%">
               <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.8" />
-              <stop offset="70%" stopColor="#F2B84B" stopOpacity="0.2" />
               <stop offset="100%" stopColor="#E7B65A" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Subtle Radial Glow Behind Phone */}
+        {/* Ambient Radial Golden Glow Behind Phone */}
         <div 
-          className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0 hidden lg:block"
+          className="absolute top-1/2 right-[12%] -translate-y-1/2 w-[550px] h-[550px] pointer-events-none z-0"
           style={{
-            background: 'radial-gradient(circle at center, rgba(231,182,90,0.15) 0%, rgba(231,182,90,0.03) 45%, transparent 70%)',
+            background: 'radial-gradient(circle at center, rgba(231,182,90,0.22) 0%, rgba(231,182,90,0.05) 50%, transparent 75%)',
           }}
         />
 
@@ -246,20 +247,8 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
 
-            </div>
-
-            {/* RIGHT COLUMN (Desktop spacer / Mobile phone graphic) */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center relative order-2">
-              <div className="w-full h-[320px] sm:h-[420px] lg:h-[500px] pointer-events-none block lg:hidden">
-                <img 
-                  src="/images/bg-iphone17pm.png" 
-                  alt="iPhone 17 Pro Max" 
-                  className="w-full h-full object-contain filter drop-shadow-2xl"
-                />
-              </div>
-
               {/* Carousel Indicators (Desktop & Mobile) */}
-              <div className="flex items-center justify-center gap-2 mt-4 lg:mt-32 z-10 w-full lg:-ml-64">
+              <div className="flex items-center gap-2 pt-4">
                 {[0, 1, 2, 3].map((dot) => (
                   <button
                     key={dot}
@@ -270,6 +259,18 @@ export const HomePage: React.FC = () => {
                     aria-label={`Slide ${dot + 1}`}
                   />
                 ))}
+              </div>
+
+            </div>
+
+            {/* RIGHT COLUMN: Seamless Blended 3D iPhone Graphic */}
+            <div className="lg:col-span-6 flex items-center justify-center lg:justify-end relative order-2">
+              <div className="relative max-w-full flex items-center justify-center">
+                <img 
+                  src="/images/iphone17_transparent.png" 
+                  alt="iPhone 17 Pro Max Sunset Gold" 
+                  className="max-h-[380px] sm:max-h-[480px] lg:max-h-[540px] xl:max-h-[580px] w-auto object-contain filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.95)] hover:scale-[1.01] transition-transform duration-500"
+                />
               </div>
             </div>
 
