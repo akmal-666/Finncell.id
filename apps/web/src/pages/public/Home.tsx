@@ -253,19 +253,19 @@ export const HomePage: React.FC = () => {
 
             </div>
 
-            {/* Right Column Product Render Image */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center relative">
-              <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
+            {/* Right Column Product Render Image (Seamless Integration) */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-end relative self-stretch pt-4 lg:pt-0">
+              <div className="relative w-full max-w-lg lg:max-w-xl h-[420px] sm:h-[500px] lg:h-[540px] flex items-center justify-center">
                 {/* Product Shot */}
                 <img
-                  src="/images/hero-iphone17-gold.png"
+                  src="/images/iphone17pm.png"
                   alt="iPhone 17 Pro Max Sunset Gold"
-                  className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(231,164,59,0.15)] hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)] hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
                 />
               </div>
 
               {/* Slider Dots Indicator */}
-              <div className="flex items-center gap-2 mt-4">
+              <div className="flex items-center justify-center gap-2.5 mt-2 z-10">
                 {[0, 1, 2, 3].map((dot) => (
                   <button
                     key={dot}
