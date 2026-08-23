@@ -109,8 +109,11 @@ export const HomePage: React.FC = () => {
           1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
       <section 
-        className="relative overflow-hidden bg-[#050505] bg-cover bg-center bg-no-repeat min-h-[540px] lg:h-[600px] flex items-center border-b border-white/10 select-none"
-        style={{ backgroundImage: `url(${bgIphone17Pm})` }}
+        className="relative overflow-hidden bg-[#050505] min-h-[560px] sm:min-h-[620px] lg:h-[660px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
+        style={{ 
+          backgroundImage: `url(${bgIphone17Pm})`,
+          backgroundSize: 'contain',
+        }}
       >
         
         {/* Top-Left Subtle Curved Golden Arc */}
@@ -158,17 +161,17 @@ export const HomePage: React.FC = () => {
 
         {/* Subtle Radial Glow Behind Phone */}
         <div 
-          className="absolute top-1/2 right-[12%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0"
+          className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0"
           style={{
-            background: 'radial-gradient(circle at center, rgba(231,182,90,0.12) 0%, rgba(231,182,90,0.03) 45%, transparent 70%)',
+            background: 'radial-gradient(circle at center, rgba(231,182,90,0.15) 0%, rgba(231,182,90,0.03) 45%, transparent 70%)',
           }}
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-8 lg:py-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-10 lg:py-0">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
             
-            {/* LEFT COLUMN: ~45% width (lg:col-span-5) */}
-            <div className="lg:col-span-6 space-y-5 text-left order-1">
+            {/* LEFT COLUMN: 5 columns on desktop so text never overlaps right-side background graphic */}
+            <div className="lg:col-span-5 xl:col-span-6 space-y-5 text-left order-1">
               
               {/* Badge */}
               <div>
@@ -185,10 +188,10 @@ export const HomePage: React.FC = () => {
 
               {/* Main Headline */}
               <div className="space-y-0.5">
-                <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-white leading-[1.02]">
+                <h1 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[56px] font-black tracking-tight text-white leading-[1.02]">
                   Pro. Melampaui.
                 </h1>
-                <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-[#E7B65A] leading-[1.02]">
+                <h1 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[56px] font-black tracking-tight text-[#E7B65A] leading-[1.02]">
                   Dalam segala hal.
                 </h1>
               </div>
@@ -216,7 +219,7 @@ export const HomePage: React.FC = () => {
               </div>
 
               {/* Trust Indicators */}
-              <div className="pt-6 grid grid-cols-3 gap-2 border-t border-white/10 text-xs">
+              <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 border-t border-white/10 text-xs">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#E7B65A] shrink-0 mt-0.5" />
                   <div>
@@ -244,8 +247,8 @@ export const HomePage: React.FC = () => {
 
             </div>
 
-            {/* RIGHT COLUMN: ~55% width spacer so bg-iphone17pm.png is visible */}
-            <div className="hidden lg:block lg:col-span-6 h-[380px] sm:h-[460px] lg:h-[520px] pointer-events-none" />
+            {/* RIGHT COLUMN: Spacer so right-side background graphic is open */}
+            <div className="hidden lg:block lg:col-span-7 xl:col-span-6 h-[400px] sm:h-[480px] lg:h-[540px] pointer-events-none" />
 
           </div>
         </div>
