@@ -108,10 +108,12 @@ export const HomePage: React.FC = () => {
           1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
       <section 
-        className="relative overflow-hidden bg-[#050505] min-h-[580px] sm:min-h-[620px] lg:h-[660px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
+        className="relative overflow-hidden bg-[#050505] min-h-[520px] sm:min-h-[580px] lg:h-[640px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
         style={{ 
           backgroundImage: `url(${bgIphone17Pm})`,
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
+          backgroundPosition: 'right center',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         
