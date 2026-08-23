@@ -105,173 +105,160 @@ export const HomePage: React.FC = () => {
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#E7B65A] selection:text-black">
       
       {/* ─────────────────────────────────────────────────────────────
-          1. HERO SECTION (Sunset Gold iPhone 17 Pro Max)
+          1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#050505] pt-6 pb-16 border-b border-white/10">
+      <section className="relative overflow-hidden bg-[#050505] min-h-[540px] lg:h-[600px] flex items-center border-b border-white/10 select-none">
         
-        {/* Top-Left Glowing Curved Golden Arc */}
-        <div 
-          className="absolute -top-32 -left-32 w-[600px] h-[400px] pointer-events-none z-0"
-          style={{
-            background: 'radial-gradient(ellipse at top left, rgba(231, 164, 59, 0.25) 0%, rgba(231, 164, 59, 0.05) 50%, transparent 75%)',
-          }}
-        />
+        {/* Top-Left Subtle Curved Golden Arc */}
         <svg 
-          className="absolute top-0 left-0 w-[500px] h-[250px] pointer-events-none z-0 opacity-80" 
-          viewBox="0 0 500 250" 
+          className="absolute top-0 left-0 w-[550px] h-[300px] pointer-events-none z-0 opacity-25" 
+          viewBox="0 0 550 300" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
           <path 
-            d="M -50 0 C 150 50 300 120 450 0" 
-            stroke="url(#goldGradientTL)" 
-            strokeWidth="2.5" 
+            d="M -50 0 C 150 60 350 140 550 -20" 
+            stroke="url(#goldArcTopLeft)" 
+            strokeWidth="1.5" 
             strokeLinecap="round" 
           />
           <defs>
-            <linearGradient id="goldGradientTL" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#F5C46B" stopOpacity="0.9" />
-              <stop offset="60%" stopColor="#E7A43B" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#E7A43B" stopOpacity="0" />
+            <linearGradient id="goldArcTopLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.8" />
+              <stop offset="70%" stopColor="#F2B84B" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#E7B65A" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Bottom-Right Glowing Curved Golden Arc */}
-        <div 
-          className="absolute -bottom-32 -right-32 w-[600px] h-[400px] pointer-events-none z-0"
-          style={{
-            background: 'radial-gradient(ellipse at bottom right, rgba(231, 164, 59, 0.2) 0%, rgba(231, 164, 59, 0.03) 50%, transparent 75%)',
-          }}
-        />
+        {/* Bottom-Right Subtle Curved Golden Arc */}
         <svg 
-          className="absolute bottom-0 right-0 w-[600px] h-[250px] pointer-events-none z-0 opacity-70" 
-          viewBox="0 0 600 250" 
+          className="absolute bottom-0 right-0 w-[650px] h-[300px] pointer-events-none z-0 opacity-25" 
+          viewBox="0 0 650 300" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
           <path 
-            d="M 650 250 C 450 200 200 150 0 250" 
-            stroke="url(#goldGradientBR)" 
-            strokeWidth="2" 
+            d="M 700 300 C 450 220 200 180 -50 300" 
+            stroke="url(#goldArcBottomRight)" 
+            strokeWidth="1.5" 
           />
           <defs>
-            <linearGradient id="goldGradientBR" x1="100%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#F5C46B" stopOpacity="0.8" />
-              <stop offset="70%" stopColor="#E7A43B" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#E7A43B" stopOpacity="0" />
+            <linearGradient id="goldArcBottomRight" x1="100%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stopColor="#E7B65A" stopOpacity="0.8" />
+              <stop offset="70%" stopColor="#F2B84B" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#E7B65A" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
 
-        {/* Ambient Center Glow */}
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#E7A43B]/10 blur-[150px] rounded-full pointer-events-none" />
+        {/* Subtle Radial Glow Behind Phone */}
+        <div 
+          className="absolute top-1/2 right-[12%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(231,182,90,0.12) 0%, rgba(231,182,90,0.03) 45%, transparent 70%)',
+          }}
+        />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-8 lg:py-0">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
             
-            {/* Left Column Text Content */}
-            <div className="lg:col-span-6 space-y-6 text-left">
+            {/* LEFT COLUMN: ~45% width (lg:col-span-5) */}
+            <div className="lg:col-span-6 space-y-5 text-left order-1">
               
-              {/* New Arrival Badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#E7A43B]/40 bg-[#E7A43B]/10 text-xs text-white font-medium">
-                New Arrival
+              {/* Badge */}
+              <div>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border border-[#E7B65A]/40 bg-[#E7B65A]/10 text-white tracking-wide">
+                  New Arrival
+                </span>
               </div>
 
-              {/* Sub-Brand Title with Apple Logo */}
-              <div className="flex items-center gap-2.5 text-2xl sm:text-3xl font-extrabold text-white">
-                <span className="text-3xl sm:text-4xl"></span>
+              {/* Product Title */}
+              <div className="flex items-center gap-2 text-xl sm:text-2xl font-bold text-white tracking-tight">
+                <span className="text-2xl sm:text-3xl text-white"></span>
                 <span>iPhone 17 Pro Max</span>
               </div>
 
               {/* Main Headline */}
-              <div className="space-y-1">
-                <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-white leading-[1.05]">
+              <div className="space-y-0.5">
+                <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-white leading-[1.02]">
                   Pro. Melampaui.
                 </h1>
-                <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black tracking-tight text-[#E7A43B] leading-[1.05]">
+                <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-[#E7B65A] leading-[1.02]">
                   Dalam segala hal.
                 </h1>
               </div>
 
-              {/* Subtitle */}
-              <p className="text-sm sm:text-base text-gray-400 max-w-lg leading-relaxed">
-                Desain unibody aluminum terbaru.<br />
+              {/* Subtitle / Description */}
+              <p className="text-xs sm:text-sm text-[#A1A1AA] max-w-md leading-relaxed">
+                Desain unibody aluminium terbaru.<br />
                 Performa ekstrem. Baterai paling tahan lama.
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap items-center gap-3.5 pt-1">
                 <Link to="/produk">
-                  <button className="px-6 py-3.5 bg-[#E7A43B] hover:bg-[#d9962e] text-black font-extrabold text-xs sm:text-sm rounded-xl transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#E7A43B]/20 group">
+                  <button className="px-7 py-3 bg-[#E7B65A] hover:bg-[#d99d3d] text-black font-extrabold text-xs sm:text-sm rounded-full transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#E7B65A]/15 active:scale-95 group">
                     <span>Belanja Sekarang</span>
-                    <span className="text-sm group-hover:translate-x-0.5 transition-transform">
-                      →
-                    </span>
+                    <span className="text-sm font-bold group-hover:translate-x-0.5 transition-transform">→</span>
                   </button>
                 </Link>
 
                 <Link to="/produk/iphone-17-pro-max">
-                  <button className="px-6 py-3.5 bg-transparent border border-white/30 hover:border-[#E7A43B] text-white rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300">
+                  <button className="px-7 py-3 bg-white/5 border border-white/20 hover:border-[#E7B65A] text-white font-semibold text-xs sm:text-sm rounded-full transition-all duration-300 active:scale-95">
                     Lihat Detail
                   </button>
                 </Link>
               </div>
 
-              {/* Guarantee Badges Row */}
-              <div className="pt-8 grid grid-cols-3 gap-3 text-left border-t border-white/10 text-xs">
-                <div className="flex items-start gap-2.5">
-                  <div className="p-1 rounded-full bg-[#E7A43B]/15 text-[#E7A43B] shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
+              {/* Trust Indicators */}
+              <div className="pt-6 grid grid-cols-3 gap-2 border-t border-white/10 text-xs">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#E7B65A] shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold text-white leading-tight">Garansi Resmi</p>
-                    <p className="text-[11px] text-gray-400">Apple Indonesia</p>
+                    <p className="text-[10px] text-gray-400">Apple Indonesia</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2.5">
-                  <div className="p-1 rounded-full bg-[#E7A43B]/15 text-[#E7A43B] shrink-0 mt-0.5">
-                    <Truck className="w-4 h-4" />
-                  </div>
+                <div className="flex items-start gap-2">
+                  <Truck className="w-4 h-4 text-[#E7B65A] shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold text-white leading-tight">Pengiriman Cepat</p>
-                    <p className="text-[11px] text-gray-400">Seluruh Indonesia</p>
+                    <p className="text-[10px] text-gray-400">Seluruh Indonesia</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2.5">
-                  <div className="p-1 rounded-full bg-[#E7A43B]/15 text-[#E7A43B] shrink-0 mt-0.5">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
+                <div className="flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#E7B65A] shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold text-white leading-tight">100% Original</p>
-                    <p className="text-[11px] text-gray-400">Produk Bergaransi</p>
+                    <p className="text-[10px] text-gray-400">Produk Bergaransi</p>
                   </div>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Column Product Render Image (Seamless Integration) */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-end relative self-stretch pt-4 lg:pt-0">
-              <div className="relative w-full max-w-lg lg:max-w-xl h-[420px] sm:h-[500px] lg:h-[540px] flex items-center justify-center">
-                {/* Product Shot */}
+            {/* RIGHT COLUMN: ~55% width (lg:col-span-6) */}
+            <div className="lg:col-span-6 flex flex-col items-center lg:items-end justify-center relative order-2">
+              <div className="relative w-full max-w-lg lg:max-w-xl h-[380px] sm:h-[460px] lg:h-[520px] flex items-center justify-center">
+                {/* Floating iPhone Transparent Image (Zero White Background Box) */}
                 <img
-                  src="/images/iphone17pm.png"
+                  src="/images/iphone17pm_transparent.png"
                   alt="iPhone 17 Pro Max Sunset Gold"
-                  className="w-full h-full object-contain filter drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)] hover:scale-[1.02] transition-transform duration-700 pointer-events-none"
+                  className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] animate-float pointer-events-none"
                 />
               </div>
 
-              {/* Slider Dots Indicator */}
-              <div className="flex items-center justify-center gap-2.5 mt-2 z-10">
+              {/* Carousel Indicators */}
+              <div className="flex items-center justify-center gap-2.5 mt-1 z-10 w-full lg:w-auto">
                 {[0, 1, 2, 3].map((dot) => (
                   <button
                     key={dot}
                     onClick={() => setActiveSlide(dot)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      activeSlide === dot ? 'w-6 bg-[#E7A43B]' : 'w-2 bg-white/30 hover:bg-white/50'
+                      activeSlide === dot ? 'w-6 bg-[#E7B65A]' : 'w-2 bg-white/30 hover:bg-white/50'
                     }`}
                     aria-label={`Slide ${dot + 1}`}
                   />
