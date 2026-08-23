@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, User, Menu, X } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 
 export const PublicHeader: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -72,36 +72,7 @@ export const PublicHeader: React.FC = () => {
               <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 pointer-events-none" />
             </div>
 
-            {/* Action Buttons: Account, Wishlist, Cart */}
-            <div className="flex items-center space-x-1">
-              <Link
-                to="/admin/login"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Account / Login"
-                aria-label="Account"
-              >
-                <User className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/wishlist"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Wishlist"
-                aria-label="Wishlist"
-              >
-                <Heart className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/keranjang"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Cart"
-                aria-label="Cart"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span className="absolute top-0 right-0 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#050505]">
-                  2
-                </span>
-              </Link>
-            </div>
+
 
             {/* Mobile Menu Toggle */}
             <button

@@ -244,31 +244,8 @@ export const HomePage: React.FC = () => {
 
             </div>
 
-            {/* RIGHT COLUMN: ~55% width (lg:col-span-6) */}
-            <div className="lg:col-span-6 flex flex-col items-center lg:items-end justify-center relative order-2">
-              <div className="relative w-full max-w-lg lg:max-w-xl h-[380px] sm:h-[460px] lg:h-[520px] flex items-center justify-center">
-                {/* Floating iPhone Transparent Image (Zero White Background Box) */}
-                <img
-                  src="/images/iphone17pm_transparent.png"
-                  alt="iPhone 17 Pro Max Sunset Gold"
-                  className="w-full h-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] animate-float pointer-events-none"
-                />
-              </div>
-
-              {/* Carousel Indicators */}
-              <div className="flex items-center justify-center gap-2.5 mt-1 z-10 w-full lg:w-auto">
-                {[0, 1, 2, 3].map((dot) => (
-                  <button
-                    key={dot}
-                    onClick={() => setActiveSlide(dot)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      activeSlide === dot ? 'w-6 bg-[#E7B65A]' : 'w-2 bg-white/30 hover:bg-white/50'
-                    }`}
-                    aria-label={`Slide ${dot + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
+            {/* RIGHT COLUMN: ~55% width spacer so bg-iphone17pm.png is visible */}
+            <div className="hidden lg:block lg:col-span-6 h-[380px] sm:h-[460px] lg:h-[520px] pointer-events-none" />
 
           </div>
         </div>
