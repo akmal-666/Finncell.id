@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/Button';
 import { productService } from '@/services/productService';
 import { formatRupiah } from '@/lib/utils';
 import { Product } from '@fincell/shared';
@@ -11,8 +10,8 @@ import {
   CheckCircle2,
   Star,
   ShoppingBag,
-  RefreshCw,
-  Sparkles
+  Heart,
+  RefreshCw
 } from 'lucide-react';
 import bgIphone17Pm from '../../../img/bg-iphone17pm.png';
 
@@ -38,65 +37,65 @@ export const HomePage: React.FC = () => {
     loadProducts();
   }, []);
 
-  // Static product list matching reference if API items are fewer
+  // Static product list matching user reference image 100%
   const bestSellers = [
     {
       id: 'p1',
-      name: 'iPhone 15 Pro Max',
-      spec: '256GB - Natural Titanium',
+      name: 'iPhone 16 Pro Max',
+      spec: '256GB • Desert Titanium',
       price: 23999000,
       originalPrice: undefined,
-      discount: undefined,
+      tag: 'Terlaris',
       rating: 4.9,
-      reviews: 128,
-      slug: 'iphone-15-pro-max',
+      reviews: 328,
+      slug: 'iphone-16-pro-max',
       image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p2',
       name: 'iPhone 15',
-      spec: '128GB - Pink',
+      spec: '128GB • Pink',
       price: 14999000,
       originalPrice: undefined,
-      discount: undefined,
+      tag: 'Promo',
       rating: 4.8,
-      reviews: 96,
+      reviews: 186,
       slug: 'iphone-15',
       image: 'https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p3',
-      name: 'iPhone 14',
-      spec: '128GB - Blue',
-      price: 11199000,
-      originalPrice: 11999000,
-      discount: '-7%',
-      rating: 4.7,
-      reviews: 85,
-      slug: 'iphone-14',
+      name: 'iPhone 16',
+      spec: '128GB • Black',
+      price: 16999000,
+      originalPrice: undefined,
+      tag: undefined,
+      rating: 4.8,
+      reviews: 245,
+      slug: 'iphone-16',
       image: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p4',
-      name: 'iPhone 13',
-      spec: '128GB - Midnight',
-      price: 8999000,
+      name: 'iPhone 15 Pro',
+      spec: '256GB • Blue Titanium',
+      price: 20999000,
       originalPrice: undefined,
-      discount: undefined,
-      rating: 4.6,
-      reviews: 64,
-      slug: 'iphone-13',
+      tag: undefined,
+      rating: 4.9,
+      reviews: 142,
+      slug: 'iphone-15-pro',
       image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p5',
       name: 'iPhone SE (3rd Gen)',
-      spec: '64GB - Starlight',
+      spec: '128GB • Midnight',
       price: 5999000,
       originalPrice: undefined,
-      discount: undefined,
+      tag: undefined,
       rating: 4.6,
-      reviews: 48,
+      reviews: 98,
       slug: 'iphone-se-3rd-gen',
       image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop'
     }
@@ -109,10 +108,10 @@ export const HomePage: React.FC = () => {
           1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
       <section 
-        className="relative overflow-hidden bg-[#050505] min-h-[560px] sm:min-h-[620px] lg:h-[660px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
+        className="relative overflow-hidden bg-[#050505] min-h-[580px] sm:min-h-[620px] lg:h-[660px] flex items-center border-b border-white/10 select-none bg-no-repeat bg-center lg:bg-right"
         style={{ 
           backgroundImage: `url(${bgIphone17Pm})`,
-          backgroundSize: 'contain',
+          backgroundSize: 'cover',
         }}
       >
         
@@ -161,7 +160,7 @@ export const HomePage: React.FC = () => {
 
         {/* Subtle Radial Glow Behind Phone */}
         <div 
-          className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0"
+          className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[520px] h-[520px] pointer-events-none z-0 hidden lg:block"
           style={{
             background: 'radial-gradient(circle at center, rgba(231,182,90,0.15) 0%, rgba(231,182,90,0.03) 45%, transparent 70%)',
           }}
@@ -170,8 +169,8 @@ export const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-10 lg:py-0">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
             
-            {/* LEFT COLUMN: 5 columns on desktop so text never overlaps right-side background graphic */}
-            <div className="lg:col-span-5 xl:col-span-6 space-y-5 text-left order-1">
+            {/* LEFT COLUMN: Text & CTAs */}
+            <div className="lg:col-span-6 space-y-5 text-left order-1">
               
               {/* Badge */}
               <div>
@@ -188,10 +187,10 @@ export const HomePage: React.FC = () => {
 
               {/* Main Headline */}
               <div className="space-y-0.5">
-                <h1 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[56px] font-black tracking-tight text-white leading-[1.02]">
+                <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-white leading-[1.02]">
                   Pro. Melampaui.
                 </h1>
-                <h1 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[56px] font-black tracking-tight text-[#E7B65A] leading-[1.02]">
+                <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-[#E7B65A] leading-[1.02]">
                   Dalam segala hal.
                 </h1>
               </div>
@@ -219,7 +218,7 @@ export const HomePage: React.FC = () => {
               </div>
 
               {/* Trust Indicators */}
-              <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 border-t border-white/10 text-xs">
+              <div className="pt-6 grid grid-cols-3 gap-2 border-t border-white/10 text-xs">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#E7B65A] shrink-0 mt-0.5" />
                   <div>
@@ -247,8 +246,30 @@ export const HomePage: React.FC = () => {
 
             </div>
 
-            {/* RIGHT COLUMN: Spacer so right-side background graphic is open */}
-            <div className="hidden lg:block lg:col-span-7 xl:col-span-6 h-[400px] sm:h-[480px] lg:h-[540px] pointer-events-none" />
+            {/* RIGHT COLUMN (Desktop spacer / Mobile phone graphic) */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center relative order-2">
+              <div className="w-full h-[320px] sm:h-[420px] lg:h-[500px] pointer-events-none block lg:hidden">
+                <img 
+                  src="/images/bg-iphone17pm.png" 
+                  alt="iPhone 17 Pro Max" 
+                  className="w-full h-full object-contain filter drop-shadow-2xl"
+                />
+              </div>
+
+              {/* Carousel Indicators (Desktop & Mobile) */}
+              <div className="flex items-center justify-center gap-2 mt-4 lg:mt-32 z-10 w-full lg:-ml-64">
+                {[0, 1, 2, 3].map((dot) => (
+                  <button
+                    key={dot}
+                    onClick={() => setActiveSlide(dot)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      activeSlide === dot ? 'w-6 bg-[#E7B65A]' : 'w-2 bg-white/30 hover:bg-white/50'
+                    }`}
+                    aria-label={`Slide ${dot + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
 
           </div>
         </div>
@@ -264,11 +285,11 @@ export const HomePage: React.FC = () => {
           {/* Section Header */}
           <div className="flex items-end justify-between mb-8">
             <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                Jelajahi Produk
+              <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1">
+                JELAJAHI PRODUK
               </p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">
-                Pilih iPhone yang <span className="text-gray-400 font-normal">Sesuai</span> untukmu
+              <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight">
+                Pilih iPhone yang <span className="font-normal text-gray-500">sesuai</span> <span className="text-[#2563eb] font-black">untukmu.</span>
               </h2>
             </div>
 
@@ -284,52 +305,52 @@ export const HomePage: React.FC = () => {
           {/* 5 Category Cards Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             
-            {/* Card 1: iPhone 15 Series */}
-            <Link to="/produk?series=15" className="group">
+            {/* Card 1: iPhone 17 Series */}
+            <Link to="/produk?series=17" className="group">
               <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
                 <div className="w-full h-28 flex items-center justify-center">
                   <img
                     src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone 17 Series"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone 17 Series</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Terbaru</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 2: iPhone 16 Series */}
+            <Link to="/produk?series=16" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone 16 Series"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone 16 Series</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Populer</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 3: iPhone 15 Series */}
+            <Link to="/produk?series=15" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=400&auto=format&fit=crop"
                     alt="iPhone 15 Series"
                     className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div>
                   <h3 className="text-sm font-extrabold text-black">iPhone 15 Series</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Terbaru</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 2: iPhone 14 Series */}
-            <Link to="/produk?series=14" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone 14 Series"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone 14 Series</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Populer</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 3: iPhone 13 Series */}
-            <Link to="/produk?series=13" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone 13 Series"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone 13 Series</h3>
                   <p className="text-[11px] text-gray-500 font-medium">Hemat & Berkualitas</p>
                 </div>
               </div>
@@ -357,7 +378,7 @@ export const HomePage: React.FC = () => {
               <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
                 <div className="w-full h-28 flex items-center justify-center">
                   <img
-                    src="https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=400&auto=format&fit=crop"
+                    src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=400&auto=format&fit=crop"
                     alt="Semua iPhone"
                     className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
                   />
@@ -378,16 +399,16 @@ export const HomePage: React.FC = () => {
       {/* ─────────────────────────────────────────────────────────────
           3. BEST SELLER PRODUCTS SECTION ("Produk Terlaris")
       ────────────────────────────────────────────────────────────── */}
-      <section className="bg-[#0b0c10] py-16 text-white border-t border-b border-white/5">
+      <section className="bg-[#08090d] py-16 text-white border-t border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
           <div className="flex items-end justify-between mb-8">
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                Best Seller
+              <p className="text-[11px] font-semibold text-[#E7B65A] uppercase tracking-wider mb-1">
+                BEST SELLER
               </p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                 Produk Terlaris
               </h2>
             </div>
@@ -406,13 +427,13 @@ export const HomePage: React.FC = () => {
             {bestSellers.map((item) => (
               <div
                 key={item.id}
-                className="bg-[#12141c] border border-white/10 rounded-2xl p-4 flex flex-col justify-between hover:border-white/20 transition-all duration-300 hover:-translate-y-1 group"
+                className="bg-[#12141c] border border-white/10 rounded-2xl p-4 flex flex-col justify-between hover:border-white/20 transition-all duration-300 hover:-translate-y-1 group relative"
               >
-                {/* Product Image */}
+                {/* Product Image Container */}
                 <div className="relative aspect-square w-full rounded-xl bg-[#090a0e] p-3 flex items-center justify-center mb-3 overflow-hidden">
-                  {item.discount && (
-                    <span className="absolute top-2 left-2 px-2 py-0.5 bg-blue-600 text-white text-[10px] font-black rounded-md z-10">
-                      {item.discount}
+                  {item.tag && (
+                    <span className="absolute top-2 left-2 px-2 py-0.5 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-extrabold rounded-md z-10">
+                      {item.tag}
                     </span>
                   )}
                   <img
@@ -429,32 +450,35 @@ export const HomePage: React.FC = () => {
                   </h3>
                   <p className="text-[11px] text-gray-400 truncate">{item.spec}</p>
 
-                  {/* Rating & Reviews */}
-                  <div className="flex items-center gap-1 text-[11px] text-gray-300 pt-0.5">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span className="font-bold text-white">{item.rating}</span>
-                    <span className="text-gray-500">({item.reviews})</span>
+                  {/* Price */}
+                  <div className="pt-1">
+                    <p className="text-xs font-black text-white">{formatRupiah(item.price)}</p>
                   </div>
 
-                  {/* Price & Action */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-black text-white">{formatRupiah(item.price)}</p>
-                      {item.originalPrice && (
-                        <p className="text-[10px] text-gray-500 line-through">
-                          {formatRupiah(item.originalPrice)}
-                        </p>
-                      )}
+                  {/* Rating & Actions */}
+                  <div className="pt-2 flex items-center justify-between border-t border-white/5">
+                    <div className="flex items-center gap-1 text-[11px] text-gray-300">
+                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      <span className="font-bold text-white">{item.rating}</span>
+                      <span className="text-gray-500">({item.reviews})</span>
                     </div>
 
-                    <Link
-                      to={`/produk/${item.slug}`}
-                      className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all duration-300"
-                      title="Beli"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                    </Link>
+                    <div className="flex items-center gap-1">
+                      <button 
+                        className="p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                        title="Tambah ke Wishlist"
+                      >
+                        <Heart className="w-3.5 h-3.5" />
+                      </button>
+                      <button 
+                        className="p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                        title="Tambah ke Keranjang"
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
+
                 </div>
               </div>
             ))}
@@ -478,11 +502,12 @@ export const HomePage: React.FC = () => {
             {/* Left Text */}
             <div className="space-y-5 max-w-xl text-left relative z-10">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                Tukar Tambah Dapat Untung
+                TRADE IN
               </p>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Trade in iPhone lamamu dapatkan potongan harga hingga{' '}
+                Tukar iPhone lamamu.<br />
+                Dapatkan potongan harga hingga{' '}
                 <span className="text-[#E7B65A]">Rp 2.000.000</span>
               </h2>
 
@@ -495,25 +520,9 @@ export const HomePage: React.FC = () => {
                   </button>
                 </Link>
               </div>
-
-              {/* Trust Checkmarks */}
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-3 text-xs text-gray-300 font-medium border-t border-white/10">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Proses cepat & mudah
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Harga terbaik
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Aman & terpercaya
-                </span>
-              </div>
             </div>
 
-            {/* Right Side Image (Hands holding 2 iPhones with transfer symbol) */}
+            {/* Right Side Image */}
             <div className="relative z-10 w-full lg:w-96 flex items-center justify-center shrink-0">
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-[#090a0e]/60 flex items-center justify-center">
                 <img
