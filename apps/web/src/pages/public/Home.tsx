@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Sparkles
 } from 'lucide-react';
+import bgIphone17Pm from '../../../img/bg-iphone17pm.png';
 
 export const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -107,7 +108,10 @@ export const HomePage: React.FC = () => {
       {/* ─────────────────────────────────────────────────────────────
           1. HERO SECTION (Cinematic iPhone 17 Pro Max)
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#050505] min-h-[540px] lg:h-[600px] flex items-center border-b border-white/10 select-none">
+      <section 
+        className="relative overflow-hidden bg-[#050505] bg-cover bg-center bg-no-repeat min-h-[540px] lg:h-[600px] flex items-center border-b border-white/10 select-none"
+        style={{ backgroundImage: `url(${bgIphone17Pm})` }}
+      >
         
         {/* Top-Left Subtle Curved Golden Arc */}
         <svg 
