@@ -39,6 +39,12 @@
     },
     "production": {
       "name": "fincell-worker-prod",
+      "routes": [
+        {
+          "pattern": "api.fincell.id/*",
+          "custom_domain": true
+        }
+      ],
       "d1_databases": [
         {
           "binding": "DB",

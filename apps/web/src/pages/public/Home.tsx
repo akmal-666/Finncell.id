@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/Button';
 import { productService } from '@/services/productService';
 import { formatRupiah } from '@/lib/utils';
 import { Product } from '@fincell/shared';
@@ -10,15 +11,14 @@ import {
   CheckCircle2,
   Star,
   ShoppingBag,
-  Heart,
   RefreshCw,
-  ChevronRight
+  Sparkles
 } from 'lucide-react';
-import iphone17Transparent from '../../../img/iphone17_transparent.png';
 
 export const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [activeSlide, setActiveSlide] = useState<number>(0);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -37,520 +37,469 @@ export const HomePage: React.FC = () => {
     loadProducts();
   }, []);
 
-  const featuredGridProducts = [
+  // Static product list matching reference if API items are fewer
+  const bestSellers = [
     {
       id: 'p1',
-      name: 'iPhone 16 Pro Max',
-      storage: '256GB',
-      color: 'Desert Titanium',
+      name: 'iPhone 15 Pro Max',
+      spec: '256GB - Natural Titanium',
       price: 23999000,
+      originalPrice: undefined,
+      discount: undefined,
       rating: 4.9,
-      reviews: 328,
-      slug: 'iphone-16-pro-max',
+      reviews: 128,
+      slug: 'iphone-15-pro-max',
       image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p2',
-      name: 'iPhone 16 Pro',
-      storage: '128GB',
-      color: 'Natural Titanium',
-      price: 20999000,
-      rating: 4.9,
-      reviews: 215,
-      slug: 'iphone-16-pro',
-      image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=800&auto=format&fit=crop'
+      name: 'iPhone 15',
+      spec: '128GB - Pink',
+      price: 14999000,
+      originalPrice: undefined,
+      discount: undefined,
+      rating: 4.8,
+      reviews: 96,
+      slug: 'iphone-15',
+      image: 'https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p3',
-      name: 'iPhone 16',
-      storage: '128GB',
-      color: 'Black',
-      price: 16999000,
-      rating: 4.8,
-      reviews: 245,
-      slug: 'iphone-16',
+      name: 'iPhone 14',
+      spec: '128GB - Blue',
+      price: 11199000,
+      originalPrice: 11999000,
+      discount: '-7%',
+      rating: 4.7,
+      reviews: 85,
+      slug: 'iphone-14',
       image: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=800&auto=format&fit=crop'
     },
     {
       id: 'p4',
-      name: 'iPhone 15',
-      storage: '128GB',
-      color: 'Pink',
-      price: 14999000,
-      rating: 4.8,
-      reviews: 186,
-      slug: 'iphone-15',
-      image: 'https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=800&auto=format&fit=crop'
-    },
-  ];
-
-  const visualCategories = [
-    {
-      title: 'iPhone 17 Series',
-      subtitle: 'Generasi Terbaru',
-      slug: 'iphone-17',
-      image: iphone17Transparent,
+      name: 'iPhone 13',
+      spec: '128GB - Midnight',
+      price: 8999000,
+      originalPrice: undefined,
+      discount: undefined,
+      rating: 4.6,
+      reviews: 64,
+      slug: 'iphone-13',
+      image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=800&auto=format&fit=crop'
     },
     {
-      title: 'iPhone 16 Pro',
-      subtitle: 'Titanium Engineering',
-      slug: 'iphone-16-pro',
-      image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      title: 'iPhone 15 Series',
-      subtitle: 'Dynamic Island',
-      slug: 'iphone-15',
-      image: 'https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      title: 'iPhone SE',
-      subtitle: 'Compact & Capable',
-      slug: 'iphone-se',
-      image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop',
-    },
-    {
-      title: 'Aksesoris Original',
-      subtitle: 'MagSafe & Charging',
-      slug: 'aksesoris',
-      image: 'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=800&auto=format&fit=crop',
-    },
+      id: 'p5',
+      name: 'iPhone SE (3rd Gen)',
+      spec: '64GB - Starlight',
+      price: 5999000,
+      originalPrice: undefined,
+      discount: undefined,
+      rating: 4.6,
+      reviews: 48,
+      slug: 'iphone-se-3rd-gen',
+      image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop'
+    }
   ];
 
   return (
-    <div className="bg-[#F7F9FC] text-[#0B1F3A] min-h-screen">
+    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#E7B65A] selection:text-black">
       
       {/* ─────────────────────────────────────────────────────────────
-          1. HERO SECTION (Deep Navy #061426 - Editorial Asymmetric)
+          1. HERO SECTION (Dark Premium iStore Style)
       ────────────────────────────────────────────────────────────── */}
-      <section className="bg-[#061426] text-white relative overflow-hidden min-h-[580px] lg:h-[620px] flex items-center">
-        {/* Subtle Background Lighting Accent */}
-        <div className="absolute -right-20 -bottom-20 w-[600px] h-[600px] bg-[#0B1F3A]/40 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#050505] via-[#0a0a0c] to-[#050505] pt-8 pb-16 border-b border-white/10">
+        
+        {/* Ambient Glow */}
+        <div className="absolute top-1/3 right-10 w-[550px] h-[550px] bg-gray-500/10 blur-[160px] rounded-full pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-0 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <div>
-                <span className="text-[11px] font-bold tracking-widest uppercase text-[#5EA7FF] block mb-2">
-                  NEW ARRIVAL
-                </span>
-                <span className="text-xs font-semibold text-slate-400 tracking-wider uppercase block mb-3">
-                  iPhone 17 Pro Max
-                </span>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.06]">
-                  Pro. Melampaui.<br />
-                  Dalam segala hal.
-                </h1>
-              </div>
-
-              <p className="text-sm sm:text-base text-slate-300 max-w-lg font-normal leading-relaxed">
-                Desain unibody aluminium terbaru. Performa ekstrem chip A19 Pro. Baterai paling tahan lama dalam sejarah iPhone.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
-                  to="/produk/iphone-17-pro-max"
-                  className="bg-[#1769E0] hover:bg-[#1769E0]/90 text-white font-semibold text-xs tracking-wider uppercase px-7 py-3.5 rounded-md transition-colors shadow-sm"
-                >
-                  Belanja Sekarang
-                </Link>
-                <Link
-                  to="/produk/iphone-17-pro-max"
-                  className="text-slate-300 hover:text-white font-semibold text-xs tracking-wider uppercase px-6 py-3.5 border border-white/20 hover:border-white/40 rounded-md transition-colors"
-                >
-                  Lihat Detail
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Visual Column (No Container Box, Product Dominates Directly) */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
-              <img
-                src={iphone17Transparent}
-                alt="iPhone 17 Pro Max"
-                className="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-500"
-              />
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          2. TRUST STRIP (Horizontal Line with Thin Dividers)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-[#DCE5EF] py-6 select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#DCE5EF]">
-            
-            <div className="py-3 md:py-0 md:px-8 flex items-center gap-4 justify-start">
-              <ShieldCheck className="w-6 h-6 text-[#1769E0] shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#061426]">Garansi Resmi</h4>
-                <p className="text-xs text-[#64748B] mt-0.5">Apple Indonesia (iBox / Digimap)</p>
-              </div>
-            </div>
-
-            <div className="py-3 md:py-0 md:px-8 flex items-center gap-4 justify-start">
-              <Truck className="w-6 h-6 text-[#1769E0] shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#061426]">Pengiriman Cepat</h4>
-                <p className="text-xs text-[#64748B] mt-0.5">Berasuransi ke Seluruh Indonesia</p>
-              </div>
-            </div>
-
-            <div className="py-3 md:py-0 md:px-8 flex items-center gap-4 justify-start">
-              <CheckCircle2 className="w-6 h-6 text-[#1769E0] shrink-0" />
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#061426]">100% Original</h4>
-                <p className="text-xs text-[#64748B] mt-0.5">Produk Segel Bergaransi Utuh</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          3. PRODUCT DISCOVERY (Horizontal Visual Navigation)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-[#1769E0] block mb-1">
-              Eksplorasi Katalog
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#061426]">
-              Kategori Seri iPhone
-            </h2>
-          </div>
-          <Link
-            to="/produk"
-            className="text-xs font-bold text-[#1769E0] hover:text-[#0B1F3A] uppercase tracking-wider flex items-center gap-1 transition-colors"
-          >
-            Lihat Semua <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {visualCategories.map((cat) => (
-            <Link
-              key={cat.slug}
-              to={`/produk?category=${cat.slug}`}
-              className="group bg-white border border-[#DCE5EF] hover:border-[#1769E0] p-4 transition-all duration-300 flex flex-col justify-between h-56"
-            >
-              <div className="h-32 flex items-center justify-center overflow-hidden">
-                <img
-                  src={cat.image}
-                  alt={cat.title}
-                  className="max-h-28 object-contain group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="pt-2 border-t border-[#DCE5EF]/60">
-                <h3 className="text-xs font-bold text-[#061426] group-hover:text-[#1769E0] transition-colors">
-                  {cat.title}
-                </h3>
-                <p className="text-[11px] text-[#64748B] mt-0.5">{cat.subtitle}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          4. FEATURED EDITORIAL PRODUCT (60% Visual / 40% Content)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="bg-white border-y border-[#DCE5EF] py-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Visual (60% width equivalent on lg) */}
-            <div className="lg:col-span-7 flex justify-center bg-[#F7F9FC] p-8 lg:p-12 border border-[#DCE5EF]">
-              <img
-                src={iphone17Transparent}
-                alt="Featured Editorial iPhone 17 Pro Max"
-                className="max-h-[380px] lg:max-h-[440px] object-contain hover:scale-[1.02] transition-transform duration-500"
-              />
-            </div>
-
-            {/* Content (40% width equivalent on lg) */}
-            <div className="lg:col-span-5 space-y-6">
-              <div>
-                <span className="text-[11px] font-bold tracking-widest uppercase text-[#1769E0] block mb-2">
-                  FEATURED EDITORIAL
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#061426] tracking-tight leading-tight">
-                  iPhone 17 Pro Max
-                </h2>
-                <p className="text-base font-medium italic text-[#64748B] mt-2">
-                  &ldquo;Pro yang tidak perlu banyak bicara.&rdquo;
-                </p>
+            {/* Left Column Text Content */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              
+              {/* New Arrival Badge */}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 bg-white/5 text-xs text-gray-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E7B65A] animate-pulse" />
+                New Arrival
               </div>
 
-              <div className="space-y-3 pt-2 text-xs text-[#0B1F3A]/90 border-t border-[#DCE5EF]">
-                <div className="flex justify-between py-1.5 border-b border-[#DCE5EF]/60">
-                  <span className="text-[#64748B]">Chipset</span>
-                  <span className="font-semibold">Apple A19 Pro (3nm)</span>
-                </div>
-                <div className="flex justify-between py-1.5 border-b border-[#DCE5EF]/60">
-                  <span className="text-[#64748B]">Material</span>
-                  <span className="font-semibold">Titanium Grade 5 Unibody</span>
-                </div>
-                <div className="flex justify-between py-1.5 border-b border-[#DCE5EF]/60">
-                  <span className="text-[#64748B]">Kamera Utam</span>
-                  <span className="font-semibold">48MP Fusion Camera Control</span>
-                </div>
-                <div className="flex justify-between py-1.5">
-                  <span className="text-[#64748B]">Baterai</span>
-                  <span className="font-semibold">Hingga 33 Jam Video Playback</span>
-                </div>
+              {/* Sub-Brand Title with Apple Logo */}
+              <div className="flex items-center gap-2 text-xl sm:text-2xl font-bold text-gray-200">
+                <span className="text-2xl sm:text-3xl"></span>
+                <span>iPhone 15 Pro</span>
               </div>
 
-              <div className="pt-4">
-                <Link
-                  to="/produk/iphone-17-pro-max"
-                  className="inline-flex items-center gap-2 bg-[#061426] hover:bg-[#1769E0] text-white font-semibold text-xs tracking-wider uppercase px-7 py-3.5 rounded-md transition-colors"
-                >
-                  Lihat iPhone 17 Pro Max <ArrowRight className="w-4 h-4" />
+              {/* Main Headline */}
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05]">
+                Titanium.<br />
+                <span className="text-gray-300 font-extrabold">So strong. So light.</span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-sm sm:text-base text-gray-400 max-w-lg leading-relaxed">
+                iPhone 15 Pro dengan desain titanium yang kuat namun ringan. Dibuat untuk masa depan.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link to="/produk">
+                  <button className="px-6 py-3.5 bg-white text-black hover:bg-gray-200 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 shadow-lg shadow-white/10 group">
+                    <span>Belanja Sekarang</span>
+                    <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
+                      →
+                    </span>
+                  </button>
+                </Link>
+
+                <Link to="/produk/iphone-15-pro-max">
+                  <button className="px-6 py-3.5 bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300">
+                    Lihat Detail
+                  </button>
                 </Link>
               </div>
-            </div>
 
-          </div>
-        </div>
-      </section>
+              {/* Guarantee Badges Row */}
+              <div className="pt-8 grid grid-cols-3 gap-3 text-left border-t border-white/10 text-xs sm:text-xs">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-white leading-tight">Garansi Resmi</p>
+                    <p className="text-[11px] text-gray-400">Apple Indonesia</p>
+                  </div>
+                </div>
 
-      {/* ─────────────────────────────────────────────────────────────
-          5. PRODUCT GRID ("Produk Pilihan" - 4 Minimal Columns)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-[#1769E0] block mb-1">
-              SELEKSI UTAMA
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#061426] tracking-tight">
-              Produk Pilihan
-            </h2>
-          </div>
-          <Link
-            to="/produk"
-            className="text-xs font-bold text-[#1769E0] hover:text-[#061426] uppercase tracking-wider flex items-center gap-1 transition-colors"
-          >
-            Lihat Semua Produk <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
+                <div className="flex items-start gap-2">
+                  <Truck className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-white leading-tight">Pengiriman Cepat</p>
+                    <p className="text-[11px] text-gray-400">Seluruh Indonesia</p>
+                  </div>
+                </div>
 
-        {/* Clean 4-Column Minimal Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredGridProducts.map((p) => (
-            <div
-              key={p.id}
-              className="group bg-white border border-[#DCE5EF] hover:border-[#1769E0] p-5 flex flex-col justify-between transition-all duration-200 relative"
-            >
-              {/* Top Bar: Wishlist button on hover */}
-              <div className="flex items-center justify-between text-xs mb-3">
-                <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider">
-                  {p.storage} • {p.color}
-                </span>
-                <button
-                  className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-[#64748B] hover:text-red-500"
-                  aria-label="Add to wishlist"
-                >
-                  <Heart className="w-4 h-4" />
-                </button>
+                <div className="flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-bold text-white leading-tight">100% Original</p>
+                    <p className="text-[11px] text-gray-400">Produk Bergaransi</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Product Image Dominance */}
-              <Link to={`/produk/${p.slug}`} className="block h-52 my-2 overflow-hidden flex items-center justify-center">
+            </div>
+
+            {/* Right Column Product Render Image */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+              <div className="relative w-full max-w-lg aspect-[4/3] sm:aspect-square flex items-center justify-center">
+                
+                {/* Product Shot */}
                 <img
-                  src={p.image}
-                  alt={p.name}
-                  className="max-h-48 object-contain group-hover:scale-105 transition-transform duration-300"
+                  src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1000&auto=format&fit=crop"
+                  alt="iPhone 15 Pro Titanium"
+                  className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(255,255,255,0.08)] hover:scale-105 transition-transform duration-700"
                 />
-              </Link>
-
-              {/* Info Area */}
-              <div className="pt-4 border-t border-[#DCE5EF]/70 space-y-2">
-                <div className="flex items-center gap-1 text-[11px] text-[#64748B]">
-                  <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                  <span className="font-semibold text-[#061426]">{p.rating}</span>
-                  <span>({p.reviews})</span>
-                </div>
-
-                <Link to={`/produk/${p.slug}`} className="block">
-                  <h3 className="text-sm font-bold text-[#061426] group-hover:text-[#1769E0] transition-colors">
-                    {p.name}
-                  </h3>
-                </Link>
-
-                <div className="pt-1 flex items-center justify-between">
-                  <span className="text-sm font-black text-[#061426]">
-                    {formatRupiah(p.price)}
-                  </span>
-                  <Link
-                    to={`/produk/${p.slug}`}
-                    className="text-xs font-semibold text-[#1769E0] hover:underline"
-                  >
-                    Beli &rarr;
-                  </Link>
-                </div>
               </div>
 
+              {/* Slider Dots Indicator */}
+              <div className="flex items-center gap-2 mt-4">
+                {[0, 1, 2, 3].map((dot) => (
+                  <button
+                    key={dot}
+                    onClick={() => setActiveSlide(dot)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      activeSlide === dot ? 'w-6 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'
+                    }`}
+                    aria-label={`Slide ${dot + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-          ))}
+
+          </div>
         </div>
       </section>
 
+
       {/* ─────────────────────────────────────────────────────────────
-          6. TRADE IN EDITORIAL SECTION (Deep Navy #061426 Full Width)
+          2. EXPLORE CATEGORIES SECTION ("Jelajahi Produk")
       ────────────────────────────────────────────────────────────── */}
-      <section className="bg-[#061426] text-white py-16 lg:py-20 my-8">
+      <section className="bg-[#f5f6f8] text-[#111111] py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left Content */}
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-[11px] font-bold tracking-widest uppercase text-[#5EA7FF] block">
-                LAYANAN TRADE IN FINCELL
-              </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-                Tukar iPhone lamamu.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-300 max-w-md font-normal leading-relaxed">
-                Dapatkan estimasi harga terbaik secara transparan untuk proses upgrade yang cepat, aman, dan tanpa kendala.
-              </p>
-
-              <div className="pt-2">
-                <Link
-                  to="/trade-in"
-                  className="inline-flex items-center gap-2 bg-[#1769E0] hover:bg-[#1769E0]/90 text-white font-semibold text-xs tracking-wider uppercase px-7 py-3.5 rounded-md transition-colors"
-                >
-                  Cek Trade In Sekarang <RefreshCw className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Integrated Visual */}
-            <div className="lg:col-span-6 flex justify-center lg:justify-end">
-              <img
-                src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop"
-                alt="Trade In iPhone"
-                className="max-h-[320px] lg:max-h-[380px] object-contain rounded-lg border border-white/10"
-              />
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          7. EDITORIAL / BLOG (Technology Magazine Composition)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <span className="text-[11px] font-bold tracking-widest uppercase text-[#1769E0] block mb-1">
-              JURNAL &amp; EDUKASI
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#061426] tracking-tight">
-              Artikel Terkini
-            </h2>
-          </div>
-          <Link
-            to="/blog"
-            className="text-xs font-bold text-[#1769E0] hover:text-[#061426] uppercase tracking-wider flex items-center gap-1 transition-colors"
-          >
-            Baca Semua Artikel <ChevronRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        {/* Magazine Asymmetric Composition */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Large Featured Article (60%) */}
-          <div className="lg:col-span-7 bg-white border border-[#DCE5EF] p-6 lg:p-8 flex flex-col justify-between">
-            <div className="space-y-4">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1769E0]">
-                PANDUAN PEMBELIAN
-              </span>
-              <Link to="/blog/panduan-memilih-iphone" className="block">
-                <h3 className="text-xl sm:text-2xl font-bold text-[#061426] hover:text-[#1769E0] transition-colors leading-snug">
-                  Panduan memilih iPhone yang tepat untuk kebutuhan sehari-hari Anda.
-                </h3>
-              </Link>
-              <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                Memahami perbedaan signifikan antara seri Pro dan standar, efisiensi baterai, hingga pertimbangan kapasitas penyimpanan untuk penggunaan jangka panjang.
+          {/* Section Header */}
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                Jelajahi Produk
               </p>
-            </div>
-            <div className="pt-6 mt-6 border-t border-[#DCE5EF] flex items-center justify-between text-xs text-[#64748B]">
-              <span>Tim Edukasi fincell.id</span>
-              <Link to="/blog/panduan-memilih-iphone" className="font-semibold text-[#1769E0] hover:underline">
-                Baca Selengkapnya &rarr;
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Stacked Articles (40%) */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            <div className="bg-white border border-[#DCE5EF] p-6 space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1769E0]">
-                TIPS &amp; TRIK
-              </span>
-              <Link to="/blog/tips-baterai-iphone" className="block">
-                <h4 className="text-base font-bold text-[#061426] hover:text-[#1769E0] transition-colors">
-                  5 Kebiasaan pengisian daya yang memperpanjang umur baterai iPhone.
-                </h4>
-              </Link>
-              <p className="text-xs text-[#64748B] line-clamp-2">
-                Praktik terbaik menjaga kesehatan baterai agar daya tahan tetap optimal hingga bertahun-tahun.
-              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">
+                Pilih iPhone yang <span className="text-gray-400 font-normal">Sesuai</span> untukmu
+              </h2>
             </div>
 
-            <div className="bg-white border border-[#DCE5EF] p-6 space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#1769E0]">
-                GARANSI &amp; KEAMANAN
-              </span>
-              <Link to="/blog/memahami-garansi-apple" className="block">
-                <h4 className="text-base font-bold text-[#061426] hover:text-[#1769E0] transition-colors">
-                  Cara klaim dan cek status garansi resmi Apple Indonesia dengan mudah.
-                </h4>
-              </Link>
-              <p className="text-xs text-[#64748B] line-clamp-2">
-                Langkah rinci memeriksa nomor seri dan garansi aktif untuk perlindungan produk maksimal.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────
-          8. FINAL CTA (Restrained & Minimalist)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="bg-white border-t border-[#DCE5EF] py-16 text-center select-none">
-        <div className="max-w-3xl mx-auto px-4 space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#061426] tracking-tight">
-            Temukan iPhone berikutnya.
-          </h2>
-          <p className="text-xs sm:text-sm text-[#64748B] max-w-md mx-auto">
-            Jelajahi seluruh varian iPhone original bergaransi resmi dengan kemudahan transaksi online.
-          </p>
-          <div className="pt-2">
             <Link
               to="/produk"
-              className="inline-block bg-[#061426] hover:bg-[#1769E0] text-white font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-md transition-colors"
+              className="text-xs font-bold text-black hover:text-gray-600 flex items-center gap-1 transition-colors"
             >
-              Lihat Produk
+              <span>Lihat Semua</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
+
+          {/* 5 Category Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            
+            {/* Card 1: iPhone 15 Series */}
+            <Link to="/produk?series=15" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone 15 Series"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone 15 Series</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Terbaru</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 2: iPhone 14 Series */}
+            <Link to="/produk?series=14" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone 14 Series"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone 14 Series</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Populer</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 3: iPhone 13 Series */}
+            <Link to="/produk?series=13" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone 13 Series"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone 13 Series</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Hemat & Berkualitas</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 4: iPhone SE */}
+            <Link to="/produk?series=se" className="group">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=400&auto=format&fit=crop"
+                    alt="iPhone SE"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">iPhone SE</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Ringkas & Powerful</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 5: Semua iPhone */}
+            <Link to="/produk" className="group col-span-2 sm:col-span-1">
+              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="w-full h-28 flex items-center justify-center">
+                  <img
+                    src="https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=400&auto=format&fit=crop"
+                    alt="Semua iPhone"
+                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-black">Semua iPhone</h3>
+                  <p className="text-[11px] text-gray-500 font-medium">Lihat Semua</p>
+                </div>
+              </div>
+            </Link>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ─────────────────────────────────────────────────────────────
+          3. BEST SELLER PRODUCTS SECTION ("Produk Terlaris")
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-[#0b0c10] py-16 text-white border-t border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
+                Best Seller
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                Produk Terlaris
+              </h2>
+            </div>
+
+            <Link
+              to="/produk"
+              className="text-xs font-bold text-gray-300 hover:text-white flex items-center gap-1 transition-colors"
+            >
+              <span>Lihat Semua</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          {/* 5 Dark Product Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {bestSellers.map((item) => (
+              <div
+                key={item.id}
+                className="bg-[#12141c] border border-white/10 rounded-2xl p-4 flex flex-col justify-between hover:border-white/20 transition-all duration-300 hover:-translate-y-1 group"
+              >
+                {/* Product Image */}
+                <div className="relative aspect-square w-full rounded-xl bg-[#090a0e] p-3 flex items-center justify-center mb-3 overflow-hidden">
+                  {item.discount && (
+                    <span className="absolute top-2 left-2 px-2 py-0.5 bg-blue-600 text-white text-[10px] font-black rounded-md z-10">
+                      {item.discount}
+                    </span>
+                  )}
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="max-h-36 object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+
+                {/* Meta info */}
+                <div className="space-y-1.5">
+                  <h3 className="text-xs font-bold text-white truncate group-hover:text-[#E7B65A] transition-colors">
+                    <Link to={`/produk/${item.slug}`}>{item.name}</Link>
+                  </h3>
+                  <p className="text-[11px] text-gray-400 truncate">{item.spec}</p>
+
+                  {/* Rating & Reviews */}
+                  <div className="flex items-center gap-1 text-[11px] text-gray-300 pt-0.5">
+                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                    <span className="font-bold text-white">{item.rating}</span>
+                    <span className="text-gray-500">({item.reviews})</span>
+                  </div>
+
+                  {/* Price & Action */}
+                  <div className="pt-2 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-black text-white">{formatRupiah(item.price)}</p>
+                      {item.originalPrice && (
+                        <p className="text-[10px] text-gray-500 line-through">
+                          {formatRupiah(item.originalPrice)}
+                        </p>
+                      )}
+                    </div>
+
+                    <Link
+                      to={`/produk/${item.slug}`}
+                      className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all duration-300"
+                      title="Beli"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ─────────────────────────────────────────────────────────────
+          4. TRADE IN BANNER SECTION ("Tukar Tambah Dapat Untung")
+      ────────────────────────────────────────────────────────────── */}
+      <section className="py-16 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="relative rounded-3xl bg-gradient-to-r from-[#0d0e14] via-[#12141f] to-[#0d0e14] border border-white/15 p-8 sm:p-12 overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
+            
+            {/* Ambient Background Glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#E7B65A]/10 blur-[130px] rounded-full pointer-events-none" />
+
+            {/* Left Text */}
+            <div className="space-y-5 max-w-xl text-left relative z-10">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                Tukar Tambah Dapat Untung
+              </p>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                Trade in iPhone lamamu dapatkan potongan harga hingga{' '}
+                <span className="text-[#E7B65A]">Rp 2.000.000</span>
+              </h2>
+
+              {/* Action Button */}
+              <div>
+                <Link to="/trade-in">
+                  <button className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 inline-flex items-center gap-2 shadow-lg">
+                    <span>Cek Harga Trade In</span>
+                    <span>→</span>
+                  </button>
+                </Link>
+              </div>
+
+              {/* Trust Checkmarks */}
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-3 text-xs text-gray-300 font-medium border-t border-white/10">
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                  Proses cepat & mudah
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                  Harga terbaik
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                  Aman & terpercaya
+                </span>
+              </div>
+            </div>
+
+            {/* Right Side Image (Hands holding 2 iPhones with transfer symbol) */}
+            <div className="relative z-10 w-full lg:w-96 flex items-center justify-center shrink-0">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-[#090a0e]/60 flex items-center justify-center">
+                <img
+                  src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop"
+                  alt="Trade In iPhone"
+                  className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0e14] via-transparent to-transparent opacity-80" />
+                <div className="absolute p-3 rounded-full bg-white/10 backdrop-blur-md text-[#E7B65A] border border-white/20">
+                  <RefreshCw className="w-6 h-6 animate-spin-slow" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
     </div>
   );
 };
+
+export default HomePage;
