@@ -58,7 +58,7 @@ authRoutes.post('/login', async (c) => {
 
         setCookie(c, 'fincell_session', token, {
           httpOnly: true,
-          secure: false, // set true in production
+          secure: c.req.url.startsWith('https://'),
           sameSite: 'Strict',
           path: '/',
           maxAge: 8 * 60 * 60,
@@ -112,7 +112,7 @@ authRoutes.post('/login', async (c) => {
     // Set HTTP-only session cookie
     setCookie(c, 'fincell_session', token, {
       httpOnly: true,
-      secure: true,
+      secure: c.req.url.startsWith('https://'),
       sameSite: 'Strict',
       path: '/',
       maxAge: 8 * 60 * 60,

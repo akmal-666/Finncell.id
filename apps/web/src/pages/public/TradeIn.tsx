@@ -162,31 +162,26 @@ export const TradeInPage: React.FC = () => {
 
       <div className="space-y-16 pb-20">
         
-        {/* 1. HERO SECTION */}
-        <section className="relative bg-[#050505] text-white py-16 sm:py-20 overflow-hidden border-b border-white/10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#E7B65A]/12 blur-[150px] rounded-full pointer-events-none" />
+        {/* 1. HERO SECTION (Editorial Deep Navy #061426) */}
+        <section className="relative bg-[#061426] text-white py-20 overflow-hidden border-b border-[#0B1F3A]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-4">
+            <span className="text-[11px] font-bold tracking-widest uppercase text-[#5EA7FF] block">
+              LAYANAN TUKAR TAMBAH RETAIL
+            </span>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
-            <Badge variant="accent" size="md" className="inline-flex items-center gap-1.5 bg-[#E7B65A]/15 text-[#E7B65A] border-[#E7B65A]/30">
-              <Sparkles className="w-3.5 h-3.5" />
-              Layanan Tukar Tambah iPhone Terpercaya
-            </Badge>
-
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
-              Tukar iPhone lamamu.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-[#E7B65A]">
-                Dapat harga terbaik.
-              </span>
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+              Tukar. Upgrade.<br />
+              Lanjutkan.
             </h1>
 
-            <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
-              Dapatkan taksiran harga pasar tertinggi untuk unit iPhone lamamu, proses pemeriksaan 15 menit, dan potongan langsung untuk pembelian seri iPhone terbaru.
+            <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto font-normal leading-relaxed">
+              Tukarkan iPhone lamamu dengan estimasi transparan dan proses upgrade serba instan.
             </p>
 
-            <div className="pt-2 flex justify-center">
+            <div className="pt-4 flex justify-center">
               <a href={whatsappUrl} target="_blank" rel="noreferrer">
-                <Button variant="whatsapp" size="lg" className="font-extrabold shadow-xl text-sm" leftIcon={<MessageCircle className="w-5 h-5" />}>
-                  Tukar Sekarang via WhatsApp
+                <Button variant="whatsapp" size="lg" className="font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-md" leftIcon={<MessageCircle className="w-4 h-4" />}>
+                  Chat WhatsApp
                 </Button>
               </a>
             </div>
@@ -196,52 +191,44 @@ export const TradeInPage: React.FC = () => {
         <PageContainer breadcrumbs={[{ label: 'Trade In' }]}>
           <div className="space-y-16">
             
-            {/* 2. BENEFITS (4 Pillars) */}
-            <section className="space-y-6">
+            {/* 2. VISUAL 4 STEPS PROCESS */}
+            <section className="space-y-8">
               <div className="text-center space-y-1 max-w-xl mx-auto">
-                <h2 className="text-xl sm:text-2xl font-extrabold text-[#111111] tracking-tight">Keunggulan Trade In fincell.id</h2>
-                <p className="text-xs text-gray-500">Transparan, akurat, dan tanpa biaya tersembunyi</p>
+                <span className="text-[11px] font-bold text-[#1769E0] uppercase tracking-widest">ALUR LAYANAN</span>
+                <h2 className="text-2xl font-extrabold text-[#061426] tracking-tight">Proses 4 Langkah Mudah</h2>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div className="p-6 bg-white rounded-2xl border border-gray-200/80 space-y-2 hover:shadow-lg transition-all">
-                  <div className="p-3 bg-amber-50 text-[#B88632] rounded-xl w-fit">
-                    <CheckCircle2 className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#111111]">Mudah</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Tanpa prosedur rumit. Tim kami bantu backup data & factory reset unit secara aman.
+                <div className="p-6 bg-white rounded-md border border-[#DCE5EF] space-y-3">
+                  <span className="text-2xl font-black text-[#1769E0]">01</span>
+                  <h3 className="text-base font-bold text-[#061426]">Pilih perangkat</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed">
+                    Pilih model iPhone impian yang ingin Anda dapatkan di fincell.id.
                   </p>
                 </div>
 
-                <div className="p-6 bg-white rounded-2xl border border-gray-200/80 space-y-2 hover:shadow-lg transition-all">
-                  <div className="p-3 bg-amber-50 text-[#B88632] rounded-xl w-fit">
-                    <Zap className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#111111]">Cepat</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Estimasi penawaran harga instan dalam 2 menit via WhatsApp tanpa perlu menunggu lama.
+                <div className="p-6 bg-white rounded-md border border-[#DCE5EF] space-y-3">
+                  <span className="text-2xl font-black text-[#1769E0]">02</span>
+                  <h3 className="text-base font-bold text-[#061426]">Kirim detail</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed">
+                    Kirimkan kondisi, kapasitas, dan foto iPhone lama Anda melalui kalkulator / WhatsApp.
                   </p>
                 </div>
 
-                <div className="p-6 bg-white rounded-2xl border border-gray-200/80 space-y-2 hover:shadow-lg transition-all">
-                  <div className="p-3 bg-amber-50 text-[#B88632] rounded-xl w-fit">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#111111]">Aman</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Jaminan 100% amanah dengan perlindungan kerahasiaan data pribadi pelanggan.
+                <div className="p-6 bg-white rounded-md border border-[#DCE5EF] space-y-3">
+                  <span className="text-2xl font-black text-[#1769E0]">03</span>
+                  <h3 className="text-base font-bold text-[#061426]">Dapat estimasi</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed">
+                    Dapatkan penawaran nilai tukar terbaik secara transparan dari tim penilai kami.
                   </p>
                 </div>
 
-                <div className="p-6 bg-white rounded-2xl border border-gray-200/80 space-y-2 hover:shadow-lg transition-all">
-                  <div className="p-3 bg-amber-50 text-[#B88632] rounded-xl w-fit">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#111111]">Hemat</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">
-                    Potongan harga instan yang bikin upgrade ke iPhone impian jadi jauh lebih hemat.
+                <div className="p-6 bg-white rounded-md border border-[#DCE5EF] space-y-3">
+                  <span className="text-2xl font-black text-[#1769E0]">04</span>
+                  <h3 className="text-base font-bold text-[#061426]">Upgrade</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed">
+                    Bawa unit atau kirim via ekspedisi, dan bawa pulang iPhone baru Anda hari ini.
                   </p>
                 </div>
 
@@ -448,12 +435,26 @@ export const TradeInPage: React.FC = () => {
                     </div>
                     <div className="flex items-start gap-2.5">
                       <Clock className="w-4 h-4 text-[#B88632] shrink-0 mt-0.5" />
-                      <p>Proses kilat 15 menit selesai di tempat tanpa menunggu lama.</p>
                     </div>
                   </div>
                 </Card>
               </div>
 
+            </section>
+
+            {/* Bottom Siap Tukar CTA */}
+            <section className="bg-white border border-[#DCE5EF] p-10 text-center rounded-md space-y-4">
+              <h3 className="text-2xl font-black text-[#061426]">Siap tukar?</h3>
+              <p className="text-xs text-[#64748B] max-w-md mx-auto">
+                Konsultasikan unit iPhone lama Anda langsung dengan tim penilai fincell.id via WhatsApp.
+              </p>
+              <div className="pt-2">
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-block">
+                  <Button variant="whatsapp" size="lg" className="font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-md" leftIcon={<MessageCircle className="w-4 h-4" />}>
+                    Chat WhatsApp
+                  </Button>
+                </a>
+              </div>
             </section>
 
           </div>

@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS products (
   compare_price REAL,
   stock INTEGER DEFAULT 0,
   low_stock_threshold INTEGER DEFAULT 5,
-  status TEXT DEFAULT 'active', -- active, draft, archived
-  condition TEXT DEFAULT 'brand_new', -- brand_new, like_new, secondhand
+  status TEXT DEFAULT 'active',
+  condition TEXT DEFAULT 'brand_new',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -118,8 +118,8 @@ CREATE TABLE IF NOT EXISTS orders (
   discount_total REAL DEFAULT 0,
   shipping_fee REAL DEFAULT 0,
   total REAL NOT NULL,
-  status TEXT DEFAULT 'pending', -- pending, processing, shipped, delivered, cancelled
-  payment_status TEXT DEFAULT 'unpaid', -- unpaid, paid, refunded
+  status TEXT DEFAULT 'pending',
+  payment_status TEXT DEFAULT 'unpaid',
   payment_method TEXT NOT NULL,
   notes TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS promos (
   code TEXT NOT NULL UNIQUE,
   title TEXT NOT NULL,
   description TEXT,
-  discount_type TEXT NOT NULL, -- fixed, percentage
+  discount_type TEXT NOT NULL,
   discount_value REAL NOT NULL,
   min_purchase REAL DEFAULT 0,
   start_date DATETIME,
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS trade_in_requests (
   condition TEXT NOT NULL,
   battery_health INTEGER NOT NULL,
   estimated_value REAL NOT NULL,
-  status TEXT DEFAULT 'pending', -- pending, approved, rejected, completed
+  status TEXT DEFAULT 'pending',
   notes TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
 -- SEO Metadata & Redirects
 CREATE TABLE IF NOT EXISTS seo_metadata (
   id TEXT PRIMARY KEY,
-  entity_type TEXT NOT NULL, -- product, category, page, blog
+  entity_type TEXT NOT NULL, 
   entity_id TEXT NOT NULL,
   meta_title TEXT,
   meta_description TEXT,

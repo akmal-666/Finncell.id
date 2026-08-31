@@ -61,10 +61,10 @@ export const BlogPage: React.FC = () => {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                className={`px-4 py-2 rounded-md text-xs font-semibold whitespace-nowrap transition-all ${
                   selectedCategory === cat
-                    ? 'bg-[#111111] text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-[#061426] text-white'
+                    : 'bg-[#F7F9FC] text-gray-600 border border-[#DCE5EF] hover:bg-gray-100'
                 }`}
               >
                 {cat === 'all' ? 'Semua Artikel' : cat}
@@ -86,45 +86,42 @@ export const BlogPage: React.FC = () => {
 
         {/* 2. FEATURED ARTICLE HERO (If no search query) */}
         {!search && selectedCategory === 'all' && featuredPost && (
-          <Card className="group overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all duration-300">
+          <Card className="group overflow-hidden border border-[#DCE5EF] bg-white rounded-md transition-all duration-300">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
               
-              <div className="lg:col-span-7 aspect-video lg:aspect-auto overflow-hidden bg-gray-100 relative">
+              <div className="lg:col-span-7 aspect-video lg:aspect-auto overflow-hidden bg-[#F7F9FC] relative">
                 <img
                   src={featuredPost.coverImage || (featuredPost as any).featuredImage}
                   alt={featuredPost.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <Badge variant="accent" size="sm" className="absolute top-4 left-4 z-10">
-                  <Sparkles className="w-3 h-3 mr-1" /> Artikel Utama
-                </Badge>
               </div>
 
               <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-xs text-gray-500">
-                    <Badge variant="secondary" size="sm">{featuredPost.category}</Badge>
-                    <span className="flex items-center gap-1">
+                    <span className="font-bold text-[#1769E0] uppercase tracking-wider">{featuredPost.category}</span>
+                    <span className="flex items-center gap-1 text-gray-400">
                       <Clock className="w-3.5 h-3.5" /> {(featuredPost as any).readTime || `${featuredPost.readTimeMinutes || 5} min`}
                     </span>
                   </div>
 
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#111111] group-hover:text-[#B88632] transition-colors leading-tight">
+                  <h2 className="text-xl sm:text-2xl font-black text-[#061426] group-hover:text-[#1769E0] transition-colors leading-tight">
                     <Link to={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link>
                   </h2>
 
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#64748B] line-clamp-3 leading-relaxed">
                     {featuredPost.excerpt}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-[#DCE5EF] flex items-center justify-between">
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <User className="w-3.5 h-3.5" /> {featuredPost.author}
                   </span>
 
                   <Link to={`/blog/${featuredPost.slug}`}>
-                    <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#111111] hover:text-[#B88632] transition-colors">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1769E0] hover:underline transition-colors">
                       Baca Artikel <ArrowRight className="w-4 h-4" />
                     </span>
                   </Link>
@@ -138,17 +135,17 @@ export const BlogPage: React.FC = () => {
         {/* 3. LOADING & EMPTY STATES */}
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Skeleton className="h-64 rounded-2xl w-full" />
-            <Skeleton className="h-64 rounded-2xl w-full" />
-            <Skeleton className="h-64 rounded-2xl w-full" />
+            <Skeleton className="h-64 rounded-md w-full" />
+            <Skeleton className="h-64 rounded-md w-full" />
+            <Skeleton className="h-64 rounded-md w-full" />
           </div>
         )}
 
         {!isLoading && filteredBlogs.length === 0 && (
-          <Card className="p-12 text-center space-y-3 bg-white border border-gray-200">
+          <Card className="p-12 text-center space-y-3 bg-white border border-[#DCE5EF] rounded-md">
             <BookOpen className="w-10 h-10 text-gray-300 mx-auto" />
-            <h3 className="text-base font-bold text-[#111111]">Artikel Tidak Ditemukan</h3>
-            <p className="text-xs text-gray-500">Tidak ada artikel yang sesuai dengan pencarian atau kategori ini.</p>
+            <h3 className="text-base font-bold text-[#061426]">Artikel Tidak Ditemukan</h3>
+            <p className="text-xs text-[#64748B]">Tidak ada artikel yang sesuai dengan pencarian atau kategori ini.</p>
           </Card>
         )}
 
@@ -156,9 +153,9 @@ export const BlogPage: React.FC = () => {
         {!isLoading && filteredBlogs.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBlogs.map((post) => (
-              <Card key={post.id} className="group flex flex-col justify-between overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all duration-300">
+              <Card key={post.id} className="group flex flex-col justify-between overflow-hidden border border-[#DCE5EF] bg-white rounded-md hover:border-[#1769E0] transition-all duration-200">
                 <div className="space-y-4">
-                  <div className="aspect-video rounded-xl overflow-hidden bg-gray-100 relative">
+                  <div className="aspect-video overflow-hidden bg-[#F7F9FC] relative">
                     <img
                       src={post.coverImage || (post as any).featuredImage}
                       alt={post.title}
@@ -168,24 +165,24 @@ export const BlogPage: React.FC = () => {
 
                   <div className="p-5 space-y-3">
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <Badge variant="accent" size="sm">{post.category}</Badge>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-gray-400" />
+                      <span className="font-bold text-[#1769E0] uppercase tracking-wider">{post.category}</span>
+                      <div className="flex items-center gap-1 text-gray-400">
+                        <Clock className="w-3.5 h-3.5" />
                         <span>{(post as any).readTime || `${post.readTimeMinutes || 5} min`}</span>
                       </div>
                     </div>
 
-                    <h3 className="text-base font-bold text-[#111111] group-hover:text-[#B88632] transition-colors leading-snug line-clamp-2">
+                    <h3 className="text-base font-bold text-[#061426] group-hover:text-[#1769E0] transition-colors leading-snug line-clamp-2">
                       <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                     </h3>
 
-                    <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed">{post.excerpt}</p>
+                    <p className="text-xs text-[#64748B] line-clamp-3 leading-relaxed">{post.excerpt}</p>
                   </div>
                 </div>
 
-                <div className="px-5 pb-5 pt-2 border-t border-gray-100 flex items-center justify-between">
+                <div className="px-5 pb-5 pt-2 border-t border-[#DCE5EF] flex items-center justify-between">
                   <span className="text-[11px] text-gray-400">{post.author}</span>
-                  <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#111111] hover:text-[#B88632] transition-colors">
+                  <Link to={`/blog/${post.slug}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#1769E0] hover:underline transition-colors">
                     Baca <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

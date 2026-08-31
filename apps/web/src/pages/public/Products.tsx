@@ -494,37 +494,25 @@ export const ProductsPage: React.FC = () => {
                   return (
                     <Card
                       key={product.id}
-                      className="group overflow-hidden border border-gray-200/80 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                      className="group overflow-hidden border border-[#DCE5EF] hover:border-[#1769E0] transition-all duration-200 flex flex-col justify-between p-4 bg-white rounded-md"
                     >
                       <div>
                         {/* Image Frame */}
-                        <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 mb-4">
+                        <div className="relative aspect-square rounded-md overflow-hidden bg-[#F7F9FC] mb-4 flex items-center justify-center">
                           <img
                             src={product.images[0]}
                             alt={product.name}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                            className="max-h-48 object-contain group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                           />
-
-                          {/* Top Left Badges */}
-                          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-                            {discountPercent > 0 && (
-                              <Badge variant="danger" size="sm">
-                                {discountPercent}% OFF
-                              </Badge>
-                            )}
-                            <Badge variant={product.condition === 'brand_new' ? 'success' : 'dark'} size="sm">
-                              {product.condition === 'brand_new' ? 'BNIB Garansi' : 'Second Mulus'}
-                            </Badge>
-                          </div>
 
                           {/* Wishlist Button */}
                           <button
                             onClick={(e) => toggleWishlist(product.id, e)}
-                            className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all ${
+                            className={`absolute top-2 right-2 p-1.5 rounded-md transition-colors ${
                               isWishlisted
-                                ? 'bg-rose-500 text-white'
-                                : 'bg-white/80 text-gray-700 hover:bg-white'
+                                ? 'bg-red-500 text-white'
+                                : 'bg-white/80 text-gray-600 hover:bg-white'
                             }`}
                             title="Simpan ke Wishlist"
                             aria-label="Wishlist"
@@ -534,9 +522,9 @@ export const ProductsPage: React.FC = () => {
                         </div>
 
                         {/* Card Info */}
-                        <div className="space-y-2 px-1">
-                          <div className="flex items-center justify-between text-[11px] text-gray-500">
-                            <span className="font-bold text-gray-600 uppercase">{product.category}</span>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-[11px] text-[#64748B]">
+                            <span className="font-bold uppercase tracking-wider">{product.category}</span>
                             <div className="flex items-center text-amber-500 gap-1 font-bold">
                               <Star className="w-3 h-3 fill-amber-500" />
                               <span>{product.rating}</span>
@@ -544,17 +532,17 @@ export const ProductsPage: React.FC = () => {
                             </div>
                           </div>
 
-                          <h3 className="text-sm font-extrabold text-[#111111] group-hover:text-[#B88632] transition-colors truncate">
+                          <h3 className="text-sm font-bold text-[#061426] group-hover:text-[#1769E0] transition-colors truncate">
                             <Link to={`/produk/${product.slug}`}>{product.name}</Link>
                           </h3>
 
                           {/* Variant Storage & Color Pills */}
                           {primaryVariant && (
-                            <div className="flex items-center gap-1.5 text-[11px] text-gray-500">
-                              <span className="px-2 py-0.5 bg-gray-100 rounded-md font-semibold text-gray-700">
+                            <div className="flex items-center gap-1.5 text-[11px] text-[#64748B]">
+                              <span className="px-2 py-0.5 bg-[#F7F9FC] border border-[#DCE5EF] rounded font-semibold text-[#061426]">
                                 {primaryVariant.storage}
                               </span>
-                              <span className="flex items-center gap-1 px-2 py-0.5 bg-gray-100 rounded-md font-semibold text-gray-700">
+                              <span className="flex items-center gap-1 px-2 py-0.5 bg-[#F7F9FC] border border-[#DCE5EF] rounded font-semibold text-[#061426]">
                                 <span
                                   className="w-2 h-2 rounded-full border border-gray-400 shrink-0"
                                   style={{ backgroundColor: primaryVariant.colorHex || '#9E9992' }}
@@ -565,8 +553,8 @@ export const ProductsPage: React.FC = () => {
                           )}
 
                           {/* Price */}
-                          <div className="pt-1 flex items-baseline gap-2">
-                            <span className="text-base font-black text-[#111111]">
+                          <div className="pt-2 flex items-baseline gap-2">
+                            <span className="text-base font-black text-[#061426]">
                               {formatRupiah(product.basePrice)}
                             </span>
                             {product.originalPrice && (

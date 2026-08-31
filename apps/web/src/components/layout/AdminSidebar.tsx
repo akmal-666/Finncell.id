@@ -43,20 +43,20 @@ export const AdminSidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-64 bg-[#050505] text-white border-r border-gray-800 flex flex-col h-screen sticky top-0 shrink-0">
+    <aside className="w-64 bg-[#061426] text-white border-r border-[#0B1F3A] flex flex-col h-screen sticky top-0 shrink-0 select-none">
       {/* Brand Header */}
-      <div className="h-16 px-6 flex items-center border-b border-gray-800">
-        <Link to="/admin" className="flex items-center gap-2 text-lg font-bold tracking-tighter">
-          <ShieldCheck className="w-5 h-5 text-[#E7B65A]" />
-          <span><span className="text-[#E7B65A]">fincell</span>.id</span>
-          <span className="ml-1 text-[10px] px-2 py-0.5 rounded bg-[#E7B65A]/20 text-[#E7B65A] font-semibold uppercase">Admin</span>
+      <div className="h-16 px-6 flex items-center border-b border-[#0B1F3A]">
+        <Link to="/admin" className="flex items-center gap-2 text-lg font-bold tracking-tight">
+          <ShieldCheck className="w-5 h-5 text-[#5EA7FF]" />
+          <span>fincell<span className="text-[#1769E0]">.id</span></span>
+          <span className="ml-1 text-[10px] px-2 py-0.5 rounded bg-[#1769E0] text-white font-semibold uppercase">Admin</span>
         </Link>
       </div>
 
       {/* Navigation List */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
         <div>
-          <p className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Navigasi Utama</p>
+          <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Navigasi Utama</p>
           <nav className="space-y-1">
             {mainLinks.map((link) => {
               const isActive = location.pathname === link.href || (link.href !== '/admin' && location.pathname.startsWith(link.href));
@@ -64,10 +64,10 @@ export const AdminSidebar: React.FC = () => {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md transition-colors ${
                     isActive
-                      ? 'bg-[#111111] text-[#E7B65A] font-semibold border-l-2 border-[#E7B65A]'
-                      : 'text-gray-400 hover:text-white hover:bg-[#111111]'
+                      ? 'bg-[#0B1F3A] text-[#5EA7FF] font-semibold border-l-2 border-[#1769E0]'
+                      : 'text-slate-300 hover:text-white hover:bg-[#0B1F3A]/60'
                   }`}
                 >
                   {link.icon}
@@ -79,7 +79,7 @@ export const AdminSidebar: React.FC = () => {
         </div>
 
         <div>
-          <p className="px-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Laporan</p>
+          <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Laporan</p>
           <nav className="space-y-1">
             {reportLinks.map((link) => {
               const isActive = location.pathname === link.href;
@@ -87,10 +87,10 @@ export const AdminSidebar: React.FC = () => {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-md transition-colors ${
                     isActive
-                      ? 'bg-[#111111] text-[#E7B65A] font-semibold border-l-2 border-[#E7B65A]'
-                      : 'text-gray-400 hover:text-white hover:bg-[#111111]'
+                      ? 'bg-[#0B1F3A] text-[#5EA7FF] font-semibold border-l-2 border-[#1769E0]'
+                      : 'text-slate-300 hover:text-white hover:bg-[#0B1F3A]/60'
                   }`}
                 >
                   {link.icon}
@@ -103,17 +103,17 @@ export const AdminSidebar: React.FC = () => {
       </div>
 
       {/* User Footer */}
-      <div className="p-4 border-t border-gray-800 bg-[#111111]/50 flex items-center justify-between">
+      <div className="p-4 border-t border-[#0B1F3A] bg-[#0B1F3A]/40 flex items-center justify-between">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-8 h-8 rounded-full bg-[#E7B65A] text-[#111111] font-bold text-xs flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-full bg-[#1769E0] text-white font-bold text-xs flex items-center justify-center shrink-0">
             FA
           </div>
           <div className="truncate">
             <p className="text-xs font-bold text-white truncate">Admin fincell</p>
-            <p className="text-[10px] text-gray-400 truncate">admin@fincell.id</p>
+            <p className="text-[10px] text-slate-400 truncate">admin@fincell.id</p>
           </div>
         </div>
-        <Link to="/admin/login" className="text-gray-400 hover:text-red-400 p-1.5 rounded-lg transition-colors" title="Logout">
+        <Link to="/admin/login" className="text-slate-400 hover:text-red-400 p-1.5 rounded-md transition-colors" title="Logout">
           <LogOut className="w-4 h-4" />
         </Link>
       </div>

@@ -8,21 +8,42 @@ export default {
   theme: {
     extend: {
       colors: {
+        navy: {
+          deep: '#061426',
+          secondary: '#0B1F3A',
+        },
+        accentBlue: {
+          DEFAULT: '#1769E0',
+          light: '#5EA7FF',
+          bg: '#EAF2FC',
+        },
+        surface: {
+          bg: '#F7F9FC',
+          border: '#DCE5EF',
+          dark: '#05070A',
+        },
         brand: {
-          dark: '#050505',
-          cardDark: '#111111',
-          surfaceDark: '#1A1A1A',
+          dark: '#061426',
+          secondaryNavy: '#0B1F3A',
           light: '#FFFFFF',
-          bgLight: '#F7F7F7',
-          textPrimary: '#111111',
-          textSecondary: '#6B7280',
-          accent: '#E7B65A',
-          accentDark: '#B88632',
+          bgLight: '#F7F9FC',
+          textPrimary: '#0B1F3A',
+          textSecondary: '#64748B',
+          accent: '#1769E0',
+          accentLight: '#5EA7FF',
+          border: '#DCE5EF',
           whatsapp: '#25D366',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '6px',
+        'md': '8px',
+        'lg': '12px',
+        'xl': '16px',
       },
     },
   },

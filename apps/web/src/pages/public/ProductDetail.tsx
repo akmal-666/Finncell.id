@@ -198,32 +198,20 @@ export const ProductDetailPage: React.FC = () => {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start mb-16">
           
-          {/* Left: Gallery (5 cols) */}
+          {/* Left: Gallery (6 cols) */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-square rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-md group">
+            <div className="relative aspect-square rounded-md overflow-hidden bg-[#F7F9FC] border border-[#DCE5EF] group flex items-center justify-center p-8">
               <img
                 src={selectedImage}
                 alt={product.name}
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                className="max-h-[380px] object-contain group-hover:scale-105 transition-transform duration-500"
               />
-
-              {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-2">
-                {discountPercent > 0 && (
-                  <Badge variant="danger" size="md" className="font-extrabold">
-                    {discountPercent}% OFF
-                  </Badge>
-                )}
-                <Badge variant={product.condition === 'brand_new' ? 'success' : 'dark'} size="md">
-                  {product.condition === 'brand_new' ? 'BNIB Garansi Resmi' : 'Second Mulus'}
-                </Badge>
-              </div>
 
               {/* Wishlist Button */}
               <button
                 onClick={() => setIsWishlisted(!isWishlisted)}
-                className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all ${
-                  isWishlisted ? 'bg-rose-500 text-white' : 'bg-white/80 text-gray-700 hover:bg-white'
+                className={`absolute top-4 right-4 p-2.5 rounded-md border border-[#DCE5EF] transition-colors ${
+                  isWishlisted ? 'bg-red-500 text-white border-red-500' : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
                 title="Wishlist"
                 aria-label="Wishlist"
@@ -239,34 +227,34 @@ export const ProductDetailPage: React.FC = () => {
                   <button
                     key={i}
                     onClick={() => setSelectedImage(img)}
-                    className={`w-20 h-20 rounded-2xl overflow-hidden border-2 shrink-0 transition-all ${
+                    className={`w-16 h-16 rounded-md overflow-hidden border p-1 bg-white shrink-0 transition-all ${
                       selectedImage === img
-                        ? 'border-[#111111] ring-2 ring-[#E7B65A]/50 scale-95'
-                        : 'border-gray-200 opacity-70 hover:opacity-100'
+                        ? 'border-[#1769E0] ring-1 ring-[#1769E0]'
+                        : 'border-[#DCE5EF] opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>
             )}
 
             {/* Value Badges */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-gray-200 text-center">
-              <div className="p-3 bg-white rounded-2xl border border-gray-200 space-y-1">
-                <ShieldCheck className="w-5 h-5 text-[#E7B65A] mx-auto" />
-                <p className="text-xs font-bold text-[#111111]">100% Original</p>
-                <p className="text-[10px] text-gray-500">Apple Indonesia</p>
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-[#DCE5EF] text-center">
+              <div className="p-3 bg-white rounded-md border border-[#DCE5EF] space-y-1">
+                <ShieldCheck className="w-4 h-4 text-[#1769E0] mx-auto" />
+                <p className="text-xs font-bold text-[#061426]">100% Original</p>
+                <p className="text-[10px] text-[#64748B]">Apple Indonesia</p>
               </div>
-              <div className="p-3 bg-white rounded-2xl border border-gray-200 space-y-1">
-                <Truck className="w-5 h-5 text-[#E7B65A] mx-auto" />
-                <p className="text-xs font-bold text-[#111111]">Bebas Ongkir</p>
-                <p className="text-[10px] text-gray-500">Asuransi Penuh</p>
+              <div className="p-3 bg-white rounded-md border border-[#DCE5EF] space-y-1">
+                <Truck className="w-4 h-4 text-[#1769E0] mx-auto" />
+                <p className="text-xs font-bold text-[#061426]">Bebas Ongkir</p>
+                <p className="text-[10px] text-[#64748B]">Asuransi Penuh</p>
               </div>
-              <div className="p-3 bg-white rounded-2xl border border-gray-200 space-y-1">
-                <RefreshCw className="w-5 h-5 text-[#E7B65A] mx-auto" />
-                <p className="text-xs font-bold text-[#111111]">Trade-In Ready</p>
-                <p className="text-[10px] text-gray-500">Terima Unit Lama</p>
+              <div className="p-3 bg-white rounded-md border border-[#DCE5EF] space-y-1">
+                <RefreshCw className="w-4 h-4 text-[#1769E0] mx-auto" />
+                <p className="text-xs font-bold text-[#061426]">Trade-In Ready</p>
+                <p className="text-[10px] text-[#64748B]">Terima Unit Lama</p>
               </div>
             </div>
           </div>
@@ -276,7 +264,7 @@ export const ProductDetailPage: React.FC = () => {
             
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="accent" size="sm" className="font-bold">{product.category}</Badge>
+                <span className="text-[11px] font-bold text-[#1769E0] uppercase tracking-wider">{product.category}</span>
                 <div className="flex items-center text-amber-500 text-xs gap-1 font-bold">
                   <Star className="w-3.5 h-3.5 fill-amber-500" />
                   <span>{product.rating}</span>
@@ -284,17 +272,17 @@ export const ProductDetailPage: React.FC = () => {
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-black text-[#111111] tracking-tight">{product.name}</h1>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2 leading-relaxed">{product.summary}</p>
+              <h1 className="text-2xl sm:text-4xl font-black text-[#061426] tracking-tight">{product.name}</h1>
+              <p className="text-xs sm:text-sm text-[#64748B] mt-2 leading-relaxed">{product.summary}</p>
             </div>
 
             {/* Price Box */}
-            <div className="p-5 rounded-2xl bg-[#111111] text-white border border-gray-800 flex items-center justify-between shadow-xl">
+            <div className="p-5 rounded-md bg-white text-[#061426] border border-[#DCE5EF] flex items-center justify-between">
               <div>
                 <div className="flex items-baseline gap-3">
-                  <span className="text-2xl sm:text-3xl font-black text-white">{formatRupiah(currentPrice)}</span>
+                  <span className="text-2xl sm:text-3xl font-black text-[#061426]">{formatRupiah(currentPrice)}</span>
                   {currentOriginalPrice && (
-                    <span className="text-xs sm:text-sm text-gray-400 line-through">
+                    <span className="text-xs sm:text-sm text-[#64748B] line-through">
                       {formatRupiah(currentOriginalPrice)}
                     </span>
                   )}
