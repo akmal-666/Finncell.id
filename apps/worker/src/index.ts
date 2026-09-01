@@ -18,7 +18,17 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // Enable CORS
 app.use('*', cors({
-  origin: (origin) => origin || '*',
+  origin: (origin) => {
+    const allowed = [
+      'https://fincell-web.pages.dev',
+      'http://localhost:3000',
+      'http://localhost:5173',
+    ];
+    if (!origin || allowed.some(o => origin.startsWith(o))) return origin || '*';
+    // allow any pages.dev preview URL
+    if (origin.includes('.pages.dev')) return origin;
+    return '*';
+  },
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
   credentials: true,

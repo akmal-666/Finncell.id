@@ -40,7 +40,7 @@ jobs:
       - name: Build Web application
         run: pnpm --filter web build
         env:
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://api.fincell.id/api' }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://fincell-worker-prod.bintangresponoptimal.workers.dev/api' }}
           VITE_STORE_NAME: ${{ vars.VITE_STORE_NAME || 'fincell.id' }}
 
       # ── D1 DATABASE MIGRATIONS ──
