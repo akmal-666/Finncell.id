@@ -19,10 +19,10 @@ jobs:
         with:
           version: 8
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -52,24 +52,21 @@ jobs:
 
       # ── DEPLOY CLOUDFLARE WORKER ──
       - name: Deploy Cloudflare Worker API
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: 'apps/worker'
-          command: 'deploy --env production'
+        working-directory: apps/worker
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           B2_KEY_ID: ${{ secrets.B2_KEY_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
           B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
+        run: pnpm exec wrangler deploy --env production
 
       # ── DEPLOY CLOUDFLARE PAGES ──
       - name: Deploy Frontend to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          npx wrangler pages deploy apps/web/dist --project-name=fincell-web --branch=main
+        run: pnpm exec wrangler pages deploy apps/web/dist --project-name=fincell-web --branch=main
 
       - name: Deployment Success Notification
         run: |
