@@ -315,9 +315,33 @@ productRoutes.put('/:id', async (c) => {
 
     const updated = await c.env.DB.prepare(`SELECT * FROM products WHERE id = ?`).bind(id).first();
 
+    // Re-sync product_images: delete old, insert new
+    if (data.images !== undefined) {
+      await c.env.DB.prepare(`DELETE FROM product_images WHERE product_id = ?`).bind(id).run();
+      if (data.images.length > 0) {
+        for (const img of data.images) {
+          const imgId = `img-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+          await c.env.DB.prepare(`
+            INSERT INTO product_images (id, product_id, url, alt_text, sort_order, is_primary)
+            VALUES (?, ?, ?, ?, ?, ?)
+          `).bind(
+            imgId,
+            id,
+            img.url,
+            img.alt_text || null,
+            img.sort_order,
+            img.is_primary ? 1 : 0
+          ).run();
+        }
+      }
+    }
+
+    // Re-fetch with images
+    const images = await c.env.DB.prepare(`SELECT url, alt_text, sort_order, is_primary FROM product_images WHERE product_id = ? ORDER BY sort_order ASC`).bind(id).all();
+
     return c.json({
       success: true,
-      data: updated,
+      data: { ...updated, images: images.results || [] },
     });
   } catch (err: any) {
     return c.json({ success: false, message: err.message, code: 'INTERNAL_SERVER_ERROR' }, 500);

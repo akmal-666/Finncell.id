@@ -30,7 +30,7 @@ export const CreateProductSchema = z.object({
   stock: z.number().int().min(0).default(0),
   low_stock_threshold: z.number().int().min(0).default(5),
   status: z.enum(['active', 'draft', 'archived']).default('active'),
-  condition: z.enum(['brand_new', 'like_new', 'secondhand']).default('brand_new'),
+  condition: z.enum(['brand_new', 'like_new', 'secondhand', 'second_mulus', 'second_good', 'second_fair']).default('brand_new'),
   variants: z.array(VariantSchema).optional(),
   images: z.array(ImageSchema).optional(),
 });

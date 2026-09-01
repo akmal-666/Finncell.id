@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Shield, Truck, CheckCircle2, ShoppingBag, Star, Heart, ChevronRight, MessageCircle } from 'lucide-react';
+import { Shield, Truck, CheckCircle2, ChevronRight, MessageCircle } from 'lucide-react';
 import { openWhatsApp, buildProductWhatsAppMessage } from '@/utils/whatsapp';
 import { trackEvent } from '@/utils/analytics';
+import { productService } from '@/services/productService';
+import type { Product } from '@fincell/shared';
 
-/* ─── DATA ─────────────────────────────────────────── */
+/* ─── STATIC DATA (categories & blog never come from admin) ─── */
 
 const CATEGORIES = [
   { label: 'iPhone 17 Series', sub: 'Terbaru', img: '/images/iphone17_transparent.png', q: '17' },
@@ -14,25 +16,28 @@ const CATEGORIES = [
   { label: 'Aksesoris', sub: 'Lengkapi Perangkatmu', img: '/images/iphone17pm_transparent.png', q: 'aksesoris' },
 ];
 
-const PRODUCTS = [
-  { name: 'iPhone 17 Pro Max', storage: '256GB', color: 'Desert Titanium', price: 23999000, rating: 4.9, reviews: 239, slug: 'iphone-17-pro-max', img: '/images/iphone17_transparent.png', badge: 'Pro Max' },
-  { name: 'iPhone 15', storage: '128GB', color: 'Pink', price: 14999000, rating: 4.8, reviews: 398, slug: 'iphone-15', img: '/images/iphone17pm_transparent.png', badge: null },
-  { name: 'iPhone 16', storage: '128GB', color: 'Black', price: 16000000, oldPrice: 19000000, rating: 4.3, reviews: 241, slug: 'iphone-16', img: '/images/hero-iphone17-gold.png', badge: null },
-  { name: 'iPhone 15 Pro', storage: '256GB', color: 'Blue Titanium', price: 20999000, rating: 4.9, reviews: 142, slug: 'iphone-15-pro', img: '/images/iphone17_transparent.png', badge: null },
-  { name: 'iPhone SE (3rd Gen)', storage: '256GB', color: 'Midnight', price: 5999000, rating: 4.8, reviews: 99, slug: 'iphone-se-3rd-gen', img: '/images/iphone17pm_transparent.png', badge: null },
-];
-
 const BLOG_POSTS = [
   { title: '5 Hal Wajib Cek Sebelum Beli iPhone Second', category: 'Tips', date: '20 Mei 2024', slug: 'cek-sebelum-beli-second', img: '/images/iphone17_transparent.png' },
   { title: 'Perbedaan iPhone Resmi dan iPhone Inter', category: 'iPhone', date: '18 Mei 2024', slug: 'resmi-vs-inter', img: '/images/iphone17pm_transparent.png' },
   { title: 'Kenapa Trade In Jadi Pilihan Terbaik?', category: 'Trade In', date: '15 Mei 2024', slug: 'kenapa-trade-in', img: '/images/hero-iphone17-gold.png' },
 ];
 
+const PLACEHOLDER_IMG = '/images/iphone17_transparent.png';
+
 /* ─── COMPONENT ─────────────────────────────────────── */
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [dot, setDot] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+
+  useEffect(() => {
+    productService
+      .getProducts({ status: 'active', limit: 5, sort: 'newest' })
+      .then(res => { if (res.success && res.data) setProducts(res.data.slice(0, 5)); })
+      .finally(() => setProductsLoading(false));
+  }, []);
 
   return (
     <div className="bg-white text-[#111]">
@@ -228,73 +233,60 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0 lg:grid lg:grid-cols-5 lg:gap-4 scrollbar-hide">
-            {PRODUCTS.map(p => (
-              <div
-                key={p.slug}
-                className="flex-shrink-0 w-[160px] sm:w-[180px] lg:w-auto bg-white border border-[#EAEAEA] rounded-xl overflow-hidden hover:shadow-md transition-shadow group"
-              >
-                {/* Image area */}
-                <div
-                  className="relative bg-[#F7F7F7] aspect-square flex items-center justify-center p-4 cursor-pointer"
-                  onClick={() => navigate(`/produk/${p.slug}`)}
-                >
-                  {p.badge && (
-                    <span className="absolute top-2 left-2 bg-[#D6A84F] text-black text-[9px] font-black px-1.5 py-0.5 rounded-sm z-10">
-                      {p.badge}
-                    </span>
-                  )}
-                  <button className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-sm z-10 hover:text-rose-400">
-                    <Heart className="w-3 h-3 text-[#ccc]" />
-                  </button>
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                {/* Info */}
-                <div className="p-3 space-y-1">
-                  <div
-                    onClick={() => navigate(`/produk/${p.slug}`)}
-                    className="cursor-pointer"
-                  >
-                    <p className="text-[10px] text-[#999] font-mono">{p.storage} · {p.color}</p>
-                    <h3 className="text-[12px] font-bold text-[#111] leading-tight mt-0.5 group-hover:text-[#D6A84F] transition-colors">
-                      {p.name}
-                    </h3>
-                  </div>
-
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[13px] font-black text-[#111]">
-                      Rp {p.price.toLocaleString('id-ID')}
-                    </span>
-                    {p.oldPrice && (
-                      <span className="text-[10px] text-[#aaa] line-through">
-                        Rp {p.oldPrice.toLocaleString('id-ID')}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Rating + Cart */}
-                  <div className="flex items-center justify-between pt-1">
-                    <div className="flex items-center gap-1">
-                      <Star className="w-3 h-3 text-[#D6A84F] fill-[#D6A84F]" />
-                      <span className="text-[10px] text-[#888]">{p.rating} ({p.reviews})</span>
+            {productsLoading
+              ? Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="flex-shrink-0 w-[160px] sm:w-[180px] lg:w-auto bg-[#F7F7F7] border border-[#EAEAEA] rounded-xl overflow-hidden animate-pulse">
+                    <div className="aspect-square bg-[#EAEAEA]" />
+                    <div className="p-3 space-y-2">
+                      <div className="h-3 bg-[#E0E0E0] rounded w-2/3" />
+                      <div className="h-4 bg-[#E0E0E0] rounded" />
+                      <div className="h-4 bg-[#E0E0E0] rounded w-1/2" />
                     </div>
-                    <button
-                      onClick={() => {
-                        trackEvent('Contact', { content_name: p.name });
-                        openWhatsApp(buildProductWhatsAppMessage({ productName: p.name, storage: p.storage, color: p.color, price: p.price }));
-                      }}
-                      className="w-7 h-7 rounded-lg bg-[#F0F0F0] hover:bg-[#25D366] flex items-center justify-center transition-colors group/btn"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5 text-[#888] group-hover/btn:text-black transition-colors" />
-                    </button>
                   </div>
-                </div>
-              </div>
-            ))}
+                ))
+              : products.map(p => {
+                  const img = p.images?.[0] || PLACEHOLDER_IMG;
+                  return (
+                    <div
+                      key={p.id}
+                      className="flex-shrink-0 w-[160px] sm:w-[180px] lg:w-auto bg-white border border-[#EAEAEA] rounded-xl overflow-hidden hover:shadow-md transition-shadow group"
+                    >
+                      <div
+                        className="relative bg-[#F7F7F7] aspect-square flex items-center justify-center p-4 cursor-pointer"
+                        onClick={() => navigate(`/produk/${p.slug}`)}
+                      >
+                        <img
+                          src={img}
+                          alt={p.name}
+                          className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                          onError={e => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMG; }}
+                        />
+                      </div>
+                      <div className="p-3 space-y-1">
+                        <div onClick={() => navigate(`/produk/${p.slug}`)} className="cursor-pointer">
+                          <p className="text-[10px] text-[#999] font-mono">{p.category}</p>
+                          <h3 className="text-[12px] font-bold text-[#111] leading-tight mt-0.5 group-hover:text-[#D6A84F] transition-colors">{p.name}</h3>
+                        </div>
+                        <div>
+                          <span className="text-[13px] font-black text-[#111]">Rp {p.basePrice.toLocaleString('id-ID')}</span>
+                          {p.originalPrice && (
+                            <p className="text-[10px] text-[#aaa] line-through">Rp {p.originalPrice.toLocaleString('id-ID')}</p>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => {
+                            trackEvent('Contact', { content_name: p.name });
+                            openWhatsApp(buildProductWhatsAppMessage({ productName: p.name, price: p.basePrice }));
+                          }}
+                          className="w-full mt-1 bg-[#F0F0F0] hover:bg-[#25D366] text-[#888] hover:text-black font-bold text-[10px] uppercase tracking-wider py-1.5 rounded-md transition-colors text-center"
+                        >
+                          Beli via WA
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+            }
           </div>
         </div>
       </section>
