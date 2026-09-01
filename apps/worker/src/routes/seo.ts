@@ -273,6 +273,7 @@ seoRoutes.get('/sitemap', async (c) => {
       { url: `${baseUrl}/trade-in`, changefreq: 'monthly', priority: '0.7' },
       { url: `${baseUrl}/tentang-kami`, changefreq: 'monthly', priority: '0.5' },
       { url: `${baseUrl}/hubungi-kami`, changefreq: 'monthly', priority: '0.5' },
+      { url: `${baseUrl}/jual-beli-iphone-depok`, changefreq: 'monthly', priority: '0.8' },
     ];
 
     let products: any[] = [];

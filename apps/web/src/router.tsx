@@ -17,6 +17,7 @@ import { BlogPage } from './pages/public/Blog';
 import { BlogDetailPage } from './pages/public/BlogDetail';
 import { AboutUsPage } from './pages/public/AboutUs';
 import { ContactUsPage } from './pages/public/ContactUs';
+import { DepokLandingPage } from './pages/public/DepokLanding';
 
 // Admin Pages
 import { AdminLoginPage } from './pages/admin/AdminLogin';
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
       { path: 'blog/:slug', element: <BlogDetailPage /> },
       { path: 'tentang-kami', element: <AboutUsPage /> },
       { path: 'hubungi-kami', element: <ContactUsPage /> },
+      { path: 'jual-beli-iphone-depok', element: <DepokLandingPage /> },
     ],
   },
   // Admin Login (Standalone)

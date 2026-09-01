@@ -7,8 +7,16 @@ export interface StoreSettings {
   store_phone: string;
   whatsapp_number: string;
   store_address: string;
+  store_city: string;
+  store_district: string;
+  store_postal_code: string;
   operating_hours: string;
   instagram_handle: string;
+  google_maps_url: string;
+  google_business_profile_url: string;
+  google_rating: string;
+  google_review_count: string;
+  google_review_url: string;
   homepage_hero_title: string;
   homepage_hero_subtitle: string;
   homepage_cta_text: string;
@@ -18,41 +26,44 @@ export interface StoreSettings {
 }
 
 export const DEFAULT_SETTINGS: StoreSettings = {
-  store_name: 'fincell.id',
-  store_email: 'support@fincell.id',
-  store_phone: '(021) 1234-5678',
-  whatsapp_number: '6281234567890',
-  store_address: 'Ruko Premium Apple Center, Lt. 2, Central Park Mall, Jakarta Barat, 11470',
+  store_name: 'VINCELL.ID',
+  store_email: 'info@vincellid.id',
+  store_phone: '0899-0033-684',
+  whatsapp_number: '628990033684',
+  store_address: "Jl. Masjid Jami' Al-Huda No.2a, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16424",
+  store_city: 'Depok',
+  store_district: 'Beji',
+  store_postal_code: '16424',
   operating_hours: 'Senin - Minggu: 09:00 - 21:00 WIB',
-  instagram_handle: '@fincell.id',
-  homepage_hero_title: 'Temukan iPhone yang tepat untukmu.',
-  homepage_hero_subtitle: 'iPhone pilihan dengan kondisi terpercaya, harga kompetitif, dan layanan terbaik di Indonesia.',
-  homepage_cta_text: 'Belanja Sekarang',
-  footer_tagline: 'Pusat belanja online iPhone & Apple ecosystem terpercaya dengan garansi resmi dan layanan trade-in terbaik.',
+  instagram_handle: '@vincellid',
+  google_maps_url: 'https://maps.app.goo.gl/vincellid',
+  google_business_profile_url: 'https://g.page/vincellid',
+  google_rating: '4.9',
+  google_review_count: '169',
+  google_review_url: 'https://g.page/r/vincellid/review',
+  homepage_hero_title: 'Jual Beli iPhone di Depok',
+  homepage_hero_subtitle: 'Temukan iPhone original pilihan, aksesoris resmi, dan layanan Trade In dengan proses mudah di vincellid.',
+  homepage_cta_text: 'Lihat Produk',
+  footer_tagline: 'Retailer iPhone independen di Depok. Garansi resmi, Trade In mudah, pengiriman ke seluruh Indonesia.',
   faq_content: JSON.stringify([
     {
-      q: 'Apakah seluruh iPhone di fincell.id bergaransi resmi?',
-      a: 'Ya, 100% unit bergaransi resmi Apple Indonesia (iBox/Digimap/GDN) atau eks-garansi resmi dengan jaminan garansi toko.',
+      q: 'Apakah VINCELL.ID melayani jual beli iPhone di Depok?',
+      a: "Ya. VINCELL.ID melayani kebutuhan jual beli iPhone di area Depok, khususnya Beji dan Kemiri Muka.",
     },
     {
-      q: 'Bagaimana proses layanan Trade In?',
-      a: 'Anda dapat mengisi formulir Trade In di situs kami atau langsung menghubungi WhatsApp admin untuk mendapatkan estimasi nilai tukar tambahkan unit lama Anda.',
+      q: 'Di mana lokasi VINCELL.ID?',
+      a: "VINCELL.ID berlokasi di Jl. Masjid Jami' Al-Huda No.2a, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16424.",
     },
     {
-      q: 'Metode pembayaran apa saja yang didukung?',
-      a: 'Kami menerima Pembayaran via Transfer Bank, QRIS, Kartu Kredit 0%, serta Virtual Account resmi.',
+      q: 'Apakah bisa Trade In iPhone?',
+      a: 'Ya. Kamu dapat menghubungi VINCELL.ID melalui WhatsApp untuk proses Trade In dan mendapatkan estimasi perangkat.',
+    },
+    {
+      q: 'Bagaimana cara membeli iPhone?',
+      a: 'Pilih produk yang kamu inginkan lalu hubungi VINCELL.ID melalui WhatsApp untuk mengecek ketersediaan dan proses pembelian.',
     },
   ]),
-  banners_content: JSON.stringify([
-    {
-      id: 'b1',
-      title: 'Promo Spesial Trade In iPhone 15',
-      subtitle: 'Dapatkan cashback tambahan hingga Rp 1.500.000 untuk tukar tambah unit lama!',
-      bg_color: 'from-[#111111] to-[#1A1A1A]',
-      cta: 'Tukar Sekarang',
-      link: '/trade-in',
-    },
-  ]),
+  banners_content: JSON.stringify([]),
 };
 
 export const settingsService = {

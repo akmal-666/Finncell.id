@@ -1,208 +1,263 @@
-import React, { useEffect, useState } from 'react';
-import { PageContainer } from '@/components/layout/PageContainer';
-import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
-import { Textarea } from '@/components/ui/Textarea';
-import { Button } from '@/components/ui/Button';
-import { useToast } from '@/components/ui/Toast';
-import { settingsService, StoreSettings } from '@/services/settingsService';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { MapPin, Phone, MessageCircle, Clock, Star, ExternalLink } from 'lucide-react';
 import { SeoHead } from '@/components/common/SeoHead';
-import {
-  MessageCircle,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  Instagram,
-  Send
-} from 'lucide-react';
+import { CANONICAL_NAP, buildLocalBusinessSchema } from '@/utils/localBusiness';
+import { openWhatsApp } from '@/utils/whatsapp';
+import { trackEvent } from '@/utils/analytics';
 
 export const ContactUsPage: React.FC = () => {
-  const { toast } = useToast();
-  const [settings, setSettings] = useState<StoreSettings | null>(null);
-
-  // Form Fields
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [whatsapp, setWhatsapp] = useState<string>('');
-  const [topic, setTopic] = useState<string>('Pertanyaan Produk');
-  const [message, setMessage] = useState<string>('');
-
-  useEffect(() => {
-    settingsService.getSettings().then((res) => {
-      if (res.data) setSettings(res.data);
-    });
-  }, []);
-
-  const storeName = settings?.store_name || 'vincellid';
-  const whatsappNumber = settings?.whatsapp_number || '6281234567890';
-  const emailAddr = settings?.store_email || 'support@vincellid';
-  const phone = settings?.store_phone || '(021) 1234-5678';
-  const address = settings?.store_address || 'Ruko Premium Apple Center, Lt. 2, Central Park Mall, Jakarta Barat';
-  const hours = settings?.operating_hours || 'Senin - Minggu: 09:00 - 21:00 WIB';
+  const [name, setName] = useState('');
+  const [waNum, setWaNum] = useState('');
+  const [topic, setTopic] = useState('Pertanyaan Produk');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!name.trim() || !whatsapp.trim() || !message.trim()) {
-      toast('Lengkapi Formulir', { type: 'error', message: 'Nama, No. WhatsApp, dan Pesan wajib diisi!' });
-      return;
-    }
-
-    const prefilled = `Halo ${storeName},\n\nSaya ingin bertanya mengenai ${topic}.\n\nNama: ${name}\nEmail: ${email || '-'}\nWhatsApp: ${whatsapp}\nTopik: ${topic}\n\nPesan:\n${message}`;
-    const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(prefilled)}`;
-
-    toast('Pesan Terkirim!', {
-      type: 'success',
-      message: 'Membuka WhatsApp untuk mengirimkan pesan langsung ke tim customer support...',
-    });
-
-    window.open(waUrl, '_blank');
+    if (!name.trim() || !waNum.trim() || !message.trim()) return;
+    trackEvent('Contact', { content_name: topic });
+    const text = `Halo VINCELL.ID,\n\nSaya ingin bertanya mengenai ${topic}.\n\nNama: ${name}\nWhatsApp: ${waNum}\n\nPesan:\n${message}`;
+    openWhatsApp(text);
   };
 
+  const schema = buildLocalBusinessSchema({ url: 'https://vincellid.id' });
+
   return (
-    <>
+    <div className="bg-[#050505] text-white min-h-screen">
       <SeoHead
-        title="Hubungi vincellid — Customer Care"
-        description="Hubungi tim layanan pelanggan vincellid via WhatsApp, email, atau telepon."
-        canonicalUrl="https://vincellid/tentang-kami"
+        title="Hubungi VINCELL.ID — Toko iPhone Depok"
+        description="Hubungi VINCELL.ID di Depok untuk jual beli iPhone, aksesoris, dan layanan Trade In. Chat WhatsApp atau kunjungi toko di Beji, Depok."
+        canonicalUrl="https://vincellid.id/hubungi-kami"
+        jsonLdSchema={schema}
       />
 
-      <PageContainer breadcrumbs={[{ label: 'Hubungi Kami' }]}>
-        <div className="max-w-6xl mx-auto py-8">
-          
-          <div className="mb-12">
-            <span className="text-[11px] font-bold text-[#1769E0] uppercase tracking-widest block mb-1">
-              LAYANAN PELANGGAN
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-black text-[#061426] tracking-tight">
-              Hubungi vincellid
-            </h1>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-2 max-w-xl">
-              Tim spesialis kami siap memberikan bantuan seputar ketersediaan produk, spesifikasi, serta layanan tukar tambah.
-            </p>
-          </div>
+      {/* HERO */}
+      <section className="border-b border-[#262626] py-14 px-4">
+        <div className="max-w-4xl mx-auto">
+          <span className="text-[11px] font-bold tracking-widest text-[#D6A84F] uppercase">HUBUNGI KAMI</span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-1 tracking-tight">
+            Hubungi VINCELL.ID
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-400 mt-2">
+            Tim vincellid siap membantu kebutuhan iPhone, aksesoris, dan Trade In Anda.
+          </p>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            {/* Left: Contact Information (Typography & Spacing, No Card Clutter) */}
-            <div className="lg:col-span-5 space-y-8">
-              
-              <div className="space-y-6 text-xs text-[#061426]">
-                
-                <div className="space-y-1 border-b border-[#DCE5EF] pb-4">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">WHATSAPP OFFICIAL</span>
-                  <a
-                    href={`https://wa.me/${whatsappNumber}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-base font-bold text-[#1769E0] hover:underline inline-flex items-center gap-2"
-                  >
-                    <MessageCircle className="w-4 h-4" /> +{whatsappNumber}
-                  </a>
-                  <p className="text-[#64748B]">Respon cepat 24 jam via WhatsApp</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+          {/* LEFT — Contact Info + Location */}
+          <div className="lg:col-span-5 space-y-8">
+
+            {/* Contact channels */}
+            <div className="space-y-4">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-[#D6A84F]">Kontak Langsung</h2>
+
+              <a
+                href={`https://wa.me/${CANONICAL_NAP.whatsapp}`}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackEvent('Contact', { content_name: 'WhatsApp Direct' })}
+                className="flex items-center gap-4 p-4 bg-[#101010] border border-[#262626] rounded-md hover:border-[#25D366] transition-colors group"
+              >
+                <div className="w-9 h-9 rounded bg-[#25D366]/10 flex items-center justify-center shrink-0">
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
                 </div>
-
-                <div className="space-y-1 border-b border-[#DCE5EF] pb-4">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">EMAIL &amp; TELEPON</span>
-                  <p className="font-semibold text-sm">{emailAddr}</p>
-                  <p className="text-[#64748B]">{phone}</p>
+                <div>
+                  <p className="text-xs font-bold text-white">WhatsApp</p>
+                  <p className="text-[11px] text-gray-400 font-mono">{CANONICAL_NAP.phone}</p>
                 </div>
+              </a>
 
-                <div className="space-y-1 border-b border-[#DCE5EF] pb-4">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">ALAMAT RETAIL STORE</span>
-                  <p className="font-semibold leading-relaxed">{address}</p>
+              <a
+                href={`tel:${CANONICAL_NAP.phone}`}
+                className="flex items-center gap-4 p-4 bg-[#101010] border border-[#262626] rounded-md hover:border-[#D6A84F] transition-colors group"
+              >
+                <div className="w-9 h-9 rounded bg-[#D6A84F]/10 flex items-center justify-center shrink-0">
+                  <Phone className="w-4 h-4 text-[#D6A84F]" />
                 </div>
-
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">JAM OPERASIONAL</span>
-                  <p className="font-semibold">{hours}</p>
+                <div>
+                  <p className="text-xs font-bold text-white">Telepon</p>
+                  <p className="text-[11px] text-gray-400 font-mono">{CANONICAL_NAP.phone}</p>
                 </div>
+              </a>
 
+              <div className="flex items-center gap-4 p-4 bg-[#101010] border border-[#262626] rounded-md">
+                <div className="w-9 h-9 rounded bg-[#D6A84F]/10 flex items-center justify-center shrink-0">
+                  <Clock className="w-4 h-4 text-[#D6A84F]" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white">Jam Operasional</p>
+                  <p className="text-[11px] text-gray-400">Senin – Minggu: 09:00 – 21:00 WIB</p>
+                </div>
               </div>
-
             </div>
 
-            {/* Right: Contact Form */}
-            <div className="lg:col-span-7 bg-white border border-[#DCE5EF] p-8 rounded-md space-y-6">
-              <div>
-                <h3 className="text-lg font-bold text-[#061426]">Kirim Pesan</h3>
-                <p className="text-xs text-[#64748B] mt-1">Lengkapi data untuk terhubung langsung via sistem pesan kami.</p>
+            {/* Store Location / NAP */}
+            <div className="space-y-3">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-[#D6A84F]">Lokasi Toko</h2>
+              <div className="bg-[#101010] border border-[#262626] rounded-md p-5 space-y-4">
+                <div>
+                  <p className="text-sm font-bold text-white">VINCELL.ID</p>
+                  <p className="text-[11px] text-gray-500 uppercase tracking-wider">Electronics Store</p>
+                </div>
+                <address className="not-italic text-xs text-gray-400 leading-relaxed space-y-1">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-3.5 h-3.5 text-[#D6A84F] shrink-0 mt-0.5" />
+                    <span>
+                      {CANONICAL_NAP.streetAddress},<br />
+                      {CANONICAL_NAP.neighborhood}, {CANONICAL_NAP.district},<br />
+                      {CANONICAL_NAP.city}, {CANONICAL_NAP.province} {CANONICAL_NAP.postalCode}
+                    </span>
+                  </div>
+                </address>
+                <div className="flex gap-3 pt-2">
+                  <a
+                    href="https://maps.app.goo.gl/vincellid"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 text-center text-xs font-semibold bg-[#D6A84F] hover:bg-[#F0C66A] text-black py-2 rounded transition-colors"
+                  >
+                    Google Maps
+                  </a>
+                  <a
+                    href={`https://wa.me/${CANONICAL_NAP.whatsapp}?text=Halo%20VINCELL.ID%2C%20saya%20ingin%20berkunjung%20ke%20toko.`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 text-center text-xs font-semibold bg-[#25D366] hover:bg-[#20bd5a] text-black py-2 rounded transition-colors"
+                  >
+                    Chat WhatsApp
+                  </a>
+                </div>
               </div>
+            </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#061426] mb-1">Nama Lengkap *</label>
-                    <Input
-                      placeholder="Contoh: Budi Santoso"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-[#061426] mb-1">No. WhatsApp *</label>
-                    <Input
-                      placeholder="08123456789"
-                      value={whatsapp}
-                      onChange={(e) => setWhatsapp(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
+            {/* Google Review CTA */}
+            <div className="bg-[#101010] border border-[#262626] rounded-md p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-[#D6A84F]" />
+                <span className="text-xs font-bold text-white">4.9 di Google</span>
+                <span className="text-[11px] text-gray-500">(169 ulasan)</span>
+              </div>
+              <p className="text-xs text-gray-400">Sudah berbelanja di VINCELL.ID? Bagikan pengalamanmu di Google.</p>
+              <a
+                href="https://g.page/r/vincellid/review"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D6A84F] hover:underline"
+              >
+                <span>Berikan Review di Google</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
 
+          </div>
+
+          {/* RIGHT — Contact Form */}
+          <div className="lg:col-span-7">
+            <div className="bg-[#101010] border border-[#262626] rounded-md p-8">
+              <h2 className="text-lg font-bold text-white mb-6">Kirim Pesan</h2>
+              <form onSubmit={handleSubmit} className="space-y-5 text-xs">
                 <div>
-                  <label className="block text-xs font-semibold text-[#061426] mb-1">Email (Opsional)</label>
-                  <Input
-                    placeholder="nama@email.com"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[#061426] mb-1">Topik Pertanyaan</label>
-                  <Select
-                    options={[
-                      { value: 'Pertanyaan Produk', label: 'Ketersediaan / Stok iPhone' },
-                      { value: 'Trade In', label: 'Estimasi Tukar Tambah (Trade In)' },
-                      { value: 'Konfirmasi Pesanan', label: 'Status Pesanan & Pengiriman' },
-                      { value: 'Garansi & Klaim', label: 'Klaim Garansi & Servis' },
-                      { value: 'Kerjasama / Lainnya', label: 'Lainnya' },
-                    ]}
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-[#061426] mb-1">Pesan *</label>
-                  <Textarea
-                    placeholder="Tuliskan detail pertanyaan Anda..."
-                    rows={4}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                  <label className="block text-gray-300 font-semibold uppercase mb-1.5">Nama *</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Nama lengkap"
+                    className="w-full bg-[#050505] border border-[#262626] rounded p-3 text-white focus:border-[#D6A84F] focus:outline-none"
                     required
                   />
                 </div>
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full bg-[#061426] hover:bg-[#1769E0] text-white font-semibold text-xs tracking-wider uppercase py-3.5 rounded-md transition-colors"
-                  leftIcon={<Send className="w-4 h-4" />}
-                >
-                  Kirim Pesan WhatsApp
-                </Button>
+                <div>
+                  <label className="block text-gray-300 font-semibold uppercase mb-1.5">Nomor WhatsApp *</label>
+                  <input
+                    type="tel"
+                    value={waNum}
+                    onChange={e => setWaNum(e.target.value)}
+                    placeholder="08xx-xxxx-xxxx"
+                    className="w-full bg-[#050505] border border-[#262626] rounded p-3 text-white focus:border-[#D6A84F] focus:outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 font-semibold uppercase mb-1.5">Topik</label>
+                  <select
+                    value={topic}
+                    onChange={e => setTopic(e.target.value)}
+                    className="w-full bg-[#050505] border border-[#262626] rounded p-3 text-white focus:border-[#D6A84F] focus:outline-none"
+                  >
+                    <option>Pertanyaan Produk</option>
+                    <option>Trade In iPhone</option>
+                    <option>Informasi Garansi</option>
+                    <option>Pengiriman</option>
+                    <option>Lainnya</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-gray-300 font-semibold uppercase mb-1.5">Pesan *</label>
+                  <textarea
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    rows={5}
+                    placeholder="Tulis pertanyaan atau pesan Anda..."
+                    className="w-full bg-[#050505] border border-[#262626] rounded p-3 text-white focus:border-[#D6A84F] focus:outline-none resize-none"
+                    required
+                  />
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-[#25D366] hover:bg-[#20bd5a] text-black font-bold uppercase tracking-wider py-3 rounded transition-colors"
+                  >
+                    Kirim via WhatsApp
+                  </button>
+                  <a
+                    href={`https://wa.me/${CANONICAL_NAP.whatsapp}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 text-center bg-[#D6A84F] hover:bg-[#F0C66A] text-black font-bold uppercase tracking-wider py-3 rounded transition-colors"
+                  >
+                    Chat Langsung
+                  </a>
+                </div>
               </form>
             </div>
 
+            {/* Embedded Google Maps iframe placeholder — URL configurable via admin */}
+            <div className="mt-6 bg-[#101010] border border-[#262626] rounded-md overflow-hidden">
+              <iframe
+                title="Lokasi VINCELL.ID di Depok"
+                src="https://www.google.com/maps/embed/v1/place?key=&q=VINCELL.ID,Depok"
+                width="100%"
+                height="280"
+                style={{ border: 0, filter: 'grayscale(30%) invert(90%) hue-rotate(180deg)' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <div className="p-3 flex justify-between items-center text-[11px] text-gray-500">
+                <span>VINCELL.ID — {CANONICAL_NAP.neighborhood}, {CANONICAL_NAP.city}</span>
+                <a href="https://maps.app.goo.gl/vincellid" target="_blank" rel="noreferrer" className="text-[#D6A84F] hover:underline">
+                  Buka di Google Maps
+                </a>
+              </div>
+            </div>
           </div>
 
         </div>
-      </PageContainer>
-    </>
+      </div>
+
+      {/* Internal link to local SEO page */}
+      <div className="border-t border-[#262626] py-8 text-center">
+        <p className="text-xs text-gray-500">
+          Mencari informasi jual beli iPhone di Depok?{' '}
+          <Link to="/jual-beli-iphone-depok" className="text-[#D6A84F] hover:underline">
+            Lihat halaman Jual Beli iPhone Depok
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 };
