@@ -264,14 +264,13 @@ seoRoutes.delete('/redirects/:id', async (c) => {
 seoRoutes.get('/sitemap', async (c) => {
   try {
     const db = c.env.DB;
-    const baseUrl = 'https://fincell.id';
+    const baseUrl = 'https://vincellid.id';
 
     const staticPages = [
       { url: baseUrl, changefreq: 'daily', priority: '1.0' },
       { url: `${baseUrl}/produk`, changefreq: 'daily', priority: '0.9' },
       { url: `${baseUrl}/blog`, changefreq: 'weekly', priority: '0.8' },
       { url: `${baseUrl}/trade-in`, changefreq: 'monthly', priority: '0.7' },
-      { url: `${baseUrl}/promo`, changefreq: 'weekly', priority: '0.7' },
       { url: `${baseUrl}/tentang-kami`, changefreq: 'monthly', priority: '0.5' },
       { url: `${baseUrl}/hubungi-kami`, changefreq: 'monthly', priority: '0.5' },
     ];
@@ -347,7 +346,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://fincell.id/sitemap.xml`;
+Sitemap: https://vincellid.id/sitemap.xml`;
 
     return new Response(robots, {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },

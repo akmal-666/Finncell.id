@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Card } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { useAuth } from '@/context/AuthContext';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ShieldCheck, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export const AdminLoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -43,64 +40,65 @@ export const AdminLoginPage: React.FC = () => {
 
         {/* Header */}
         <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 text-2xl font-bold tracking-tighter">
-            <ShieldCheck className="w-6 h-6 text-[#E7B65A]" />
-            <span><span className="text-[#E7B65A]">fincell</span>.id</span>
-          </Link>
-          <h2 className="text-xl font-extrabold text-white">Portal Admin Platform</h2>
-          <p className="text-xs text-gray-400">Masuk untuk mengelola produk, pesanan, SEO, dan konfigurasi toko.</p>
+          <div className="inline-flex items-center gap-2 text-2xl font-bold tracking-tight text-white">
+            <span>vincellid</span>
+            <span className="w-2 h-2 rounded-full bg-[#D6A84F]" />
+          </div>
+          <h2 className="text-lg font-extrabold text-gray-200 uppercase tracking-wider">Portal Internal Admin</h2>
+          <p className="text-xs text-gray-400">Otentikasi aman untuk pengelolaan produk, konten, dan konfigurasi toko.</p>
         </div>
 
         {/* Card Form */}
-        <Card variant="dark" className="p-8 space-y-4 border border-gray-800 shadow-2xl">
+        <div className="bg-[#101010] border border-[#262626] rounded-md p-8 space-y-5 shadow-2xl">
           {errorMsg && (
-            <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-xs flex items-start gap-2">
+            <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded text-rose-400 text-xs flex items-start gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              label="Email Administrator"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              leftIcon={<Mail className="w-4 h-4" />}
-              className="bg-[#1A1A1A] border-gray-800 text-white placeholder-gray-500 focus:border-[#E7B65A]"
-              required
-            />
-            <Input
-              label="Kata Sandi"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              leftIcon={<Lock className="w-4 h-4" />}
-              className="bg-[#1A1A1A] border-gray-800 text-white placeholder-gray-500 focus:border-[#E7B65A]"
-              required
-            />
-            <Button
-              variant="secondary"
-              size="lg"
-              className="w-full"
-              type="submit"
-              isLoading={isSubmitting}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-            >
-              Masuk ke Dashboard
-            </Button>
-          </form>
-        </Card>
+            <div>
+              <label className="block text-xs font-semibold text-gray-300 uppercase mb-1.5">Email Administrator</label>
+              <div className="relative">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 bg-[#050505] border border-[#262626] rounded text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D6A84F]"
+                  required
+                />
+                <Mail className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              </div>
+            </div>
 
-        {/* Demo credentials tip */}
-        <div className="p-4 bg-gray-900/60 border border-gray-800 rounded-xl text-[11px] text-gray-400 space-y-1">
-          <p className="font-bold text-gray-300 uppercase tracking-wider text-[10px]">Credential Default Admin:</p>
-          <p className="font-mono">Email: <span className="text-[#E7B65A]">admin@fincell.id</span></p>
-          <p className="font-mono">Password: <span className="text-[#E7B65A]">admin123</span></p>
+            <div>
+              <label className="block text-xs font-semibold text-gray-300 uppercase mb-1.5">Kata Sandi</label>
+              <div className="relative">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 bg-[#050505] border border-[#262626] rounded text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D6A84F]"
+                  required
+                />
+                <Lock className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-[#D6A84F] hover:bg-[#F0C66A] text-black font-bold text-xs uppercase tracking-wider py-3 rounded-md transition-colors flex items-center justify-center gap-2"
+            >
+              <span>{isSubmitting ? 'Memproses...' : 'Masuk Portal'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
         </div>
 
-        <p className="text-center text-xs text-gray-600">
-          fincell.id Secure Admin Portal • Phase 10 Authentication & RBAC
+        <p className="text-center text-[11px] text-gray-600 font-mono">
+          vincellid Secure Portal • Internal Access Only
         </p>
 
       </div>

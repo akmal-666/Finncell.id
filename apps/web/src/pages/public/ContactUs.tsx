@@ -34,9 +34,9 @@ export const ContactUsPage: React.FC = () => {
     });
   }, []);
 
-  const storeName = settings?.store_name || 'fincell.id';
+  const storeName = settings?.store_name || 'vincellid';
   const whatsappNumber = settings?.whatsapp_number || '6281234567890';
-  const emailAddr = settings?.store_email || 'support@fincell.id';
+  const emailAddr = settings?.store_email || 'support@vincellid';
   const phone = settings?.store_phone || '(021) 1234-5678';
   const address = settings?.store_address || 'Ruko Premium Apple Center, Lt. 2, Central Park Mall, Jakarta Barat';
   const hours = settings?.operating_hours || 'Senin - Minggu: 09:00 - 21:00 WIB';
@@ -63,9 +63,9 @@ export const ContactUsPage: React.FC = () => {
   return (
     <>
       <SeoHead
-        title="Hubungi fincell.id — Customer Care"
-        description="Hubungi tim layanan pelanggan fincell.id via WhatsApp, email, atau telepon."
-        canonicalUrl="https://fincell.id/tentang-kami"
+        title="Hubungi vincellid — Customer Care"
+        description="Hubungi tim layanan pelanggan vincellid via WhatsApp, email, atau telepon."
+        canonicalUrl="https://vincellid/tentang-kami"
       />
 
       <PageContainer breadcrumbs={[{ label: 'Hubungi Kami' }]}>
@@ -76,7 +76,7 @@ export const ContactUsPage: React.FC = () => {
               LAYANAN PELANGGAN
             </span>
             <h1 className="text-3xl sm:text-5xl font-black text-[#061426] tracking-tight">
-              Hubungi fincell.id
+              Hubungi vincellid
             </h1>
             <p className="text-xs sm:text-sm text-[#64748B] mt-2 max-w-xl">
               Tim spesialis kami siap memberikan bantuan seputar ketersediaan produk, spesifikasi, serta layanan tukar tambah.

@@ -25,7 +25,7 @@ export class StorageService {
   private bucket?: any; // Cloudflare R2 / S3-compatible B2 binding
   private publicBaseUrl: string;
 
-  constructor(bucketBinding?: any, publicBaseUrl: string = 'https://fincell.id') {
+  constructor(bucketBinding?: any, publicBaseUrl: string = 'https://vincellid.id') {
     this.bucket = bucketBinding;
     this.publicBaseUrl = publicBaseUrl.replace(/\/$/, '');
   }

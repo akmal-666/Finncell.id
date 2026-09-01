@@ -1,505 +1,313 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/Button';
-import { productService } from '@/services/productService';
-import { formatRupiah } from '@/lib/utils';
-import { Product } from '@fincell/shared';
-import {
-  ArrowRight,
-  ShieldCheck,
-  Truck,
-  CheckCircle2,
-  Star,
-  ShoppingBag,
-  RefreshCw,
-  Sparkles
-} from 'lucide-react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Shield, Truck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { openWhatsApp, buildProductWhatsAppMessage } from '@/utils/whatsapp';
+import { trackEvent } from '@/utils/analytics';
 
 export const HomePage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [activeSlide, setActiveSlide] = useState<number>(0);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      try {
-        const res = await productService.getProducts();
-        if (res.success && res.data) {
-          setProducts(res.data);
-        }
-      } catch (err) {
-        console.error('Failed loading products', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadProducts();
-  }, []);
+  const handleHeroBuyClick = () => {
+    trackEvent('Contact', { content_name: 'iPhone 17 Pro Max Hero CTA' });
+    const message = buildProductWhatsAppMessage({
+      productName: 'iPhone 17 Pro Max',
+      storage: '256GB',
+      color: 'Orange',
+    });
+    openWhatsApp(message);
+  };
 
-  // Static product list matching reference if API items are fewer
-  const bestSellers = [
-    {
-      id: 'p1',
-      name: 'iPhone 15 Pro Max',
-      spec: '256GB - Natural Titanium',
-      price: 23999000,
-      originalPrice: undefined,
-      discount: undefined,
-      rating: 4.9,
-      reviews: 128,
-      slug: 'iphone-15-pro-max',
-      image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop'
-    },
-    {
-      id: 'p2',
-      name: 'iPhone 15',
-      spec: '128GB - Pink',
-      price: 14999000,
-      originalPrice: undefined,
-      discount: undefined,
-      rating: 4.8,
-      reviews: 96,
-      slug: 'iphone-15',
-      image: 'https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=800&auto=format&fit=crop'
-    },
-    {
-      id: 'p3',
-      name: 'iPhone 14',
-      spec: '128GB - Blue',
-      price: 11199000,
-      originalPrice: 11999000,
-      discount: '-7%',
-      rating: 4.7,
-      reviews: 85,
-      slug: 'iphone-14',
-      image: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=800&auto=format&fit=crop'
-    },
-    {
-      id: 'p4',
-      name: 'iPhone 13',
-      spec: '128GB - Midnight',
-      price: 8999000,
-      originalPrice: undefined,
-      discount: undefined,
-      rating: 4.6,
-      reviews: 64,
-      slug: 'iphone-13',
-      image: 'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=800&auto=format&fit=crop'
-    },
-    {
-      id: 'p5',
-      name: 'iPhone SE (3rd Gen)',
-      spec: '64GB - Starlight',
-      price: 5999000,
-      originalPrice: undefined,
-      discount: undefined,
-      rating: 4.6,
-      reviews: 48,
-      slug: 'iphone-se-3rd-gen',
-      image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop'
-    }
-  ];
+  const handleFeaturedClick = (slug: string) => {
+    trackEvent('ViewContent', { content_name: slug });
+    navigate(`/produk/${slug}`);
+  };
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#E7B65A] selection:text-black">
-      
-      {/* ─────────────────────────────────────────────────────────────
-          1. HERO SECTION (Dark Premium iStore Style)
-      ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#050505] via-[#0a0a0c] to-[#050505] pt-8 pb-16 border-b border-white/10">
-        
-        {/* Ambient Glow */}
-        <div className="absolute top-1/3 right-10 w-[550px] h-[550px] bg-gray-500/10 blur-[160px] rounded-full pointer-events-none" />
+    <div className="bg-[#050505] text-white">
+
+      {/* HERO SECTION - MIDNIGHT GOLD */}
+      <section className="relative overflow-hidden bg-[#050505] pt-12 pb-20 lg:pt-20 lg:pb-32 border-b border-[#262626]">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#D6A84F]/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Column Text Content */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              
-              {/* New Arrival Badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 bg-white/5 text-xs text-gray-300 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E7B65A] animate-pulse" />
-                New Arrival
-              </div>
+            {/* Left Content */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <span className="inline-block text-[11px] font-semibold tracking-widest uppercase text-[#D6A84F] bg-[#D6A84F]/10 border border-[#D6A84F]/20 px-3 py-1 rounded-sm">
+                NEW ARRIVAL
+              </span>
 
-              {/* Sub-Brand Title with Apple Logo */}
-              <div className="flex items-center gap-2 text-xl sm:text-2xl font-bold text-gray-200">
-                <span className="text-2xl sm:text-3xl"></span>
-                <span>iPhone 15 Pro</span>
-              </div>
-
-              {/* Main Headline */}
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.05]">
-                Titanium.<br />
-                <span className="text-gray-300 font-extrabold">So strong. So light.</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08]">
+                Pro. Melampaui.
+                <br />
+                <span className="text-[#D6A84F]">Dalam segala hal.</span>
               </h1>
 
-              {/* Subtitle */}
               <p className="text-sm sm:text-base text-gray-400 max-w-lg leading-relaxed">
-                iPhone 15 Pro dengan desain titanium yang kuat namun ringan. Dibuat untuk masa depan.
+                Performa ekstrem. Desain premium. Pengalaman iPhone yang lebih berani untuk kebutuhan profesional Anda.
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link to="/produk">
-                  <button className="px-6 py-3.5 bg-white text-black hover:bg-gray-200 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 shadow-lg shadow-white/10 group">
-                    <span>Belanja Sekarang</span>
-                    <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
-                      →
-                    </span>
-                  </button>
-                </Link>
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <button
+                  onClick={handleHeroBuyClick}
+                  className="bg-[#25D366] hover:bg-[#20bd5a] text-black font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-md transition-colors text-center"
+                >
+                  Belanja via WhatsApp
+                </button>
 
-                <Link to="/produk/iphone-15-pro-max">
-                  <button className="px-6 py-3.5 bg-transparent border border-white/30 text-white hover:bg-white/10 rounded-full font-semibold text-xs sm:text-sm transition-all duration-300">
-                    Lihat Detail
-                  </button>
+                <Link
+                  to="/produk/iphone-17-pro-max"
+                  className="border border-[#262626] hover:border-[#D6A84F] text-white font-medium text-xs tracking-wider uppercase px-8 py-3.5 rounded-md transition-colors text-center inline-flex items-center justify-center gap-2"
+                >
+                  <span>Lihat Detail</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
-
-              {/* Guarantee Badges Row */}
-              <div className="pt-8 grid grid-cols-3 gap-3 text-left border-t border-white/10 text-xs sm:text-xs">
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold text-white leading-tight">Garansi Resmi</p>
-                    <p className="text-[11px] text-gray-400">Apple Indonesia</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2">
-                  <Truck className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold text-white leading-tight">Pengiriman Cepat</p>
-                    <p className="text-[11px] text-gray-400">Seluruh Indonesia</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-2">
-                  <ShieldCheck className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold text-white leading-tight">100% Original</p>
-                    <p className="text-[11px] text-gray-400">Produk Bergaransi</p>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
-            {/* Right Column Product Render Image */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              <div className="relative w-full max-w-lg aspect-[4/3] sm:aspect-square flex items-center justify-center">
-                
-                {/* Product Shot */}
+            {/* Right Product Render - Seamless Background Integration */}
+            <div className="lg:col-span-6 flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-md lg:max-w-lg aspect-square flex items-center justify-center">
                 <img
-                  src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1000&auto=format&fit=crop"
-                  alt="iPhone 15 Pro Titanium"
-                  className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(255,255,255,0.08)] hover:scale-105 transition-transform duration-700"
+                  src="/images/iphone17_transparent.png"
+                  alt="iPhone 17 Pro Max"
+                  className="w-full h-auto max-h-[500px] object-contain filter drop-shadow-[0_20px_40px_rgba(214,168,79,0.15)] transition-transform duration-500 hover:scale-[1.02]"
                 />
               </div>
-
-              {/* Slider Dots Indicator */}
-              <div className="flex items-center gap-2 mt-4">
-                {[0, 1, 2, 3].map((dot) => (
-                  <button
-                    key={dot}
-                    onClick={() => setActiveSlide(dot)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      activeSlide === dot ? 'w-6 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'
-                    }`}
-                    aria-label={`Slide ${dot + 1}`}
-                  />
-                ))}
-              </div>
             </div>
 
+          </div>
+        </div>
+
+        {/* HERO TRUST STRIP */}
+        <div className="mt-16 border-t border-[#262626]/60 pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+            <div className="flex items-center gap-3">
+              <Shield className="w-4 h-4 text-[#D6A84F] shrink-0" />
+              <div>
+                <p className="text-xs font-semibold text-white">Garansi Resmi</p>
+                <p className="text-[11px] text-gray-500">Apple Indonesia</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Truck className="w-4 h-4 text-[#D6A84F] shrink-0" />
+              <div>
+                <p className="text-xs font-semibold text-white">Pengiriman Cepat</p>
+                <p className="text-[11px] text-gray-500">Seluruh Indonesia</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-4 h-4 text-[#D6A84F] shrink-0" />
+              <div>
+                <p className="text-xs font-semibold text-white">100% Original</p>
+                <p className="text-[11px] text-gray-500">Produk Terverifikasi</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Shield className="w-4 h-4 text-[#D6A84F] shrink-0" />
+              <div>
+                <p className="text-xs font-semibold text-white">Produk Bergaransi</p>
+                <p className="text-[11px] text-gray-500">Jaminan Unit Baru</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
 
-      {/* ─────────────────────────────────────────────────────────────
-          2. EXPLORE CATEGORIES SECTION ("Jelajahi Produk")
-      ────────────────────────────────────────────────────────────── */}
-      <section className="bg-[#f5f6f8] text-[#111111] py-14">
+      {/* PRODUCT DISCOVERY - CLEAN WHITE CONTRAST */}
+      <section className="bg-white text-black py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Header */}
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
-                Jelajahi Produk
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">
-                Pilih iPhone yang <span className="text-gray-400 font-normal">Sesuai</span> untukmu
-              </h2>
-            </div>
-
-            <Link
-              to="/produk"
-              className="text-xs font-bold text-black hover:text-gray-600 flex items-center gap-1 transition-colors"
-            >
-              <span>Lihat Semua</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+          <div className="mb-12">
+            <span className="text-[11px] font-bold tracking-widest text-[#B88A32] uppercase">JELAJAHI PRODUK</span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mt-1">
+              Pilih iPhone sesuai kebutuhanmu.
+            </h2>
           </div>
 
-          {/* 5 Category Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            
-            {/* Card 1: iPhone 15 Series */}
-            <Link to="/produk?series=15" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone 15 Series"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone 15 Series</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Terbaru</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 2: iPhone 14 Series */}
-            <Link to="/produk?series=14" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone 14 Series"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone 14 Series</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Populer</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 3: iPhone 13 Series */}
-            <Link to="/produk?series=13" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone 13 Series"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone 13 Series</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Hemat & Berkualitas</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 4: iPhone SE */}
-            <Link to="/produk?series=se" className="group">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=400&auto=format&fit=crop"
-                    alt="iPhone SE"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">iPhone SE</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Ringkas & Powerful</p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Card 5: Semua iPhone */}
-            <Link to="/produk" className="group col-span-2 sm:col-span-1">
-              <div className="bg-[#eaecee] hover:bg-[#e2e5e8] rounded-2xl p-5 text-center flex flex-col items-center justify-between h-56 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                <div className="w-full h-28 flex items-center justify-center">
-                  <img
-                    src="https://images.unsplash.com/photo-1695048065449-35c8e310034a?q=80&w=400&auto=format&fit=crop"
-                    alt="Semua iPhone"
-                    className="max-h-24 object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-sm font-extrabold text-black">Semua iPhone</h3>
-                  <p className="text-[11px] text-gray-500 font-medium">Lihat Semua</p>
-                </div>
-              </div>
-            </Link>
-
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* ─────────────────────────────────────────────────────────────
-          3. BEST SELLER PRODUCTS SECTION ("Produk Terlaris")
-      ────────────────────────────────────────────────────────────── */}
-      <section className="bg-[#0b0c10] py-16 text-white border-t border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Header */}
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-                Best Seller
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Produk Terlaris
-              </h2>
-            </div>
-
-            <Link
-              to="/produk"
-              className="text-xs font-bold text-gray-300 hover:text-white flex items-center gap-1 transition-colors"
-            >
-              <span>Lihat Semua</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          {/* 5 Dark Product Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {bestSellers.map((item) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+            {[
+              { label: 'iPhone 17 Series', query: '17', img: '/images/iphone17_transparent.png' },
+              { label: 'iPhone 16 Series', query: '16', img: '/images/iphone17pm_transparent.png' },
+              { label: 'iPhone 15 Series', query: '15', img: '/images/hero-iphone17-gold.png' },
+              { label: 'iPhone SE', query: 'se', img: '/images/iphone17_transparent.png' },
+              { label: 'Accessories', query: 'aksesoris', img: '/images/iphone17pm.png' },
+            ].map((cat) => (
               <div
-                key={item.id}
-                className="bg-[#12141c] border border-white/10 rounded-2xl p-4 flex flex-col justify-between hover:border-white/20 transition-all duration-300 hover:-translate-y-1 group"
+                key={cat.label}
+                onClick={() => navigate(`/produk?category=${encodeURIComponent(cat.query)}`)}
+                className="group cursor-pointer bg-[#F5F5F3] p-6 rounded-md hover:bg-gray-100 transition-colors border border-gray-200 text-center flex flex-col items-center justify-between"
               >
-                {/* Product Image */}
-                <div className="relative aspect-square w-full rounded-xl bg-[#090a0e] p-3 flex items-center justify-center mb-3 overflow-hidden">
-                  {item.discount && (
-                    <span className="absolute top-2 left-2 px-2 py-0.5 bg-blue-600 text-white text-[10px] font-black rounded-md z-10">
-                      {item.discount}
-                    </span>
-                  )}
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="max-h-36 object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
+                <div className="w-24 h-24 mb-4 flex items-center justify-center">
+                  <img src={cat.img} alt={cat.label} className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform" />
+                </div>
+                <p className="text-xs font-bold text-gray-900 uppercase tracking-wide">{cat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* EDITORIAL FEATURED PRODUCT */}
+      <section className="bg-[#080808] py-20 lg:py-28 border-y border-[#262626]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7">
+              <img
+                src="/images/iphone17pm_transparent.png"
+                alt="iPhone 17 Pro Max Editorial"
+                className="w-full max-h-[450px] object-contain mx-auto"
+              />
+            </div>
+            <div className="lg:col-span-5 space-y-6">
+              <span className="text-[11px] font-bold tracking-widest text-[#D6A84F] uppercase">FEATURED EDITION</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Pro yang tidak perlu banyak bicara.
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                Performa, kamera, dan desain yang dirancang untuk penggunaan tanpa kompromi. Setiap detail telah dikurasi oleh vincellid untuk standar tinggi Anda.
+              </p>
+              <div>
+                <button
+                  onClick={() => handleFeaturedClick('iphone-17-pro-max')}
+                  className="bg-[#D6A84F] hover:bg-[#F0C66A] text-black font-semibold text-xs tracking-wider uppercase px-8 py-3 rounded-md transition-colors"
+                >
+                  Lihat Detail
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* PRODUCT COLLECTION GRID */}
+      <section className="py-20 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <span className="text-[11px] font-bold tracking-widest text-[#D6A84F] uppercase">KATALOG PILIHAN</span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">Produk Pilihan</h2>
+            </div>
+            <Link to="/produk" className="text-xs text-[#D6A84F] hover:underline font-semibold uppercase tracking-wider">
+              Lihat Semua &rarr;
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { name: 'iPhone 17 Pro Max', storage: '256GB', price: 24999000, slug: 'iphone-17-pro-max', img: '/images/iphone17_transparent.png' },
+              { name: 'iPhone 17 Pro', storage: '128GB', price: 21999000, slug: 'iphone-17-pro', img: '/images/iphone17pm_transparent.png' },
+              { name: 'iPhone 16 Pro Max', storage: '256GB', price: 22499000, slug: 'iphone-16-pro-max', img: '/images/hero-iphone17-gold.png' },
+              { name: 'iPhone 15', storage: '128GB', price: 14299000, slug: 'iphone-15', img: '/images/iphone17_transparent.png' },
+            ].map((product) => (
+              <div
+                key={product.slug}
+                className="bg-[#101010] border border-[#262626] rounded-md p-5 flex flex-col justify-between hover:border-[#D6A84F] transition-colors group"
+              >
+                <div
+                  onClick={() => navigate(`/produk/${product.slug}`)}
+                  className="cursor-pointer space-y-4"
+                >
+                  <div className="aspect-square flex items-center justify-center p-4 bg-[#080808] rounded-sm">
+                    <img src={product.img} alt={product.name} className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-gray-500 uppercase font-mono">{product.storage}</p>
+                    <h3 className="text-sm font-bold text-white group-hover:text-[#D6A84F] transition-colors">{product.name}</h3>
+                    <p className="text-xs font-semibold text-[#D6A84F] mt-1">
+                      Rp {product.price.toLocaleString('id-ID')}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Meta info */}
-                <div className="space-y-1.5">
-                  <h3 className="text-xs font-bold text-white truncate group-hover:text-[#E7B65A] transition-colors">
-                    <Link to={`/produk/${item.slug}`}>{item.name}</Link>
-                  </h3>
-                  <p className="text-[11px] text-gray-400 truncate">{item.spec}</p>
-
-                  {/* Rating & Reviews */}
-                  <div className="flex items-center gap-1 text-[11px] text-gray-300 pt-0.5">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span className="font-bold text-white">{item.rating}</span>
-                    <span className="text-gray-500">({item.reviews})</span>
-                  </div>
-
-                  {/* Price & Action */}
-                  <div className="pt-2 flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-black text-white">{formatRupiah(item.price)}</p>
-                      {item.originalPrice && (
-                        <p className="text-[10px] text-gray-500 line-through">
-                          {formatRupiah(item.originalPrice)}
-                        </p>
-                      )}
-                    </div>
-
-                    <Link
-                      to={`/produk/${item.slug}`}
-                      className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center transition-all duration-300"
-                      title="Beli"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
+                <div className="pt-4">
+                  <button
+                    onClick={() => {
+                      trackEvent('Contact', { content_name: product.name });
+                      openWhatsApp(buildProductWhatsAppMessage({ productName: product.name, storage: product.storage, price: product.price }));
+                    }}
+                    className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-black font-semibold text-[11px] tracking-wider uppercase py-2 rounded-sm transition-colors text-center"
+                  >
+                    Beli via WhatsApp
+                  </button>
                 </div>
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
 
-      {/* ─────────────────────────────────────────────────────────────
-          4. TRADE IN BANNER SECTION ("Tukar Tambah Dapat Untung")
-      ────────────────────────────────────────────────────────────── */}
-      <section className="py-16 bg-[#050505]">
+      {/* TRADE IN EDITORIAL SECTION */}
+      <section className="bg-[#080808] py-20 lg:py-28 border-t border-[#262626]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="relative rounded-3xl bg-gradient-to-r from-[#0d0e14] via-[#12141f] to-[#0d0e14] border border-white/15 p-8 sm:p-12 overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
-            
-            {/* Ambient Background Glow */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#E7B65A]/10 blur-[130px] rounded-full pointer-events-none" />
-
-            {/* Left Text */}
-            <div className="space-y-5 max-w-xl text-left relative z-10">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                Tukar Tambah Dapat Untung
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-[11px] font-bold tracking-widest text-[#D6A84F] uppercase">TRADE IN SERVICE</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Tukar iPhone lamamu.
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                Dapatkan estimasi nilai perangkatmu secara transparan dan gunakan langsung untuk upgrade ke generasi iPhone berikutnya.
               </p>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Trade in iPhone lamamu dapatkan potongan harga hingga{' '}
-                <span className="text-[#E7B65A]">Rp 2.000.000</span>
-              </h2>
-
-              {/* Action Button */}
-              <div>
-                <Link to="/trade-in">
-                  <button className="px-6 py-3 bg-white text-black hover:bg-gray-200 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 inline-flex items-center gap-2 shadow-lg">
-                    <span>Cek Harga Trade In</span>
-                    <span>→</span>
-                  </button>
-                </Link>
-              </div>
-
-              {/* Trust Checkmarks */}
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-3 text-xs text-gray-300 font-medium border-t border-white/10">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Proses cepat & mudah
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Harga terbaik
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                  Aman & terpercaya
-                </span>
-              </div>
-            </div>
-
-            {/* Right Side Image (Hands holding 2 iPhones with transfer symbol) */}
-            <div className="relative z-10 w-full lg:w-96 flex items-center justify-center shrink-0">
-              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 bg-[#090a0e]/60 flex items-center justify-center">
-                <img
-                  src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&auto=format&fit=crop"
-                  alt="Trade In iPhone"
-                  className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0e14] via-transparent to-transparent opacity-80" />
-                <div className="absolute p-3 rounded-full bg-white/10 backdrop-blur-md text-[#E7B65A] border border-white/20">
-                  <RefreshCw className="w-6 h-6 animate-spin-slow" />
+              <div className="grid grid-cols-2 gap-4 py-4 text-xs">
+                <div>
+                  <span className="text-[#D6A84F] font-mono font-bold block text-base">01</span>
+                  <p className="text-white font-medium">Pilih perangkat</p>
+                </div>
+                <div>
+                  <span className="text-[#D6A84F] font-mono font-bold block text-base">02</span>
+                  <p className="text-white font-medium">Kirim detail</p>
+                </div>
+                <div>
+                  <span className="text-[#D6A84F] font-mono font-bold block text-base">03</span>
+                  <p className="text-white font-medium">Dapat estimasi</p>
+                </div>
+                <div>
+                  <span className="text-[#D6A84F] font-mono font-bold block text-base">04</span>
+                  <p className="text-white font-medium">Upgrade</p>
                 </div>
               </div>
+
+              <div>
+                <Link
+                  to="/trade-in"
+                  className="bg-[#D6A84F] hover:bg-[#F0C66A] text-black font-semibold text-xs tracking-wider uppercase px-8 py-3 rounded-md transition-colors inline-block"
+                >
+                  Mulai Trade In
+                </Link>
+              </div>
             </div>
 
+            <div className="lg:col-span-6 flex justify-center">
+              <img src="/images/iphone17_transparent.png" alt="Trade In Vincellid" className="max-h-[400px] object-contain" />
+            </div>
           </div>
+        </div>
+      </section>
 
+
+      {/* CONTACT CTA */}
+      <section className="bg-[#050505] py-16 text-center border-t border-[#262626]">
+        <div className="max-w-3xl mx-auto px-4 space-y-4">
+          <h2 className="text-2xl font-bold text-white">Butuh konsultasi tipe iPhone yang tepat?</h2>
+          <p className="text-xs text-gray-400">Tim spesialis vincellid siap membantu memberikan rekomendasi terbaik sesuai kebutuhan Anda.</p>
+          <div className="pt-2">
+            <button
+              onClick={() => openWhatsApp('Halo vincellid, saya ingin konsultasi produk iPhone.')}
+              className="bg-[#25D366] hover:bg-[#20bd5a] text-black font-semibold text-xs tracking-wider uppercase px-8 py-3 rounded-md transition-colors"
+            >
+              Konsultasi via WhatsApp
+            </button>
+          </div>
         </div>
       </section>
 
     </div>
   );
 };
-
-export default HomePage;

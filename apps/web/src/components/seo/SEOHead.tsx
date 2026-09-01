@@ -63,19 +63,19 @@ function buildSchema(
 
   switch (schemaType) {
     case 'Organization':
-      return { ...base, name: base.name || siteName, url: base.url || 'https://fincell.id', logo: base.logo || ogImage };
+      return { ...base, name: base.name || siteName, url: base.url || 'https://vincellid', logo: base.logo || ogImage };
     case 'LocalBusiness':
       return {
         ...base,
         '@type': 'LocalBusiness',
         name: base.name || siteName,
-        url: 'https://fincell.id',
+        url: 'https://vincellid',
         image: ogImage,
         priceRange: '$$',
         address: base.address || { '@type': 'PostalAddress', addressLocality: 'Jakarta', addressCountry: 'ID' },
       };
     case 'WebPage':
-      return { ...base, name: title, description, url: canonical || 'https://fincell.id' };
+      return { ...base, name: title, description, url: canonical || 'https://vincellid' };
     case 'Product':
       return {
         ...base,
@@ -106,17 +106,17 @@ function buildSchema(
  * No external dependencies required.
  */
 export const SEOHead: React.FC<SEOHeadProps> = ({
-  title = 'fincell.id — Toko iPhone & Apple Ecosystem Garansi Resmi',
+  title = 'vincellid — Toko iPhone & Apple Ecosystem Garansi Resmi',
   description = 'Beli iPhone 15, 14, 13 series bergaransi resmi Apple Indonesia. Trade-in instan dengan harga terbaik.',
   canonical,
   ogTitle,
   ogDescription,
-  ogImage = 'https://fincell.id/og-image.jpg',
+  ogImage = 'https://vincellid/og-image.jpg',
   noIndex = false,
   noFollow = false,
   schemaType,
   schemaData,
-  siteName = 'fincell.id',
+  siteName = 'vincellid',
 }) => {
   useEffect(() => {
     document.title = title;

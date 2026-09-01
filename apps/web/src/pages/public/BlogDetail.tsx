@@ -130,7 +130,7 @@ export const BlogDetailPage: React.FC = () => {
                 </p>
               ))
             ) : (
-              <p>Artikel ini berisi informasi dan panduan komprehensif dari tim pakar fincell.id seputar ekosistem produk Apple.</p>
+              <p>Artikel ini berisi informasi dan panduan komprehensif dari tim pakar vincellid seputar ekosistem produk Apple.</p>
             )}
           </div>
 
@@ -143,12 +143,12 @@ export const BlogDetailPage: React.FC = () => {
               <Sparkles className="w-5 h-5 text-[#E7B65A]" /> Ada Pertanyaan Lebih Lanjut?
             </h3>
             <p className="text-xs text-gray-300 max-w-md">
-              Tim customer support fincell.id siap memberikan rekomendasi iPhone terbaik sesuai anggaran Anda.
+              Tim customer support vincellid siap memberikan rekomendasi iPhone terbaik sesuai anggaran Anda.
             </p>
           </div>
 
           <a
-            href={`https://wa.me/${waNumber}?text=Halo%20fincell.id,%20saya%20membaca%20artikel%20"${encodeURIComponent(post.title)}"%20dan%20ingin%20bertanya.`}
+            href={`https://wa.me/${waNumber}?text=Halo%20vincellid,%20saya%20membaca%20artikel%20"${encodeURIComponent(post.title)}"%20dan%20ingin%20bertanya.`}
             target="_blank"
             rel="noreferrer"
             className="shrink-0"

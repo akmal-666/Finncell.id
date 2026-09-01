@@ -1,151 +1,145 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingBag, Heart, User, Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, Menu, X } from 'lucide-react';
+import { openWhatsApp } from '@/utils/whatsapp';
 
 export const PublicHeader: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const location = useLocation();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
     { label: 'Beranda', href: '/' },
     { label: 'Produk', href: '/produk' },
     { label: 'Aksesoris', href: '/aksesoris' },
-    { label: 'Promo', href: '/promo' },
     { label: 'Trade In', href: '/trade-in' },
     { label: 'Blog', href: '/blog' },
     { label: 'Tentang Kami', href: '/tentang-kami' },
   ];
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    navigate(`/produk?q=${encodeURIComponent(searchQuery.trim())}`);
+    setIsSearchOpen(false);
+  };
+
+  const handleWhatsAppClick = () => {
+    openWhatsApp('Halo vincellid, saya ingin bertanya tentang produk iPhone & aksesoris.');
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#050505] text-white border-b border-white/10 shadow-lg">
+    <header className="sticky top-0 z-50 bg-[#050505] border-b border-[#262626]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
-          
-          {/* Logo with tagline */}
-          <Link to="/" className="flex items-center gap-2 shrink-0 group">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-0.5 text-xl sm:text-2xl font-extrabold tracking-tight">
-                <span className="text-white group-hover:text-gray-200 transition-colors">fincell</span>
-                <span className="text-[#E7B65A]">.id</span>
-              </div>
-              <span className="text-[9px] text-gray-400 font-medium tracking-wide -mt-1 hidden sm:block">
-                Your iPhone Destination
-              </span>
-            </div>
+        <div className="flex items-center justify-between h-16 gap-4">
+          {/* Logo */}
+          <Link to="/" className="text-xl font-bold tracking-tight text-white flex items-center gap-1.5 shrink-0">
+            <span className="text-white">vincellid</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D6A84F]" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all relative ${
-                    isActive
-                      ? 'text-white'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#E7B65A] rounded-full" />
-                  )}
-                </Link>
-              );
-            })}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-xs font-medium uppercase tracking-wider text-gray-300 hover:text-[#D6A84F] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Search Bar Desktop */}
-            <div className="hidden md:flex items-center relative">
+          {/* Right Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Search Input */}
+            <form onSubmit={handleSearchSubmit} className="relative">
               <input
                 type="text"
                 placeholder="Cari iPhone..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-40 xl:w-48 pl-9 pr-4 py-1.5 text-xs bg-[#16181d] text-white border border-white/10 rounded-full placeholder-gray-400 focus:outline-none focus:border-[#E7B65A] focus:w-56 transition-all duration-300"
+                className="w-48 lg:w-64 pl-8 pr-3 py-1.5 bg-[#101010] border border-[#262626] rounded-md text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D6A84F] transition-colors"
               />
-              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 pointer-events-none" />
-            </div>
+              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+            </form>
 
-            {/* Action Buttons: Account, Wishlist, Cart */}
-            <div className="flex items-center space-x-1">
-              <Link
-                to="/admin/login"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Account / Login"
-                aria-label="Account"
-              >
-                <User className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/wishlist"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Wishlist"
-                aria-label="Wishlist"
-              >
-                <Heart className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/keranjang"
-                className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-colors relative"
-                title="Cart"
-                aria-label="Cart"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span className="absolute top-0 right-0 w-4 h-4 bg-[#E7B65A] text-[#111111] text-[9px] font-black rounded-full flex items-center justify-center border-2 border-[#050505]">
-                  2
-                </span>
-              </Link>
-            </div>
+            {/* WhatsApp CTA */}
+            <button
+              onClick={handleWhatsAppClick}
+              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-black font-semibold text-xs px-4 py-2 rounded-md transition-colors"
+            >
+              <span>WhatsApp</span>
+            </button>
+          </div>
 
-            {/* Mobile Menu Toggle */}
+          {/* Mobile Right Controls */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-gray-300 hover:text-white"
+              aria-label="Toggle Search"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleWhatsAppClick}
+              className="px-3 py-1.5 bg-[#25D366] text-black font-bold text-xs rounded-md"
+            >
+              WA
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+              className="p-2 text-gray-300 hover:text-white"
               aria-label="Toggle Menu"
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Menu Drawer */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-[#050505] px-4 pt-3 pb-6 space-y-3">
-          <div className="relative mb-3">
-            <input
-              type="text"
-              placeholder="Cari iPhone, aksesoris..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-[#111111] text-white border border-white/15 rounded-lg placeholder-gray-500 focus:outline-none focus:border-[#E7B65A]"
-            />
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5 pointer-events-none" />
+        {/* Mobile Search Input Drawer */}
+        {isSearchOpen && (
+          <div className="md:hidden py-3 border-t border-[#262626]">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <input
+                type="text"
+                placeholder="Cari iPhone..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 bg-[#101010] border border-[#262626] rounded-md text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D6A84F]"
+                autoFocus
+              />
+              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            </form>
           </div>
-          <div className="grid grid-cols-1 gap-1">
+        )}
+
+        {/* Mobile Navigation Drawer */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-[#262626] space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === link.href
-                    ? 'text-[#E7B65A] bg-white/5 font-semibold'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
-                }`}
+                className="block text-sm font-medium text-gray-200 hover:text-[#D6A84F] py-1"
               >
                 {link.label}
               </Link>
             ))}
+            <Link
+              to="/hubungi-kami"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-sm font-medium text-gray-200 hover:text-[#D6A84F] py-1"
+            >
+              Hubungi Kami
+            </Link>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 };

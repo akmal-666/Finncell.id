@@ -12,15 +12,11 @@ import { HomePage } from './pages/public/Home';
 import { ProductsPage } from './pages/public/Products';
 import { ProductDetailPage } from './pages/public/ProductDetail';
 import { AccessoriesPage } from './pages/public/Accessories';
-import { PromoPage } from './pages/public/Promo';
 import { TradeInPage } from './pages/public/TradeIn';
 import { BlogPage } from './pages/public/Blog';
 import { BlogDetailPage } from './pages/public/BlogDetail';
 import { AboutUsPage } from './pages/public/AboutUs';
 import { ContactUsPage } from './pages/public/ContactUs';
-import { CartPage } from './pages/public/Cart';
-import { CheckoutPage } from './pages/public/Checkout';
-import { OrderDetailPage } from './pages/public/OrderDetail';
 
 // Admin Pages
 import { AdminLoginPage } from './pages/admin/AdminLogin';
@@ -29,8 +25,6 @@ import { AdminProductsPage } from './pages/admin/AdminProducts';
 import { AdminProductFormPage } from './pages/admin/AdminProductForm';
 import { AdminCategoriesPage } from './pages/admin/AdminCategories';
 import { AdminBrandsPage } from './pages/admin/AdminBrands';
-import { AdminOrdersPage } from './pages/admin/AdminOrders';
-import { AdminPromosPage } from './pages/admin/AdminPromos';
 import { AdminTradeInPage } from './pages/admin/AdminTradeIn';
 import { AdminContentPage } from './pages/admin/AdminContent';
 import { AdminBlogPage } from './pages/admin/AdminBlog';
@@ -50,15 +44,11 @@ export const router = createBrowserRouter([
       { path: 'produk', element: <ProductsPage /> },
       { path: 'produk/:slug', element: <ProductDetailPage /> },
       { path: 'aksesoris', element: <AccessoriesPage /> },
-      { path: 'promo', element: <PromoPage /> },
       { path: 'trade-in', element: <TradeInPage /> },
       { path: 'blog', element: <BlogPage /> },
       { path: 'blog/:slug', element: <BlogDetailPage /> },
       { path: 'tentang-kami', element: <AboutUsPage /> },
       { path: 'hubungi-kami', element: <ContactUsPage /> },
-      { path: 'keranjang', element: <CartPage /> },
-      { path: 'checkout', element: <CheckoutPage /> },
-      { path: 'pesanan/:id', element: <OrderDetailPage /> },
     ],
   },
   // Admin Login (Standalone)
@@ -81,8 +71,6 @@ export const router = createBrowserRouter([
       { path: 'products/:id/edit', element: <ProtectedRoute requiredPermission="product.update"><AdminProductFormPage /></ProtectedRoute> },
       { path: 'categories', element: <ProtectedRoute requiredPermission="product.read"><AdminCategoriesPage /></ProtectedRoute> },
       { path: 'brands', element: <ProtectedRoute requiredPermission="product.read"><AdminBrandsPage /></ProtectedRoute> },
-      { path: 'orders', element: <ProtectedRoute requiredPermission="order.read"><AdminOrdersPage /></ProtectedRoute> },
-      { path: 'promos', element: <ProtectedRoute requiredPermission="product.read"><AdminPromosPage /></ProtectedRoute> },
       { path: 'trade-in', element: <ProtectedRoute requiredPermission="order.read"><AdminTradeInPage /></ProtectedRoute> },
       { path: 'content', element: <ProtectedRoute requiredPermission="content.read"><AdminContentPage /></ProtectedRoute> },
       { path: 'blog', element: <ProtectedRoute requiredPermission="content.read"><AdminBlogPage /></ProtectedRoute> },

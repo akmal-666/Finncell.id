@@ -2,10 +2,10 @@ import { ApiResponse, SeoMetadata, GlobalSeoSettings, SeoRedirect, SeoStats } fr
 import { fetchApi } from './apiClient';
 
 export const DEFAULT_GLOBAL_SEO: GlobalSeoSettings = {
-  websiteName: 'fincell.id',
-  defaultTitle: 'fincell.id — Toko iPhone & Apple Ecosystem Garansi Resmi',
-  defaultDescription: 'Beli iPhone 15, 14, 13 series bergaransi resmi Apple Indonesia. Nikmati promo voucher & layanan Trade-in instan di fincell.id.',
-  defaultOgImage: 'https://fincell.id/og-image.jpg',
+  websiteName: 'vincellid',
+  defaultTitle: 'vincellid — Toko iPhone & Apple Ecosystem Garansi Resmi',
+  defaultDescription: 'Beli iPhone 15, 14, 13 series bergaransi resmi Apple Indonesia. Nikmati layanan Trade-in instan di vincellid.',
+  defaultOgImage: 'https://vincellid/og-image.jpg',
   googleSearchConsoleToken: '',
   googleAnalyticsId: '',
   titleSeparator: '—',
@@ -105,7 +105,7 @@ export const seoService = {
       const res = await fetch(`${baseUrl}/api/seo/robots`);
       return await res.text();
     } catch { /**/ }
-    return `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap: https://fincell.id/sitemap.xml`;
+    return `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\n\nSitemap: https://vincellid/sitemap.xml`;
   },
 
   async saveRobots(content: string): Promise<ApiResponse<void>> {

@@ -14,9 +14,9 @@ settingsRoutes.get('/', async (c) => {
       return c.json({
         success: true,
         data: {
-          store_name: 'fincell.id',
+          store_name: 'vincellid',
           whatsapp_number: '6281234567890',
-          contact_email: 'support@fincell.id',
+          contact_email: 'support@vincellid',
         },
       });
     }

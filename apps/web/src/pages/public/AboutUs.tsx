@@ -22,7 +22,7 @@ export const AboutUsPage: React.FC = () => {
     });
   }, []);
 
-  const storeName = settings?.store_name || 'fincell.id';
+  const storeName = settings?.store_name || 'vincellid';
   const whatsappNumber = settings?.whatsapp_number || '6281234567890';
   const address = settings?.store_address || 'Ruko Premium Apple Center, Lt. 2, Central Park Mall, Jakarta Barat';
   const hours = settings?.operating_hours || 'Senin - Minggu: 09:00 - 21:00 WIB';
@@ -32,7 +32,7 @@ export const AboutUsPage: React.FC = () => {
       <SeoHead
         title={`Tentang ${storeName} — Independent Apple Retailer`}
         description="Pusat retail independen iPhone & ekosistem Apple terpercaya di Indonesia."
-        canonicalUrl="https://fincell.id/tentang-kami"
+        canonicalUrl="https://vincellid/tentang-kami"
       />
 
       <PageContainer breadcrumbs={[{ label: 'Tentang Kami' }]}>

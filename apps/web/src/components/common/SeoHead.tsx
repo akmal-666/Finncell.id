@@ -13,13 +13,13 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   title,
   description,
   canonicalUrl,
-  ogImage = 'https://fincell.id/og-image.jpg',
+  ogImage = 'https://vincellid.id/og-image.jpg',
   ogType = 'website',
   jsonLdSchema,
 }) => {
   useEffect(() => {
     // 1. Update Document Title
-    const fullTitle = `${title} — fincell.id`;
+    const fullTitle = `${title} — vincellid`;
     document.title = fullTitle;
 
     // Helper to update meta tag
