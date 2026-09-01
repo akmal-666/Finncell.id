@@ -42,13 +42,13 @@ export const HomePage: React.FC = () => {
       <section
         className="relative w-full min-h-[420px] lg:min-h-[520px] overflow-hidden bg-[#0a0a0a] flex items-center"
         style={{
-          backgroundImage: 'url(/images/bg-iphone17pm.png)',
+          backgroundImage: 'url(/images/hero-bg-gold.png)',
           backgroundSize: 'cover',
-          backgroundPosition: 'right center',
+          backgroundPosition: 'center center',
         }}
       >
         {/* dark gradient overlay — left side readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/90 via-[#080808]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/85 via-[#080808]/40 to-transparent" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-14 lg:py-20 w-full">
           <div className="max-w-xl space-y-4">
