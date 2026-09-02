@@ -33,10 +33,18 @@ export const mediaService = {
 
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787/api';
 
+      // Do NOT set Content-Type — browser sets it automatically with correct multipart boundary
       const response = await fetch(`${API_BASE_URL}/media/upload`, {
         method: 'POST',
+        credentials: 'include',
         body: formData,
+        // No Content-Type header — let browser set it with proper boundary
       });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ message: `HTTP ${response.status}` }));
+        return { success: false, message: (err as any).message || `Upload gagal (${response.status})`, data: undefined as any };
+      }
 
       const json = await response.json();
       return json;
