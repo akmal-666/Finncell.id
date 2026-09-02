@@ -4,7 +4,9 @@ import type { MediaPrefix } from '@fincell/shared';
 
 type Bindings = {
   DB: D1Database;
-  B2_BUCKET?: any;
+  B2_KEY_ID?: string;
+  B2_APPLICATION_KEY?: string;
+  B2_BUCKET_NAME?: string;
   PUBLIC_BASE_URL?: string;
 };
 
@@ -85,7 +87,7 @@ mediaRoutes.get('/', async (c) => {
     params.push(limitNum, offset);
     const { results } = await db.prepare(sql).bind(...params).all();
 
-    const storage = new StorageService(c.env.B2_BUCKET, c.env.PUBLIC_BASE_URL);
+    const storage = new StorageService(c.env.B2_KEY_ID, c.env.B2_APPLICATION_KEY, c.env.B2_BUCKET_NAME);
     const items = (results || []).map((row: any) => ({
       id: row.id,
       filename: row.filename,
@@ -119,7 +121,7 @@ mediaRoutes.post('/upload', async (c) => {
       return c.json({ success: false, message: 'File tidak ditemukan dalam form upload' }, 400);
     }
 
-    const storage = new StorageService(c.env.B2_BUCKET, c.env.PUBLIC_BASE_URL);
+    const storage = new StorageService(c.env.B2_KEY_ID, c.env.B2_APPLICATION_KEY, c.env.B2_BUCKET_NAME);
 
     // Validate size, type, prefix
     const validation = storage.validate(file.size, file.type, prefixInput);
@@ -163,7 +165,7 @@ mediaRoutes.post('/upload', async (c) => {
 mediaRoutes.get('/file/*', async (c) => {
   try {
     const key = c.req.path.replace('/api/media/file/', '');
-    const storage = new StorageService(c.env.B2_BUCKET, c.env.PUBLIC_BASE_URL);
+    const storage = new StorageService(c.env.B2_KEY_ID, c.env.B2_APPLICATION_KEY, c.env.B2_BUCKET_NAME);
 
     const object = await storage.get(key);
     if (!object) {
@@ -186,7 +188,7 @@ mediaRoutes.get('/file/*', async (c) => {
 mediaRoutes.delete('/:id', async (c) => {
   try {
     const idOrKey = c.req.param('id');
-    const storage = new StorageService(c.env.B2_BUCKET, c.env.PUBLIC_BASE_URL);
+    const storage = new StorageService(c.env.B2_KEY_ID, c.env.B2_APPLICATION_KEY, c.env.B2_BUCKET_NAME);
     const db = c.env.DB;
 
     let keyToDelete = idOrKey;
